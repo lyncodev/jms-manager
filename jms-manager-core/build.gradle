@@ -1,0 +1,8 @@
+dependencies {
+    compile "org.springframework.boot:spring-boot-starter",
+            "org.springframework.boot:spring-boot-starter-data-mongodb",
+            "org.springframework:spring-jms",
+            "org.apache.activemq:activemq-broker:$project.ext.activeMqVersion"
+
+    testCompile "org.springframework.boot:spring-boot-starter-test"
+}

@@ -1,0 +1,5 @@
+rootProject.name = 'jms-manager'
+
+include 'jms-manager-core',
+        'jms-manager-web'
+
