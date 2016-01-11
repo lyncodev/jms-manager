@@ -1,19 +1,19 @@
 package uk.gov.dwp.jms.manager.core.configuration;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
-import org.springframework.context.annotation.Configuration;
+import org.springframework.stereotype.Component;
 
-@Configuration
+@Component
 @ConfigurationProperties(prefix = "jms.manager.dlq.consumer")
 public class JmsListenerProperties {
 
-    private String deadLetterQueueName;
+    private String queueName;
 
-    public String getDeadLetterQueueName() {
-        return deadLetterQueueName;
+    public String getQueueName() {
+        return queueName;
     }
 
-    public void setDeadLetterQueueName(String deadLetterQueueName) {
-        this.deadLetterQueueName = deadLetterQueueName;
+    public void setQueueName(String queueName) {
+        this.queueName = queueName;
     }
 }

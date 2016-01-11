@@ -1,0 +1,47 @@
+package uk.gov.dwp.jms.manager.core.domain;
+
+import java.util.UUID;
+
+public class FailedMessageId {
+
+    public static final String FAILED_MESSAGE_ID = "failedMessageId";
+    private final UUID id;
+
+    private FailedMessageId(UUID id) {
+        this.id = id;
+    }
+
+    public static FailedMessageId newFailedMessageId() {
+        return new FailedMessageId(UUID.randomUUID());
+    }
+
+    public static FailedMessageId fromUUID(UUID uuid) {
+        return new FailedMessageId(uuid);
+    }
+
+    public static FailedMessageId fromString(String uuid) {
+        return new FailedMessageId(UUID.fromString(uuid));
+    }
+
+    public UUID getId() {
+        return id;
+    }
+
+    @Override
+    public int hashCode() {
+        return id.hashCode();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        return id.equals(((FailedMessageId) o).id);
+    }
+
+    @Override
+    public String toString() {
+        return String.format("{id=%s}", id.toString());
+    }
+}

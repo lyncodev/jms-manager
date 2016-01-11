@@ -1,8 +1,14 @@
 dependencies {
-    compile "org.springframework.boot:spring-boot-starter",
+
+    compile "javax.validation:validation-api:1.1.0.Final",
+            "org.apache.activemq:activemq-broker:$project.ext.activeMqVersion",
+            "org.apache.commons:commons-lang3:$project.ext.apacheCommons3Version",
+            'org.hibernate:hibernate-validator:5.2.2.Final',
+            'org.projectlombok:lombok:1.16.6',
+            "org.slf4j:slf4j-api:$project.ext.slf4jApiVersion",
+            "org.springframework.boot:spring-boot-starter",
             "org.springframework.boot:spring-boot-starter-data-mongodb",
-            "org.springframework:spring-jms",
-            "org.apache.activemq:activemq-broker:$project.ext.activeMqVersion"
+            "org.springframework:spring-jms"
 
     testCompile "org.springframework.boot:spring-boot-starter-test"
 }

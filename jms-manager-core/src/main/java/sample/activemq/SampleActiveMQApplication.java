@@ -20,22 +20,26 @@ import javax.jms.Queue;
 
 import org.apache.activemq.command.ActiveMQQueue;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 import org.springframework.jms.annotation.EnableJms;
 import uk.gov.dwp.jms.manager.core.configuration.JmsListenerConfig;
+import uk.gov.dwp.jms.manager.core.configuration.JmsListenerProperties;
 
 @SpringBootApplication
 @EnableJms
-@Import({JmsListenerConfig.class})
+@Import({JmsListenerProperties.class, JmsListenerConfig.class})
 public class SampleActiveMQApplication {
 
 	@Bean
-	public Queue queue() {
-		return new ActiveMQQueue("sample.queue");
+	@Autowired
+	public Queue queue(JmsListenerProperties jmsListenerProperties) {
+		return new ActiveMQQueue(jmsListenerProperties.getQueueName());
 	}
 
 	public static void main(String[] args) {

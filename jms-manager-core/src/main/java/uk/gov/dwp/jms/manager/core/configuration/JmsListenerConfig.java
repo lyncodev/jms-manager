@@ -15,7 +15,8 @@ public class JmsListenerConfig {
     public DefaultMessageListenerContainer dlqMessageListenerContainer(ConnectionFactory connectionFactory, JmsListenerProperties jmsListenerProperties) {
         DefaultMessageListenerContainer defaultMessageListenerContainer = new DefaultMessageListenerContainer();
         defaultMessageListenerContainer.setConnectionFactory(connectionFactory);
-        defaultMessageListenerContainer.setDestinationName(jmsListenerProperties.getDeadLetterQueueName());
+        defaultMessageListenerContainer.setDestinationName(jmsListenerProperties.getQueueName());
+//        defaultMessageListenerContainer.setupMessageListener();
         return defaultMessageListenerContainer;
     }
 }
