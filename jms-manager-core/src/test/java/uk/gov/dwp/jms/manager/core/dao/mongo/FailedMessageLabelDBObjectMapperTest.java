@@ -21,7 +21,7 @@ import static uk.gov.dwp.jms.manager.core.domain.FailedMessageLabelMatcher.aFail
 public class FailedMessageLabelDBObjectMapperTest {
 
     private static final FailedMessageId FAILED_MESSAGE_ID_VALUE = newFailedMessageId();
-    private FailedMessageLabelDBObjectMapper underTest = new FailedMessageLabelDBObjectMapper(new FailedMessageIdDBObjectMapper());
+    private FailedMessageLabelDBObjectMapper underTest = new FailedMessageLabelDBObjectMapper();
 
     @Test
     public void mapFailedMessageLabel() throws Exception {

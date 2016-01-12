@@ -5,31 +5,28 @@ import com.mongodb.DBObject;
 import uk.gov.dwp.jms.manager.core.domain.FailedMessageId;
 import uk.gov.dwp.jms.manager.core.domain.FailedMessageLabel;
 
+import static uk.gov.dwp.jms.manager.core.domain.FailedMessageId.FAILED_MESSAGE_ID;
+import static uk.gov.dwp.jms.manager.core.domain.FailedMessageId.fromString;
+
 public class FailedMessageLabelDBObjectMapper implements DBObjectMapper<FailedMessageLabel> {
 
     static final String LABEL = "label";
 
-    private final FailedMessageIdDBObjectMapper failedMessageIdDBObjectMapper;
-
-    public FailedMessageLabelDBObjectMapper(FailedMessageIdDBObjectMapper failedMessageIdDBObjectMapper) {
-        this.failedMessageIdDBObjectMapper = failedMessageIdDBObjectMapper;
-    }
-
     @Override
     public FailedMessageLabel mapObject(DBObject dbObject) {
+        if (dbObject == null) {
+            return null;
+        }
+        BasicDBObject basicDBObject = (BasicDBObject)dbObject;
         return new FailedMessageLabel(
-                failedMessageIdDBObjectMapper.mapObject(dbObject),
-                ((BasicDBObject)dbObject).getString(LABEL)
+                fromString(basicDBObject.getString(FAILED_MESSAGE_ID)),
+                basicDBObject.getString(LABEL)
         );
     }
 
     @Override
     public BasicDBObject mapDBObject(FailedMessageLabel failedMessageLabel) {
-        return failedMessageIdDBObjectMapper.mapDBObject(failedMessageLabel.getFailedMessageId())
+        return new BasicDBObject(FAILED_MESSAGE_ID, failedMessageLabel.getFailedMessageId().getId().toString())
                 .append(LABEL, failedMessageLabel.getLabel());
-    }
-
-    public BasicDBObject createFailedMessageIdDBObject(FailedMessageId failedMessageId) {
-        return failedMessageIdDBObjectMapper.mapDBObject(failedMessageId);
     }
 }

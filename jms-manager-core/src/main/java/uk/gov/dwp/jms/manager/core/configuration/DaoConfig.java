@@ -17,14 +17,14 @@ import uk.gov.dwp.jms.manager.core.dao.mongo.FailedMessageMongoDao;
 @EnableConfigurationProperties(DaoProperties.class)
 public class DaoConfig {
 
-    @Autowired
     @Bean
+    @Autowired
     public FailedMessageDao failedMessageDao(MongoClient mongoClient, DaoProperties daoProperties) {
         return new FailedMessageMongoDao(mongoClient.getDB(daoProperties.getDbName()).getCollection(daoProperties.getCollection().getFailedMessage()));
     }
 
-    @Autowired
     @Bean
+    @Autowired
     public FailedMessageLabelDao failedMessageLabelDao(MongoClient mongoClient, DaoProperties daoProperties) {
         return new FailedMessageLabelMongoDao(mongoClient.getDB(daoProperties.getDbName()).getCollection(daoProperties.getCollection().getFailedMessageLabel()));
     }

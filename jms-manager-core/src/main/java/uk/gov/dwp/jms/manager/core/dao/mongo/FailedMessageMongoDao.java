@@ -1,7 +1,6 @@
 package uk.gov.dwp.jms.manager.core.dao.mongo;
 
 import com.mongodb.DBCollection;
-import com.mongodb.WriteResult;
 import uk.gov.dwp.jms.manager.core.dao.FailedMessageDao;
 import uk.gov.dwp.jms.manager.core.domain.FailedMessage;
 import uk.gov.dwp.jms.manager.core.domain.FailedMessageId;
@@ -9,7 +8,7 @@ import uk.gov.dwp.jms.manager.core.domain.FailedMessageId;
 public class FailedMessageMongoDao implements FailedMessageDao {
 
     private final DBCollection collection;
-    private final FailedMessageDBObjectMapper dbObjectMapper = new FailedMessageDBObjectMapper(new FailedMessageIdDBObjectMapper());
+    private final FailedMessageDBObjectMapper dbObjectMapper = new FailedMessageDBObjectMapper();
 
     public FailedMessageMongoDao(DBCollection collection) {
         this.collection = collection;

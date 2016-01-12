@@ -6,11 +6,11 @@ import javax.jms.MessageListener;
 public class MessageWithPropertiesAdapterListener implements MessageListener {
 
     private final MessageTextExtractor messageTextExtractor;
-    private final MessagePropertyExtractor messagePropertyExtractor;
+    private final ActiveMQMessagePropertyExtractor messagePropertyExtractor;
     private final MessageWithPropertiesListener delegate;
 
     public MessageWithPropertiesAdapterListener(MessageTextExtractor messageTextExtractor,
-                                                MessagePropertyExtractor messagePropertyExtractor,
+                                                ActiveMQMessagePropertyExtractor messagePropertyExtractor,
                                                 MessageWithPropertiesListener delegate) {
         this.messageTextExtractor = messageTextExtractor;
         this.messagePropertyExtractor = messagePropertyExtractor;

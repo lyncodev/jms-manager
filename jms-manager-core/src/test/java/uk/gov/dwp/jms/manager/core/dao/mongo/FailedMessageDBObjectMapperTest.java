@@ -15,6 +15,7 @@ import java.util.Map;
 
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.nullValue;
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
@@ -26,34 +27,39 @@ import static uk.gov.dwp.jms.manager.core.domain.FailedMessageMatcher.aFailedMes
 public class FailedMessageDBObjectMapperTest {
 
     private static final FailedMessageId FAILED_MESSAGE_ID = newFailedMessageId();
-    private static final BasicDBObject _ID = new BasicDBObject("_id", FAILED_MESSAGE_ID);
+    private static final String FAILED_MESSAGE_ID_AS_STRING = FAILED_MESSAGE_ID.getId().toString();
+    private static final BasicDBObject _ID = new BasicDBObject("_id", FAILED_MESSAGE_ID.getId().toString());
     private static final Map<String, Object> EMPTY_PROPERTIES = new HashMap<>();
     private static final Map<String, Object> SOME_PROPERTIES = new HashMap<String, Object>() {{
         put("propertyName", "propertyValue");
     }};
 
-    private FailedMessageIdDBObjectMapper failedMessageIdDBObjectMapper = mock(FailedMessageIdDBObjectMapper.class);
-    private FailedMessageDBObjectMapper underTest = new FailedMessageDBObjectMapper(failedMessageIdDBObjectMapper);
+    private FailedMessageDBObjectMapper underTest = new FailedMessageDBObjectMapper();
 
-    @Before
-    public void setUp() {
-        when(failedMessageIdDBObjectMapper.mapDBObject(FAILED_MESSAGE_ID)).thenReturn(_ID);
+    @Test
+    public void createId() {
+        assertThat(underTest.createFailedMessageIdDBObject(FAILED_MESSAGE_ID), equalTo(new BasicDBObject("_id", FAILED_MESSAGE_ID_AS_STRING)));
     }
 
     @Test
-    public void mapFailedMessageWithNoProperties() throws Exception {
+    public void mapFailedMessageWithNoPropertiesToDBObject() {
         DBObject dbObject = underTest.mapDBObject(new FailedMessage(FAILED_MESSAGE_ID, "Hello", EMPTY_PROPERTIES));
         assertThat(dbObject, is(dbObject("Hello", EMPTY_PROPERTIES)));
     }
 
     @Test
-    public void mapFailedMessageWithProperties() throws Exception {
+    public void mapFailedMessageWithPropertiesToDBObject() {
         DBObject dbObject = underTest.mapDBObject(new FailedMessage(FAILED_MESSAGE_ID, "Hello", SOME_PROPERTIES));
         assertThat(dbObject, is(dbObject("Hello", SOME_PROPERTIES)));
     }
 
     @Test
-    public void testMapDBObjectWithNoProperties() throws Exception {
+    public void mapNullDBObjectToFailedMessage() {
+        assertThat(underTest.mapObject(null), is(nullValue()));
+    }
+
+    @Test
+    public void mapDBObjectWithNoPropertiesToFailedMessage() {
         FailedMessage message = underTest.mapObject(createFailedMessageDbObject(EMPTY_PROPERTIES));
 
         assertThat(message, is(aFailedMessage()
@@ -64,7 +70,7 @@ public class FailedMessageDBObjectMapperTest {
     }
 
     @Test
-    public void testMapDBObjectWithProperties() throws Exception {
+    public void mapDBObjectWithPropertiesToFailedMessage() {
         FailedMessage message = underTest.mapObject(createFailedMessageDbObject(SOME_PROPERTIES));
 
         assertThat(message, is(aFailedMessage()
@@ -81,7 +87,7 @@ public class FailedMessageDBObjectMapperTest {
         return new TypeSafeMatcher<DBObject>() {
             @Override
             protected boolean matchesSafely(DBObject item) {
-                return FAILED_MESSAGE_ID.equals(item.get("_id")) &&
+                return FAILED_MESSAGE_ID_AS_STRING.equals(item.get("_id")) &&
                         message.equals(item.get(CONTENT)) &&
                         properties.equals(item.get(PROPERTIES));
             }

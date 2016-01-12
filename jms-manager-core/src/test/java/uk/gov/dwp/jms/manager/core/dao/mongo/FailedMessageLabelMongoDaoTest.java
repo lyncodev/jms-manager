@@ -1,31 +1,89 @@
 package uk.gov.dwp.jms.manager.core.dao.mongo;
 
 import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.data.mongo.MongoDataAutoConfiguration;
-import org.springframework.boot.autoconfigure.mongo.MongoAutoConfiguration;
-import org.springframework.boot.test.ConfigFileApplicationContextInitializer;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import uk.gov.dwp.jms.manager.core.configuration.DaoConfig;
+import uk.gov.dwp.jms.manager.core.domain.FailedMessageId;
+import uk.gov.dwp.jms.manager.core.domain.FailedMessageLabel;
 
-import static org.junit.Assert.*;
+import java.util.ArrayList;
 
-@RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(classes = {
-        DaoConfig.class,
-        MongoAutoConfiguration.class,
-        MongoDataAutoConfiguration.class},
-        initializers = ConfigFileApplicationContextInitializer.class)
-public class FailedMessageLabelMongoDaoTest {
+import static org.hamcrest.Matchers.*;
+import static org.junit.Assert.assertThat;
+import static uk.gov.dwp.jms.manager.core.domain.FailedMessageId.newFailedMessageId;
+
+public class FailedMessageLabelMongoDaoTest extends AbstractMongoDaoTest {
 
     @Autowired
     private FailedMessageLabelMongoDao underTest;
 
     @Test
-    public void canCreateMultipleLabels() throws Exception {
+    public void findByFailedMessageIdReturnsEmptyListWhenNotFound() throws Exception {
+        assertThat(underTest.findById(newFailedMessageId()), equalTo(new ArrayList<>()));
+    }
 
+    @Test
+    public void findByLabelReturnsEmptyListWhenNotFound() throws Exception {
+        assertThat(underTest.findByLabel("Label"), equalTo(new ArrayList<>()));
+    }
 
+    @Test
+    public void canCreateMultipleLabelsForTheSameFailedMessageId() throws Exception {
+        FailedMessageId failedMessageId = newFailedMessageId();
+        FailedMessageLabel failedMessageLabel1 = underTest.insert(new FailedMessageLabel(failedMessageId, "A Label"));
+        FailedMessageLabel failedMessageLabel2 = underTest.insert(new FailedMessageLabel(failedMessageId, "Another Label"));
+
+        assertThat(underTest.findByLabel("A Label"), contains(failedMessageLabel1));
+        assertThat(underTest.findByLabel("Another Label"), contains(failedMessageLabel2));
+        assertThat(underTest.findById(failedMessageId), contains(failedMessageLabel1, failedMessageLabel2));
+    }
+
+    @Test
+    public void duplicateLabelsForTheSameFailedMessageAreNotReturned() throws Exception {
+        FailedMessageId failedMessageId = newFailedMessageId();
+        FailedMessageLabel failedMessageLabel1 = underTest.insert(new FailedMessageLabel(failedMessageId, "A Label"));
+        underTest.insert(new FailedMessageLabel(failedMessageId, "A Label"));
+
+        assertThat(underTest.findByLabel("A Label"), contains(failedMessageLabel1));
+        assertThat(underTest.findById(failedMessageId), contains(failedMessageLabel1));
+    }
+
+    @Test
+    public void canCreateTheSameLabelForDifferentFailedMessages() throws Exception {
+        FailedMessageLabel failedMessageLabel1 = underTest.insert(new FailedMessageLabel(newFailedMessageId(), "A Label"));
+        FailedMessageLabel failedMessageLabel2 = underTest.insert(new FailedMessageLabel(newFailedMessageId(), "A Label"));
+
+        assertThat(underTest.findByLabel("A Label"), containsInAnyOrder(failedMessageLabel1, failedMessageLabel2));
+        assertThat(underTest.findById(failedMessageLabel1.getFailedMessageId()), contains(failedMessageLabel1));
+        assertThat(underTest.findById(failedMessageLabel2.getFailedMessageId()), contains(failedMessageLabel2));
+    }
+
+    @Test
+    public void removeAll() throws Exception {
+        FailedMessageId failedMessageId = newFailedMessageId();
+        underTest.insert(new FailedMessageLabel(failedMessageId, "A Label"));
+        underTest.insert(new FailedMessageLabel(failedMessageId, "Another Label"));
+
+        underTest.removeAll(failedMessageId);
+
+        assertThat(underTest.findById(failedMessageId), is(emptyIterable()));
+    }
+
+    @Test
+    public void remove() throws Exception {
+        FailedMessageId failedMessageId = newFailedMessageId();
+        underTest.insert(new FailedMessageLabel(failedMessageId, "A Label"));
+        underTest.insert(new FailedMessageLabel(failedMessageId, "A Label"));
+        FailedMessageLabel failedMessageLabel1 = underTest.insert(new FailedMessageLabel(failedMessageId, "Another Label"));
+        FailedMessageLabel failedMessageLabel2 = underTest.insert(new FailedMessageLabel(newFailedMessageId(), "A Label"));
+
+        underTest.remove(failedMessageId, "A Label");
+
+        assertThat(underTest.findById(failedMessageId), contains(failedMessageLabel1));
+        assertThat(underTest.findByLabel("A Label"), contains(failedMessageLabel2));
+    }
+
+    @Override
+    protected String getCollectionName() {
+        return daoProperties.getCollection().getFailedMessageLabel();
     }
 }

@@ -3,11 +3,17 @@ package uk.gov.dwp.jms.manager.core.dao;
 import uk.gov.dwp.jms.manager.core.domain.FailedMessageId;
 import uk.gov.dwp.jms.manager.core.domain.FailedMessageLabel;
 
+import java.util.List;
+
 public interface FailedMessageLabelDao {
 
-    void save(FailedMessageLabel failedMessageLabel);
+    FailedMessageLabel insert(FailedMessageLabel failedMessageLabel);
 
-    FailedMessageLabel findById(FailedMessageId failedMessageId);
+    List<FailedMessageLabel> findById(FailedMessageId failedMessageId);
 
-    void removeAll(FailedMessageId failedMessageId);
+    List<FailedMessageLabel> findByLabel(String label);
+
+    void remove(FailedMessageId failedMessageId, String label);
+
+    int removeAll(FailedMessageId failedMessageId);
 }

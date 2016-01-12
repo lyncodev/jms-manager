@@ -42,6 +42,6 @@ public class FailedMessageId {
 
     @Override
     public String toString() {
-        return String.format("{id=%s}", id.toString());
+        return id.toString();
     }
 }

@@ -22,7 +22,7 @@ public class MessageTextExtractor {
                 throw new RuntimeException(errorMsg, e);
             }
         } else {
-            String errorMsg = String.format("Expected TextMessage received: %s", message.getClass().toString());
+            String errorMsg = String.format("Expected TextMessage received: %s", message.getClass().getName());
             LOGGER.error(errorMsg);
             throw new RuntimeException(errorMsg);
         }
