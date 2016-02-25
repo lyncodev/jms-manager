@@ -1,6 +1,24 @@
-dependencies {
-    compile "org.springframework.boot:spring-boot-starter",
-            "org.springframework.boot:spring-boot-starter-jetty"
+apply plugin: 'spring-boot'
 
-    testCompile "org.springframework.boot:spring-boot-starter-test"
+dependencies {
+    compile project(':jms-manager-core-client')
+
+    compile "com.fasterxml.jackson.core:jackson-annotations:$project.ext.jacksonVersion",
+            "com.fasterxml.jackson.core:jackson-core:$project.ext.jacksonVersion",
+            "com.fasterxml.jackson.core:jackson-databind:$project.ext.jacksonVersion",
+            "com.fasterxml.jackson.datatype:jackson-datatype-jsr310:$project.ext.jacksonVersion",
+            "com.fasterxml.jackson.jaxrs:jackson-jaxrs-json-provider:$project.ext.jacksonVersion",
+            "com.github.spullara.mustache.java:compiler:0.9.1",
+            "org.apache.cxf:cxf-core:$project.ext.apacheCxfVersion",
+            "org.apache.cxf:cxf-rt-frontend-jaxrs:$project.ext.apacheCxfVersion",
+            "org.apache.cxf:cxf-rt-rs-client:$project.ext.apacheCxfVersion",
+            "org.apache.cxf:cxf-rt-transports-http:$project.ext.apacheCxfVersion",
+            "org.apache.cxf:cxf-rt-transports-http-jetty:$project.ext.apacheCxfVersion",
+            "org.slf4j:slf4j-api:$project.ext.slf4jApiVersion",
+            "org.springframework.boot:spring-boot-starter",
+            "org.springframework.boot:spring-boot-starter-jetty",
+            "org.springframework:spring-web"
+
+            testCompile "org.springframework.boot:spring-boot-starter-test",
+                        'org.valid4j:json-path-matchers:1.1'
 }

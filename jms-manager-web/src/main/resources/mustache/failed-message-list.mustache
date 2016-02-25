@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>JMS Manager - Failed Messages</title>
+    <link rel="stylesheet" type="text/css" href="http://w2ui.com/src/w2ui-1.4.2.min.css" />
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.0/jquery.min.js"></script>
+    <script type="text/javascript" src="http://w2ui.com/src/w2ui-1.4.2.min.js"></script>
+</head>
+<body>
+
+<div id="grid" style="width: 100%; height: 250px;"></div>
+
+<script type="text/javascript">
+    $(function () {
+        $('#grid').w2grid({
+            name: 'grid',
+            show: {
+                selectColumn: true
+            },
+            columns: [
+                { field: 'recid', caption: 'Failed Message Id', size: '220px', sortable: true },
+                { field: 'destination.broker', caption: 'Broker', size: '10%', sortable: true },
+                { field: 'destination.name', caption: 'Queue', size: '10%', sortable: true },
+                { field: 'sentAt', caption: 'Originally Sent', size: '160px', sortable: true },
+                { field: 'failedAt', caption: 'Failed', size: '160px', sortable: true },
+                { field: 'labels', caption: 'Labels', size: '20%' },
+                { field: 'content', caption: 'Content', size: '80%', sortable: true },
+            ],
+            records: {{{failedMessagesAsJson}}}
+        });
+    });
+</script>
+
+</body>
+</html>
