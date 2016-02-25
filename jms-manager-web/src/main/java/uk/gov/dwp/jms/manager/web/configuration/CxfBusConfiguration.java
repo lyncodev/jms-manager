@@ -30,10 +30,8 @@ public class CxfBusConfiguration {
     @Bean
     public ServletRegistrationBean cxfServlet() throws ServletException {
         ServletRegistrationBean cxfServlet = new ServletRegistrationBean(new CXFServlet(), "/*");
-//        cxfServlet.addInitParameter("redirect-servlet-name", "default");
-//        cxfServlet.addInitParameter("redirect-attributes", "javax.servlet.include.request_uri");
-//        cxfServlet.addInitParameter("redirects-list", "/static/.+");
         cxfServlet.addInitParameter("static-resources-list", "/static/.+");
+        cxfServlet.addInitParameter("static-cache-control", "max-age=86400");
         return cxfServlet;
     }
 
