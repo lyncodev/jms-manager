@@ -1,14 +1,14 @@
 package uk.gov.dwp.jms.manager.core.configuration;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 import org.springframework.jms.listener.DefaultMessageListenerContainer;
 import uk.gov.dwp.jms.manager.core.jms.FailedMessageListener;
-import uk.gov.dwp.jms.manager.core.jms.ActiveMQMessagePropertyExtractor;
+import uk.gov.dwp.jms.manager.core.jms.JmsMessagePropertyExtractor;
 import uk.gov.dwp.jms.manager.core.jms.MessageTextExtractor;
-import uk.gov.dwp.jms.manager.core.jms.MessageWithPropertiesAdapterListener;
+import uk.gov.dwp.jms.manager.core.jms.activemq.ActiveMQDestinationExtractor;
+import uk.gov.dwp.jms.manager.core.jms.activemq.ActiveMQFailedMessageFactory;
 import uk.gov.dwp.jms.manager.core.service.FailedMessageService;
 
 import javax.jms.ConnectionFactory;
@@ -18,23 +18,21 @@ import javax.jms.ConnectionFactory;
 public class JmsListenerConfig {
 
     @Bean
-    @Autowired
-    public MessageWithPropertiesAdapterListener messageWithPropertiesAdapterListener(FailedMessageListener failedMessageListener) {
-        return new MessageWithPropertiesAdapterListener(new MessageTextExtractor(), new ActiveMQMessagePropertyExtractor(), failedMessageListener);
-    }
-
-    @Bean
     public FailedMessageListener failedMessageListener(FailedMessageService failedMessageService) {
-        return new FailedMessageListener(failedMessageService);
+        return new FailedMessageListener(
+                new ActiveMQFailedMessageFactory(
+                        new MessageTextExtractor(),
+                        new ActiveMQDestinationExtractor("broker.name"),
+                        new JmsMessagePropertyExtractor()),
+                failedMessageService);
     }
 
     @Bean
-    @Autowired
-    public DefaultMessageListenerContainer dlqMessageListenerContainer(ConnectionFactory connectionFactory, JmsListenerProperties jmsListenerProperties, MessageWithPropertiesAdapterListener messageWithPropertiesAdapterListener) {
+    public DefaultMessageListenerContainer dlqMessageListenerContainer(ConnectionFactory connectionFactory, JmsListenerProperties jmsListenerProperties, FailedMessageListener failedMessageListener) {
         DefaultMessageListenerContainer defaultMessageListenerContainer = new DefaultMessageListenerContainer();
         defaultMessageListenerContainer.setConnectionFactory(connectionFactory);
         defaultMessageListenerContainer.setDestinationName(jmsListenerProperties.getQueueName());
-        defaultMessageListenerContainer.setupMessageListener(messageWithPropertiesAdapterListener);
+        defaultMessageListenerContainer.setupMessageListener(failedMessageListener);
         return defaultMessageListenerContainer;
     }
 }

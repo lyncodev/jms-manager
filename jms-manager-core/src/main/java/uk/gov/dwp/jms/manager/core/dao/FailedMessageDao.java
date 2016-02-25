@@ -1,7 +1,9 @@
 package uk.gov.dwp.jms.manager.core.dao;
 
-import uk.gov.dwp.jms.manager.core.domain.FailedMessage;
-import uk.gov.dwp.jms.manager.core.domain.FailedMessageId;
+import uk.gov.dwp.jms.manager.core.client.FailedMessage;
+import uk.gov.dwp.jms.manager.core.client.FailedMessageId;
+
+import java.util.List;
 
 public interface FailedMessageDao {
 
@@ -10,4 +12,6 @@ public interface FailedMessageDao {
     FailedMessage findById(FailedMessageId failedMessageId);
 
     int remove(FailedMessageId failedMessageId);
+
+    List<FailedMessage> find();
 }

@@ -3,11 +3,9 @@ package uk.gov.dwp.jms.manager.core.domain;
 import org.hamcrest.Description;
 import org.hamcrest.Matcher;
 import org.hamcrest.TypeSafeMatcher;
+import uk.gov.dwp.jms.manager.core.client.FailedMessageId;
+import uk.gov.dwp.jms.manager.core.client.FailedMessageLabel;
 
-import java.util.HashMap;
-import java.util.Map;
-
-import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.notNullValue;
 
 public class FailedMessageLabelMatcher extends TypeSafeMatcher<FailedMessageLabel> {

@@ -1,36 +1,39 @@
 package uk.gov.dwp.jms.manager.core.jms;
 
 import org.junit.Test;
-import uk.gov.dwp.jms.manager.core.domain.FailedMessageId;
-import uk.gov.dwp.jms.manager.core.domain.FailedMessageMatcher;
+import uk.gov.dwp.jms.manager.core.client.FailedMessage;
 import uk.gov.dwp.jms.manager.core.service.FailedMessageService;
 
-import java.util.HashMap;
-import java.util.Map;
+import javax.jms.JMSException;
+import javax.jms.Message;
 
-import static org.hamcrest.Matchers.equalTo;
-import static org.hamcrest.Matchers.notNullValue;
-import static org.mockito.Matchers.argThat;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.verify;
-import static uk.gov.dwp.jms.manager.core.domain.FailedMessageMatcher.aFailedMessage;
+import static org.mockito.Mockito.*;
 
 public class FailedMessageListenerTest {
 
+    private final FailedMessageFactory failedMessageFactory = mock(FailedMessageFactory.class);
     private final FailedMessageService failedMessageService = mock(FailedMessageService.class);
 
-    private final FailedMessageListener underTest = new FailedMessageListener(failedMessageService);
+    private final Message message = mock(Message.class);
+    private final FailedMessage failedMessage = mock(FailedMessage.class);
+
+    private final FailedMessageListener underTest = new FailedMessageListener(failedMessageFactory, failedMessageService);
 
     @Test
-    public void createFailedMessageFromMessageWithProperties() throws Exception {
-        Map<String, Object> properties = new HashMap<>();
-        properties.put("Property Key", "Property Value");
-        underTest.onMessage(new MessageWithProperties("Hello", properties));
+    public void processMessageSuccessfully() throws Exception {
+        when(failedMessageFactory.createFailedMessage(message)).thenReturn(failedMessage);
 
-        verify(failedMessageService).create(argThat(aFailedMessage()
-                .withFailedMessageId(notNullValue(FailedMessageId.class))
-                .withContent(equalTo("Hello"))
-                .withProperties(equalTo(properties))
-        ));
+        underTest.onMessage(message);
+
+        verify(failedMessageService).create(failedMessage);
+    }
+
+    @Test
+    public void exceptionIsThrownRetrievingTheJMSMessageId() throws JMSException {
+        when(message.getJMSMessageID()).thenThrow(JMSException.class);
+
+        underTest.onMessage(message);
+
+        verifyZeroInteractions(failedMessageService);
     }
 }

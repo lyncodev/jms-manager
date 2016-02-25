@@ -1,5 +1,6 @@
-package uk.gov.dwp.jms.manager.core.domain;
+package uk.gov.dwp.jms.manager.core.client;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import org.hibernate.validator.constraints.NotEmpty;
 
 import javax.validation.constraints.NotNull;
@@ -11,7 +12,8 @@ public class FailedMessageLabel {
     @NotEmpty
     private final String label;
 
-    public FailedMessageLabel(FailedMessageId failedMessageId, String label) {
+    public FailedMessageLabel(@JsonProperty("failedMessageId") FailedMessageId failedMessageId,
+                              @JsonProperty("label") String label) {
         this.failedMessageId = failedMessageId;
         this.label = label;
     }

@@ -1,14 +1,29 @@
+apply plugin: 'spring-boot'
+
 dependencies {
 
+    compile project(':jms-manager-core-client')
+
     compile "javax.validation:validation-api:1.1.0.Final",
+            "com.fasterxml.jackson.core:jackson-annotations:$project.ext.jacksonVersion",
+            "com.fasterxml.jackson.core:jackson-core:$project.ext.jacksonVersion",
+            "com.fasterxml.jackson.core:jackson-databind:$project.ext.jacksonVersion",
+            "com.fasterxml.jackson.datatype:jackson-datatype-jsr310:$project.ext.jacksonVersion",
+            "com.fasterxml.jackson.jaxrs:jackson-jaxrs-json-provider:$project.ext.jacksonVersion",
             "org.apache.activemq:activemq-broker:$project.ext.activeMqVersion",
             "org.apache.commons:commons-lang3:$project.ext.apacheCommons3Version",
-            'org.hibernate:hibernate-validator:5.2.2.Final',
+            "org.apache.cxf:cxf-core:$project.ext.apacheCxfVersion",
+            "org.apache.cxf:cxf-rt-frontend-jaxrs:$project.ext.apacheCxfVersion",
+            "org.apache.cxf:cxf-rt-transports-http:$project.ext.apacheCxfVersion",
+            "org.apache.cxf:cxf-rt-transports-http-jetty:$project.ext.apacheCxfVersion",
             'org.projectlombok:lombok:1.16.6',
             "org.slf4j:slf4j-api:$project.ext.slf4jApiVersion",
             "org.springframework.boot:spring-boot-starter",
             "org.springframework.boot:spring-boot-starter-data-mongodb",
-            "org.springframework:spring-jms"
+            "org.springframework.boot:spring-boot-starter-jetty",
+            "org.springframework:spring-jms",
+            "org.springframework:spring-web"
 
-    testCompile "org.springframework.boot:spring-boot-starter-test"
+    testCompile "org.springframework.boot:spring-boot-starter-test",
+                'org.valid4j:json-path-matchers:1.1'
 }

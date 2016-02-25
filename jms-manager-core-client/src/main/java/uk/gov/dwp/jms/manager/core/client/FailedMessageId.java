@@ -1,8 +1,8 @@
-package uk.gov.dwp.jms.manager.core.domain;
+package uk.gov.dwp.jms.manager.core.client;
 
 import java.util.UUID;
 
-public class FailedMessageId {
+public class FailedMessageId implements Id {
 
     public static final String FAILED_MESSAGE_ID = "failedMessageId";
     private final UUID id;
@@ -23,6 +23,7 @@ public class FailedMessageId {
         return new FailedMessageId(UUID.fromString(uuid));
     }
 
+    @Override
     public UUID getId() {
         return id;
     }

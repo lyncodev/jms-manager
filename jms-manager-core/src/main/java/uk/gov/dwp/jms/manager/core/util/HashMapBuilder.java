@@ -9,7 +9,11 @@ public class HashMapBuilder<K, V> {
     private HashMapBuilder() {}
 
     public static <K, V> HashMapBuilder<K, V> newHashMap() {
-        return new HashMapBuilder();
+        return new HashMapBuilder<>();
+    }
+
+    public static <K, V> HashMapBuilder<K, V> newHashMap(Class<K> keyClass, Class<V> valueClass) {
+        return new HashMapBuilder<>();
     }
 
     public HashMapBuilder<K, V> put(K key, V value) {

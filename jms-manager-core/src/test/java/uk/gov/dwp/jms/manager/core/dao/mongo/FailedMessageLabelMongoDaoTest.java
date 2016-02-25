@@ -2,14 +2,14 @@ package uk.gov.dwp.jms.manager.core.dao.mongo;
 
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import uk.gov.dwp.jms.manager.core.domain.FailedMessageId;
-import uk.gov.dwp.jms.manager.core.domain.FailedMessageLabel;
+import uk.gov.dwp.jms.manager.core.client.FailedMessageId;
+import uk.gov.dwp.jms.manager.core.client.FailedMessageLabel;
 
 import java.util.ArrayList;
 
 import static org.hamcrest.Matchers.*;
 import static org.junit.Assert.assertThat;
-import static uk.gov.dwp.jms.manager.core.domain.FailedMessageId.newFailedMessageId;
+import static uk.gov.dwp.jms.manager.core.client.FailedMessageId.newFailedMessageId;
 
 public class FailedMessageLabelMongoDaoTest extends AbstractMongoDaoTest {
 

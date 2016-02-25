@@ -3,22 +3,22 @@ package uk.gov.dwp.jms.manager.core.dao.mongo;
 import com.mongodb.BasicDBObject;
 import com.mongodb.DBCollection;
 import com.mongodb.DBCursor;
+import uk.gov.dwp.jms.manager.core.client.FailedMessageId;
+import uk.gov.dwp.jms.manager.core.client.FailedMessageLabel;
 import uk.gov.dwp.jms.manager.core.dao.FailedMessageLabelDao;
-import uk.gov.dwp.jms.manager.core.domain.FailedMessageId;
-import uk.gov.dwp.jms.manager.core.domain.FailedMessageLabel;
 
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-import static uk.gov.dwp.jms.manager.core.dao.mongo.FailedMessageLabelDBObjectMapper.LABEL;
-import static uk.gov.dwp.jms.manager.core.domain.FailedMessageId.FAILED_MESSAGE_ID;
+import static uk.gov.dwp.jms.manager.core.client.FailedMessageId.FAILED_MESSAGE_ID;
+import static uk.gov.dwp.jms.manager.core.dao.mongo.FailedMessageLabelConverter.LABEL;
 
 public class FailedMessageLabelMongoDao implements FailedMessageLabelDao {
 
     private final DBCollection collection;
-    private final FailedMessageLabelDBObjectMapper dbObjectMapper = new FailedMessageLabelDBObjectMapper();
+    private final FailedMessageLabelConverter failedMessageLabelConverter = new FailedMessageLabelConverter();
 
     public FailedMessageLabelMongoDao(DBCollection collection) {
         this.collection = collection;
@@ -26,7 +26,7 @@ public class FailedMessageLabelMongoDao implements FailedMessageLabelDao {
 
     @Override
     public FailedMessageLabel insert(FailedMessageLabel failedMessageLabel) {
-        collection.insert(dbObjectMapper.mapDBObject(failedMessageLabel));
+        collection.insert(failedMessageLabelConverter.convertFromObject(failedMessageLabel));
         return failedMessageLabel;
     }
 
@@ -53,7 +53,7 @@ public class FailedMessageLabelMongoDao implements FailedMessageLabelDao {
     private List<FailedMessageLabel> toList(DBCursor dbCursor) {
         Set<FailedMessageLabel> labels = new HashSet<>();
         while (dbCursor.hasNext()) {
-            labels.add(dbObjectMapper.mapObject(dbCursor.next()));
+            labels.add(failedMessageLabelConverter.convertToObject(dbCursor.next()));
         }
         return labels.stream().collect(Collectors.toList());
     }

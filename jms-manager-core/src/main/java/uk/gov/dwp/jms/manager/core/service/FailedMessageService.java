@@ -1,7 +1,7 @@
 package uk.gov.dwp.jms.manager.core.service;
 
-import uk.gov.dwp.jms.manager.core.domain.FailedMessage;
-import uk.gov.dwp.jms.manager.core.domain.FailedMessageId;
+import uk.gov.dwp.jms.manager.core.client.FailedMessage;
+import uk.gov.dwp.jms.manager.core.client.FailedMessageId;
 
 public interface FailedMessageService {
 

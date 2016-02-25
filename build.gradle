@@ -27,21 +27,22 @@ subprojects {
     }
 
     apply plugin: 'java'
-    apply plugin: 'spring-boot'
 
     sourceCompatibility = 1.8
     targetCompatibility = 1.8
 
+    // Update the version of jetty used by spring boot 1.3.1 (from 9.2.14)
+    ext['jetty.version']  = '9.3.0.v20150612'
     ext {
-        activeMqVersion = '5.12.1'
+        activeMqVersion  = '5.12.1'
+        apacheCxfVersion = '3.1.4'
         apacheCommons3Version = '3.4'
-        jettyVersion = '9.3.0.v20150612'
+        jacksonVersion = '2.7.1'
         junitVersion = '4.12'
         hamcrestVersion = '1.3'
         mockitoVersion = '1.10.19'
         slf4jApiVersion = '1.7.13'
         springBootVersion = '1.3.1.RELEASE'
-        springVersion = '4.2.4.RELEASE'
     }
 
     dependencies {
