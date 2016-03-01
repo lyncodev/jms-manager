@@ -33,6 +33,6 @@ public class FailedMessageReplayerTest {
         underTest.replay(failedMessage, QUEUE_NAME);
 
         verify(jmsTemplate).send(QUEUE_NAME, failedMessageCreator);
-        verify(failedMessageService).remove(FAILED_MESSAGE_ID);
+        verify(failedMessageService).reprocess(FAILED_MESSAGE_ID);
     }
 }

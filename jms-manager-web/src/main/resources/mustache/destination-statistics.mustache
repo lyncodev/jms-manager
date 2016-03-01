@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>JMS Manager - Failed Messages</title>
+    <link rel="stylesheet" type="text/css" href="/static/css/w2ui-1.4.3.min.css" />
+    <script type="text/javascript" src="/static/js/jquery-2.1.0.min.js"></script>
+    <script type="text/javascript" src="/static/js/w2ui-1.4.3.min.js"></script>
+</head>
+<body>
+
+<div id="grid" style="width: 100%; height: 250px;"></div>
+
+<script type="text/javascript">
+    $(function () {
+        $('#grid').w2grid({
+            name: 'grid',
+            show: {
+                selectColumn: true
+            },
+            columns: [
+                { field: 'destination.brokerName', caption: 'Broker', size: '10%', sortable: true,
+                    render: function (record) {
+                        return '<a href="{{failedMessageListUrl}}/' + record.destination.brokerName + '">' + record.destination.brokerName + '</a>';
+                    }
+                },
+                { field: 'destination.name', caption: 'Queue', size: '10%', sortable: true,
+                    render: function (record) {
+                        return '<a href="{{failedMessageListUrl}}/' + record.destination.brokerName + '/' + record.destination.name + '">' + record.destination.name + '</a>';
+                    }
+                },
+                { field: 'failed', caption: 'New', size: '100px', sortable: true },
+                { field: 'reprocessed', caption: 'Reprocessed', size: '100px' },
+                { field: 'deleted', caption: 'Deleted', size: '100px' },
+                { field: 'total', caption: 'Total', size: '100px' }
+            ],
+            records: {{{records}}}
+        });
+    });
+</script>
+
+</body>
+</html>

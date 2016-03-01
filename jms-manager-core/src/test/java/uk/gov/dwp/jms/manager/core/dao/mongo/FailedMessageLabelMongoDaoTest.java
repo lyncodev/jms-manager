@@ -29,11 +29,11 @@ public class FailedMessageLabelMongoDaoTest extends AbstractMongoDaoTest {
     @Test
     public void canCreateMultipleLabelsForTheSameFailedMessageId() throws Exception {
         FailedMessageId failedMessageId = newFailedMessageId();
-        FailedMessageLabel failedMessageLabel1 = underTest.insert(new FailedMessageLabel(failedMessageId, "A Label"));
-        FailedMessageLabel failedMessageLabel2 = underTest.insert(new FailedMessageLabel(failedMessageId, "Another Label"));
+        FailedMessageLabel failedMessageLabel1 = underTest.insert(new FailedMessageLabel(failedMessageId, "Label One"));
+        FailedMessageLabel failedMessageLabel2 = underTest.insert(new FailedMessageLabel(failedMessageId, "Label Two"));
 
-        assertThat(underTest.findByLabel("A Label"), contains(failedMessageLabel1));
-        assertThat(underTest.findByLabel("Another Label"), contains(failedMessageLabel2));
+        assertThat(underTest.findByLabel("Label One"), contains(failedMessageLabel1));
+        assertThat(underTest.findByLabel("Label Two"), contains(failedMessageLabel2));
         assertThat(underTest.findById(failedMessageId), contains(failedMessageLabel1, failedMessageLabel2));
     }
 

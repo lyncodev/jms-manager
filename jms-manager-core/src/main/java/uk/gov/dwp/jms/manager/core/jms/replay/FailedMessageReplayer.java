@@ -23,6 +23,6 @@ public class FailedMessageReplayer {
 
     public void replay(FailedMessage failedMessage, String queueName) {
         jmsTemplate.send(queueName, failedMessageCreatorFactory.apply(failedMessage));
-        failedMessageService.remove(failedMessage.getFailedMessageId());
+        failedMessageService.reprocess(failedMessage.getFailedMessageId());
     }
 }

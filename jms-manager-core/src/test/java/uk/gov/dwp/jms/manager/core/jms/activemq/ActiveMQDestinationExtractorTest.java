@@ -22,13 +22,4 @@ public class ActiveMQDestinationExtractorTest {
         assertThat(destination, equalTo(new Destination("internal", "queue.name")));
 
     }
-
-    @Test
-    public void destinationIsNotSetIfOriginalDestinationIsNull() throws Exception {
-        ActiveMQMessage message = mock(ActiveMQMessage.class);
-        when(message.getOriginalDestination()).thenReturn(null);
-        Destination destination = underTest.extractDestination(message);
-        assertThat(destination, equalTo(new Destination("internal", null)));
-
-    }
 }

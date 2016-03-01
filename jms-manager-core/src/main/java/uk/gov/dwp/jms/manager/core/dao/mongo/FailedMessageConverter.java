@@ -12,7 +12,7 @@ import java.util.Map;
 import static uk.gov.dwp.jms.manager.core.client.FailedMessageBuilder.aFailedMessage;
 import static uk.gov.dwp.jms.manager.core.client.FailedMessageId.fromString;
 
-public class FailedMessageConverter implements DBObjectConverter<FailedMessage> {
+public class FailedMessageConverter implements DBObjectWithIdConverter<FailedMessage, FailedMessageId> {
 
     static final String DESTINATION = "destination";
     static final String SENT_DATE_TIME = "sentDateTime";
@@ -47,7 +47,7 @@ public class FailedMessageConverter implements DBObjectConverter<FailedMessage> 
 
     @Override
     public BasicDBObject convertFromObject(FailedMessage item) {
-        return createFailedMessageIdDBObject(item.getFailedMessageId())
+        return createId(item.getFailedMessageId())
                 .append(DESTINATION, destinationDBObjectMapper.convertFromObject(item.getDestination()))
                 .append(SENT_DATE_TIME, item.getSentAt())
                 .append(FAILED_DATE_TIME, item.getFailedAt())
@@ -55,7 +55,8 @@ public class FailedMessageConverter implements DBObjectConverter<FailedMessage> 
                 .append(PROPERTIES, propertiesMongoMapper.convertFromObject(item.getProperties()));
     }
 
-    public BasicDBObject createFailedMessageIdDBObject(FailedMessageId failedMessageId) {
+    @Override
+    public BasicDBObject createId(FailedMessageId failedMessageId) {
         return new BasicDBObject("_id", failedMessageId.getId().toString());
     }
 }

@@ -9,11 +9,14 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 import org.springframework.context.annotation.ImportResource;
+import uk.gov.dwp.jms.manager.core.client.DestinationStatisticsResource;
 import uk.gov.dwp.jms.manager.core.client.FailedMessageResource;
 import uk.gov.dwp.jms.manager.web.common.jackson.PageMessageBodyWriter;
 import uk.gov.dwp.jms.manager.web.common.mustache.MustachePageRenderer;
 import uk.gov.dwp.jms.manager.web.search.FailedMessageListController;
 import uk.gov.dwp.jms.manager.web.search.FailedMessagesJsonSerializer;
+import uk.gov.dwp.jms.manager.web.summary.DestinationStatisticsController;
+import uk.gov.dwp.jms.manager.web.summary.DestinationStatisticsJsonSerializer;
 
 import javax.servlet.ServletException;
 import java.util.ArrayList;
@@ -38,12 +41,14 @@ public class CxfBusConfiguration {
     @Bean
     public Server rsServer(Bus bus,
                            FailedMessageResource failedMessageResource,
+                           DestinationStatisticsResource destinationStatisticsResource,
                            JacksonConfiguration jacksonConfiguration,
                            MustachePageRenderer mustachePageRenderer) {
         JAXRSServerFactoryBean endpoint = new JAXRSServerFactoryBean();
         endpoint.setAddress("/web");
         endpoint.setServiceBeans(new ArrayList<Object>() {{
             add(new FailedMessageListController(failedMessageResource, new FailedMessagesJsonSerializer()));
+            add(new DestinationStatisticsController(destinationStatisticsResource, new DestinationStatisticsJsonSerializer(jacksonConfiguration.objectMapper())));
         }});
         endpoint.setProvider(jacksonConfiguration.jacksonJsonProvider());
         endpoint.setProvider(new PageMessageBodyWriter(mustachePageRenderer));

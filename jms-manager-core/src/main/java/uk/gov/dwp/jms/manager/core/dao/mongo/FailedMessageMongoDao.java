@@ -27,13 +27,13 @@ public class FailedMessageMongoDao implements FailedMessageDao {
 
     @Override
     public FailedMessage findById(FailedMessageId failedMessageId) {
-        DBObject failedMessage = collection.findOne(failedMessageConverter.createFailedMessageIdDBObject(failedMessageId));
+        DBObject failedMessage = collection.findOne(failedMessageConverter.createId(failedMessageId));
         return failedMessageConverter.convertToObject(failedMessage);
     }
 
     @Override
     public int remove(FailedMessageId failedMessageId) {
-        return collection.remove(failedMessageConverter.createFailedMessageIdDBObject(failedMessageId)).getN();
+        return collection.remove(failedMessageConverter.createId(failedMessageId)).getN();
     }
 
     @Override

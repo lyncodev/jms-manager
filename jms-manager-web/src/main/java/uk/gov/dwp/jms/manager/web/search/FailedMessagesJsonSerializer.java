@@ -21,7 +21,7 @@ public class FailedMessagesJsonSerializer {
                 .stream()
                 .map(fm -> new StringBuilder().append("{ ")
                         .append("recid: \"").append(fm.getFailedMessageId().getId()).append("\", ")
-                        .append("content: \"").append(fm.getContent()).append("\", ")
+                        .append("content: \"").append(fm.getContent().replace("\"", "\\\"")).append("\", ")
                         .append("destination: ").append(destinationJsonSerializer.asJson(fm.getDestination())).append(", ")
                         .append("sentAt: \"").append(asJson(fm.getSentAt())).append("\", ")
                         .append("failedAt: \"").append(asJson(fm.getFailedAt())).append("\" ")
@@ -31,9 +31,5 @@ public class FailedMessagesJsonSerializer {
 
     private String asJson(ZonedDateTime zonedDateTime) {
         return (zonedDateTime != null) ? ISO_DATE_TIME_WITH_MS.format(zonedDateTime) : null;
-    }
-
-    public String asJson(String fieldName, List<FailedMessage> failedMessages) {
-        return "{ " + fieldName + ": " + asJson(failedMessages) + " }";
     }
 }

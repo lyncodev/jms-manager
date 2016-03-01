@@ -7,5 +7,5 @@ public interface FailedMessageService {
 
     void create(FailedMessage failedMessage);
 
-    void remove(FailedMessageId failedMessageId);
+    void reprocess(FailedMessageId failedMessageId);
 }

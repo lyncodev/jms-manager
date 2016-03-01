@@ -98,17 +98,4 @@ public class FailedMessageMongoDaoTest extends AbstractMongoDaoTest {
     protected String getCollectionName() {
         return daoProperties.getCollection().getFailedMessage();
     }
-
-    private HashMap<String, Object> createProperties() {
-        HashMapBuilder<String, Object> hashMapBuilder = newHashMap(String.class, Object.class)
-                .put("string", "some text")
-                .put("localDateTime", LocalDateTime.now())
-                .put("date", new Date())
-                .put("integer", 1)
-                .put("long", 1L)
-                .put("uuid", UUID.randomUUID());
-        return hashMapBuilder
-                .put("properties", hashMapBuilder.build())
-                .build();
-    }
 }

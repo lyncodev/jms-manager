@@ -41,18 +41,18 @@ public class FailedMessagesJsonSerializerTest {
                 .withFailedDateTime(SOME_DATE_TIME.with(MILLI_OF_SECOND, 123))
                 .withContent("More Content")
                 .build();
-        String json = underTest.asJson("failedMessages", Arrays.asList(failedMessage1, failedMessage2));
+        String json = underTest.asJson(Arrays.asList(failedMessage1, failedMessage2));
 
         assertThat(json, allOf(
-                hasJsonPath("$.failedMessages[0].recid", equalTo(FAILED_MESSAGE_ID_1)),
-                hasJsonPath("$.failedMessages[0].content", equalTo("Some Content")),
-                hasJsonPath("$.failedMessages[0].sentAt", equalTo("1970-01-01T00:00:00.000Z")),
-                hasJsonPath("$.failedMessages[0].failedAt", equalTo("2016-02-08T14:43:00.000Z")),
+                hasJsonPath("$.[0].recid", equalTo(FAILED_MESSAGE_ID_1)),
+                hasJsonPath("$.[0].content", equalTo("Some Content")),
+                hasJsonPath("$.[0].sentAt", equalTo("1970-01-01T00:00:00.000Z")),
+                hasJsonPath("$.[0].failedAt", equalTo("2016-02-08T14:43:00.000Z")),
 
-                hasJsonPath("$.failedMessages[1].recid", equalTo(FAILED_MESSAGE_ID_2)),
-                hasJsonPath("$.failedMessages[1].content", equalTo("More Content")),
-                hasJsonPath("$.failedMessages[1].sentAt", equalTo("2016-02-08T14:43:00.000Z")),
-                hasJsonPath("$.failedMessages[1].failedAt", equalTo("2016-02-08T14:43:00.123Z"))
+                hasJsonPath("$.[1].recid", equalTo(FAILED_MESSAGE_ID_2)),
+                hasJsonPath("$.[1].content", equalTo("More Content")),
+                hasJsonPath("$.[1].sentAt", equalTo("2016-02-08T14:43:00.000Z")),
+                hasJsonPath("$.[1].failedAt", equalTo("2016-02-08T14:43:00.123Z"))
         ));
 
     }

@@ -11,6 +11,7 @@ public class DaoProperties {
 
         private String failedMessage;
         private String failedMessageLabel;
+        private String destinationStatistics;
 
         public String getFailedMessage() {
             return failedMessage;
@@ -26,6 +27,14 @@ public class DaoProperties {
 
         public void setFailedMessageLabel(String failedMessageLabel) {
             this.failedMessageLabel = failedMessageLabel;
+        }
+
+        public String getDestinationStatistics() {
+            return destinationStatistics;
+        }
+
+        public void setDestinationStatistics(String destinationStatistics) {
+            this.destinationStatistics = destinationStatistics;
         }
     }
 

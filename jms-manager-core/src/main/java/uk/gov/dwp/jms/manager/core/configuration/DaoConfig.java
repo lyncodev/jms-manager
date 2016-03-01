@@ -54,8 +54,18 @@ public class DaoConfig {
     }
 
     @Bean
+    public DestinationStatisticsMongoDao destinationStatisticsMongoDao(MongoClient mongoClient, DaoProperties daoProperties, DestinationStatisticsConverter destinationStatisticsConverter) {
+        return new DestinationStatisticsMongoDao(mongoClient.getDB(daoProperties.getDbName()).getCollection(daoProperties.getCollection().getDestinationStatistics()), destinationStatisticsConverter);
+    }
+
+    @Bean
     public FailedMessageConverter failedMessageConverter(ObjectConverter<Destination, DBObject> destinationDBObjectConverter, ObjectConverter<Map<String, Object>, String> propertiesObjectConverter) {
         return new FailedMessageConverter(destinationDBObjectConverter, propertiesObjectConverter);
+    }
+
+    @Bean
+    public DestinationStatisticsConverter destinationStatisticsConverter(ObjectConverter<Destination, DBObject> destinationDBObjectConverter) {
+        return new DestinationStatisticsConverter(destinationDBObjectConverter);
     }
 
     @Bean

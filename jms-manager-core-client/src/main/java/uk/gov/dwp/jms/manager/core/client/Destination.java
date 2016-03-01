@@ -29,11 +29,19 @@ public class Destination {
         Destination that = (Destination) o;
 
         return brokerName.equals(that.brokerName)
-                && ((name != null) ? name.equals(that.name) : (that.name == null));
+                && name.equals(that.name);
     }
 
     @Override
     public int hashCode() {
-        return 31 * brokerName.hashCode() + (name != null ? name.hashCode() : 0);
+        return 31 * brokerName.hashCode() + name.hashCode();
+    }
+
+    @Override
+    public String toString() {
+        return "Destination{" +
+                "brokerName='" + brokerName + '\'' +
+                ", name='" + name + '\'' +
+                '}';
     }
 }

@@ -2,9 +2,6 @@ package uk.gov.dwp.jms.manager.core.dao.mongo;
 
 import com.mongodb.BasicDBObject;
 import com.mongodb.DBObject;
-import org.hamcrest.Description;
-import org.hamcrest.Matcher;
-import org.hamcrest.TypeSafeMatcher;
 import org.junit.Before;
 import org.junit.Test;
 import uk.gov.dwp.jms.manager.core.client.Destination;
@@ -22,6 +19,7 @@ import static org.junit.Assert.assertThat;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 import static uk.gov.dwp.jms.manager.core.client.FailedMessageId.newFailedMessageId;
+import static uk.gov.dwp.jms.manager.core.dao.mongo.DBObjectMatcher.hasField;
 import static uk.gov.dwp.jms.manager.core.dao.mongo.FailedMessageConverter.*;
 import static uk.gov.dwp.jms.manager.core.domain.DestinationMatcher.aDestination;
 import static uk.gov.dwp.jms.manager.core.domain.FailedMessageMatcher.aFailedMessage;
@@ -58,7 +56,7 @@ public class FailedMessageConverterTest {
 
     @Test
     public void createId() {
-        assertThat(underTest.createFailedMessageIdDBObject(FAILED_MESSAGE_ID), equalTo(new BasicDBObject("_id", FAILED_MESSAGE_ID_AS_STRING)));
+        assertThat(underTest.createId(FAILED_MESSAGE_ID), equalTo(new BasicDBObject("_id", FAILED_MESSAGE_ID_AS_STRING)));
     }
 
     @Test
@@ -97,19 +95,5 @@ public class FailedMessageConverterTest {
     private void primePropertiesConverter(Map<String, Object> properties, String propertiesAsJson) {
         when(propertiesConverter.convertFromObject(properties)).thenReturn(propertiesAsJson);
         when(propertiesConverter.convertToObject(propertiesAsJson)).thenReturn(properties);
-    }
-
-    private Matcher<DBObject> hasField(final String fieldName, final Object fieldValue) {
-        return new TypeSafeMatcher<DBObject>() {
-            @Override
-            protected boolean matchesSafely(DBObject item) {
-                return fieldValue.equals(item.get(fieldName));
-            }
-
-            @Override
-            public void describeTo(Description description) {
-                description.appendText(fieldName).appendText(" is ").appendValue(fieldValue);
-            }
-        };
     }
 }
