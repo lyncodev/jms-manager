@@ -12,6 +12,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import static com.mongodb.QueryOperators.EXISTS;
+
 public class FailedMessageMongoDao implements FailedMessageDao {
 
     private final DBCollection collection;
@@ -44,7 +46,7 @@ public class FailedMessageMongoDao implements FailedMessageDao {
     @Override
     public List<FailedMessage> find() {
         List<FailedMessage> failedMessages = new ArrayList<>();
-        DBCursor dbCursor = collection.find();
+        DBCursor dbCursor = collection.find(new BasicDBObject("_removedDateTime", new BasicDBObject(EXISTS, false)));
         while (dbCursor.hasNext()) {
             failedMessages.add(failedMessageConverter.convertToObject(dbCursor.next()));
         }

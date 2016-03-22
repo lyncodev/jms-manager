@@ -1,5 +1,7 @@
 package uk.gov.dwp.jms.manager.core.client;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+
 import java.util.UUID;
 
 public class FailedMessageId implements Id {
@@ -19,6 +21,7 @@ public class FailedMessageId implements Id {
         return new FailedMessageId(uuid);
     }
 
+    @JsonCreator
     public static FailedMessageId fromString(String uuid) {
         return new FailedMessageId(UUID.fromString(uuid));
     }

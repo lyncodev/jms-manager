@@ -3,6 +3,7 @@ package uk.gov.dwp.jms.manager.core.configuration;
 import com.fasterxml.jackson.jaxrs.json.JacksonJsonProvider;
 import org.apache.cxf.Bus;
 import org.apache.cxf.endpoint.Server;
+import org.apache.cxf.feature.LoggingFeature;
 import org.apache.cxf.jaxrs.JAXRSServerFactoryBean;
 import org.apache.cxf.transport.servlet.CXFServlet;
 import org.springframework.boot.context.embedded.ServletRegistrationBean;
@@ -41,7 +42,13 @@ public class CxfBusConfiguration {
         endpoint.setAddress("/core");
         endpoint.setProvider(jacksonJsonProvider);
         endpoint.setBus(bus);
+        endpoint.setFeatures(Arrays.asList(loggingFeature()));
         return endpoint.create();
+    }
+
+    @Bean
+    public LoggingFeature loggingFeature() {
+        return new LoggingFeature();
     }
 
     @Bean
