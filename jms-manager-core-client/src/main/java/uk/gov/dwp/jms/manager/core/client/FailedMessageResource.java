@@ -19,4 +19,7 @@ public interface FailedMessageResource {
     @GET
     @Path("/all")
     List<FailedMessage> getFailedMessages();
+
+    @DELETE
+    void delete(List<FailedMessageId> failedMessageIds);
 }

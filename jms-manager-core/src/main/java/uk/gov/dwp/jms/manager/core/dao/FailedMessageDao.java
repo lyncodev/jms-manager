@@ -11,7 +11,7 @@ public interface FailedMessageDao {
 
     FailedMessage findById(FailedMessageId failedMessageId);
 
-    int remove(FailedMessageId failedMessageId);
+    int delete(FailedMessageId failedMessageId);
 
     List<FailedMessage> find();
 }

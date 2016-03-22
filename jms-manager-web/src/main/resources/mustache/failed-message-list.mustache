@@ -4,7 +4,7 @@
     <title>JMS Manager - Failed Messages</title>
     <link rel="stylesheet" type="text/css" href="/static/css/w2ui-1.4.3.min.css" />
     <script type="text/javascript" src="/static/js/jquery-2.1.0.min.js"></script>
-    <script type="text/javascript" src="/static/js/w2ui-1.4.3.min.js"></script>
+    <script type="text/javascript" src="/static/js/w2ui-1.4.3.js"></script>
 </head>
 <body>
 
@@ -14,8 +14,13 @@
     $(function () {
         $('#grid').w2grid({
             name: 'grid',
+            url: {
+                remove: '/web/failed-messages/delete'
+            },
             show: {
-                selectColumn: true
+                selectColumn: true,
+                toolbar: true,
+                toolbarDelete: true
             },
             columns: [
                 { field: 'recid', caption: 'Failed Message Id', size: '220px', sortable: true },

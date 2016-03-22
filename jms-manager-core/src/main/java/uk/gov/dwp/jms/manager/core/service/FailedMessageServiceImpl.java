@@ -32,7 +32,7 @@ public class FailedMessageServiceImpl implements FailedMessageService, FailedMes
     public void reprocess(FailedMessageId failedMessageId) {
         FailedMessage failedMessage = failedMessageDao.findById(failedMessageId);
         failedMessageLabelDao.removeAll(failedMessageId);
-        failedMessageDao.remove(failedMessageId);
+        failedMessageDao.delete(failedMessageId);
         destinationStatisticsDao.reprocess(failedMessage.getDestination());
     }
 
@@ -49,5 +49,13 @@ public class FailedMessageServiceImpl implements FailedMessageService, FailedMes
     @Override
     public List<FailedMessage> getFailedMessages() {
         return failedMessageDao.find();
+    }
+
+    @Override
+    public void delete(List<FailedMessageId> failedMessageIds) {
+        failedMessageIds.forEach(failedMessageId -> {
+            failedMessageDao.delete(failedMessageId);
+            failedMessageLabelDao.removeAll(failedMessageId);
+        });
     }
 }

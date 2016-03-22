@@ -1,5 +1,6 @@
 package uk.gov.dwp.jms.manager.core.dao.mongo;
 
+import com.mongodb.BasicDBObject;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import uk.gov.dwp.jms.manager.core.client.Destination;
@@ -76,22 +77,22 @@ public class FailedMessageMongoDaoTest extends AbstractMongoDaoTest {
     }
 
     @Test
-    public void attemptToRemoveAFailedMessageThatDoesNotExist() throws Exception {
+    public void attemptToDeleteAFailedMessageThatDoesNotExist() throws Exception {
         underTest.insert(failedMessageBuilder.build());
 
-        assertThat(underTest.remove(newFailedMessageId()), is(0));
+        assertThat(underTest.delete(newFailedMessageId()), is(0));
 
         assertThat(underTest.findById(failedMessageId), is(aFailedMessage()
                 .withFailedMessageId(equalTo(failedMessageId))));
     }
 
     @Test
-    public void successfullyRemoveAFailedMessage() throws Exception {
+    public void successfullyDeleteAFailedMessage() throws Exception {
         underTest.insert(failedMessageBuilder.build());
 
-        assertThat(underTest.remove(failedMessageId), is(1));
-
+        assertThat(underTest.delete(failedMessageId), is(1));
         assertThat(underTest.findById(failedMessageId), is(nullValue()));
+        assertThat(collection.count(new BasicDBObject("_removed._id", failedMessageId.toString())), is(1L));
     }
 
     @Override

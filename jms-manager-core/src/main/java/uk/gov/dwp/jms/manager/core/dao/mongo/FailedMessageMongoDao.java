@@ -1,5 +1,6 @@
 package uk.gov.dwp.jms.manager.core.dao.mongo;
 
+import com.mongodb.BasicDBObject;
 import com.mongodb.DBCollection;
 import com.mongodb.DBCursor;
 import com.mongodb.DBObject;
@@ -8,6 +9,7 @@ import uk.gov.dwp.jms.manager.core.client.FailedMessageId;
 import uk.gov.dwp.jms.manager.core.dao.FailedMessageDao;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class FailedMessageMongoDao implements FailedMessageDao {
@@ -32,7 +34,10 @@ public class FailedMessageMongoDao implements FailedMessageDao {
     }
 
     @Override
-    public int remove(FailedMessageId failedMessageId) {
+    public int delete(FailedMessageId failedMessageId) {
+        collection.insert(new BasicDBObject()
+                .append("_removed", collection.findOne(failedMessageConverter.createId(failedMessageId)))
+                .append("_removedDateTime", new Date()));
         return collection.remove(failedMessageConverter.createId(failedMessageId)).getN();
     }
 

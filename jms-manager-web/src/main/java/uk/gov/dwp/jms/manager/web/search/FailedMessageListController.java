@@ -1,14 +1,13 @@
 package uk.gov.dwp.jms.manager.web.search;
 
 import uk.gov.dwp.jms.manager.core.client.FailedMessage;
+import uk.gov.dwp.jms.manager.core.client.FailedMessageId;
 import uk.gov.dwp.jms.manager.core.client.FailedMessageResource;
 
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
-import javax.ws.rs.Produces;
+import javax.ws.rs.*;
 import java.util.List;
 
+import static java.util.stream.Collectors.toList;
 import static javax.ws.rs.core.MediaType.TEXT_HTML;
 
 @Path("/failed-messages")
@@ -41,6 +40,14 @@ public class FailedMessageListController {
     public FailedMessageListPage getFailedMessages(@PathParam("brokerName") String brokerName, @PathParam("destination") String destinationName) {
         // TODO: Introduce FailedMessageSearchResource in jms-manager-core
         return getFailedMessages();
+    }
+
+    @POST
+    @Path("/delete")
+    public String deleteFailedMessages(@FormParam("cmd") String command, @FormParam("selected[]") List<String> selected) {
+        List<FailedMessageId> failedMessageIds = selected.stream().map(x -> FailedMessageId.fromString(x)).collect(toList());
+        failedMessageResource.delete(failedMessageIds);
+        return "{ 'status': 'success' }";
     }
 
 }

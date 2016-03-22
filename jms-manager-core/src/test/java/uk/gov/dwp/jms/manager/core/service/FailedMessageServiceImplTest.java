@@ -8,6 +8,7 @@ import uk.gov.dwp.jms.manager.core.dao.DestinationStatisticsDao;
 import uk.gov.dwp.jms.manager.core.dao.FailedMessageDao;
 import uk.gov.dwp.jms.manager.core.dao.FailedMessageLabelDao;
 
+import java.util.Arrays;
 import java.util.List;
 
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -17,6 +18,8 @@ import static org.mockito.Mockito.*;
 public class FailedMessageServiceImplTest {
 
     private static final FailedMessageId FAILED_MESSAGE_ID = FailedMessageId.newFailedMessageId();
+    private static final FailedMessageId ANOTHER_FAILED_MESSAGE_ID = FailedMessageId.newFailedMessageId();
+
     private final FailedMessageDao failedMessageDao = mock(FailedMessageDao.class);
     private final FailedMessageLabelDao failedMessageLabelDao = mock(FailedMessageLabelDao.class);
     private final DestinationStatisticsDao destinationStatisticsDao = mock(DestinationStatisticsDao.class);
@@ -61,8 +64,19 @@ public class FailedMessageServiceImplTest {
         when(failedMessageDao.findById(FAILED_MESSAGE_ID)).thenReturn(failedMessage);
         underTest.reprocess(FAILED_MESSAGE_ID);
 
-        verify(failedMessageDao).remove(FAILED_MESSAGE_ID);
+        verify(failedMessageDao).delete(FAILED_MESSAGE_ID);
         verify(failedMessageLabelDao).removeAll(FAILED_MESSAGE_ID);
         verify(destinationStatisticsDao).reprocess(destination);
+    }
+
+    @Test
+    public void deleteFailedMessages() {
+
+        underTest.delete(Arrays.asList(FAILED_MESSAGE_ID, ANOTHER_FAILED_MESSAGE_ID));
+
+        verify(failedMessageDao).delete(FAILED_MESSAGE_ID);
+        verify(failedMessageLabelDao).removeAll(FAILED_MESSAGE_ID);
+        verify(failedMessageDao).delete(ANOTHER_FAILED_MESSAGE_ID);
+        verify(failedMessageLabelDao).removeAll(ANOTHER_FAILED_MESSAGE_ID);
     }
 }
