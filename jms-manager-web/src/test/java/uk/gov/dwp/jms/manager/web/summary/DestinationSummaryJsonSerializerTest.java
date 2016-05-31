@@ -14,10 +14,10 @@ import static org.hamcrest.Matchers.allOf;
 import static org.hamcrest.Matchers.equalTo;
 import static org.valid4j.matchers.jsonpath.JsonPathMatchers.hasJsonPath;
 
-public class DestinationStatisticsJsonSerializerTest {
+public class DestinationSummaryJsonSerializerTest {
 
     private final ObjectMapper objectMapper = new JacksonConfiguration().objectMapper();
-    private final DestinationStatisticsJsonSerializer underTest = new DestinationStatisticsJsonSerializer(objectMapper);
+    private final DestinationSummaryJsonSerializer underTest = new DestinationSummaryJsonSerializer(objectMapper);
 
     @Test
     public void serializeEmptyListToJson() throws Exception {

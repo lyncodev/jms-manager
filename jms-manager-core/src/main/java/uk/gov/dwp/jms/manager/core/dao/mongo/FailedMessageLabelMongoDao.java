@@ -8,9 +8,9 @@ import uk.gov.dwp.jms.manager.core.client.FailedMessageLabel;
 import uk.gov.dwp.jms.manager.core.dao.FailedMessageLabelDao;
 
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
-import java.util.stream.Collectors;
+import java.util.SortedSet;
+import java.util.TreeSet;
 
 import static uk.gov.dwp.jms.manager.core.client.FailedMessageId.FAILED_MESSAGE_ID;
 import static uk.gov.dwp.jms.manager.core.dao.mongo.FailedMessageLabelConverter.LABEL;
@@ -26,18 +26,33 @@ public class FailedMessageLabelMongoDao implements FailedMessageLabelDao {
 
     @Override
     public FailedMessageLabel insert(FailedMessageLabel failedMessageLabel) {
-        collection.insert(failedMessageLabelConverter.convertFromObject(failedMessageLabel));
+        if (!findById(failedMessageLabel.getFailedMessageId()).contains(failedMessageLabel)) {
+            collection.insert(failedMessageLabelConverter.convertFromObject(failedMessageLabel));
+        }
         return failedMessageLabel;
     }
 
     @Override
-    public List<FailedMessageLabel> findById(FailedMessageId failedMessageId) {
-        return toList(collection.find(new BasicDBObject(FAILED_MESSAGE_ID, failedMessageId.getId().toString())).sort(new BasicDBObject(LABEL, 1)));
+    public void insert(Set<FailedMessageLabel> labels) {
+        labels.stream()
+                .findFirst()
+                .ifPresent(failedMessageLabel -> {
+                    SortedSet<FailedMessageLabel> existingLabels = findById(failedMessageLabel.getFailedMessageId());
+                    HashSet<FailedMessageLabel> newLabels = new HashSet<>(labels);
+                    newLabels.removeAll(existingLabels);
+                    newLabels.stream()
+                            .forEach(label -> collection.insert(failedMessageLabelConverter.convertFromObject(label)));
+                });
     }
 
     @Override
-    public List<FailedMessageLabel> findByLabel(String label) {
-        return toList(collection.find(new BasicDBObject(LABEL, label)).sort(new BasicDBObject(FAILED_MESSAGE_ID, 1)));
+    public SortedSet<FailedMessageLabel> findById(FailedMessageId failedMessageId) {
+        return toSet(collection.find(new BasicDBObject(FAILED_MESSAGE_ID, failedMessageId.getId().toString())).sort(new BasicDBObject(LABEL, 1)));
+    }
+
+    @Override
+    public SortedSet<FailedMessageLabel> findByLabel(String label) {
+        return toSet(collection.find(new BasicDBObject(LABEL, label)).sort(new BasicDBObject(FAILED_MESSAGE_ID, 1)));
     }
 
     @Override
@@ -50,11 +65,11 @@ public class FailedMessageLabelMongoDao implements FailedMessageLabelDao {
         return collection.remove(new BasicDBObject(FAILED_MESSAGE_ID, failedMessageId.getId().toString())).getN();
     }
 
-    private List<FailedMessageLabel> toList(DBCursor dbCursor) {
-        Set<FailedMessageLabel> labels = new HashSet<>();
+    private SortedSet<FailedMessageLabel> toSet(DBCursor dbCursor) {
+        SortedSet<FailedMessageLabel> labels = new TreeSet<>();
         while (dbCursor.hasNext()) {
             labels.add(failedMessageLabelConverter.convertToObject(dbCursor.next()));
         }
-        return labels.stream().collect(Collectors.toList());
+        return labels;
     }
 }

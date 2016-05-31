@@ -2,11 +2,11 @@ package uk.gov.dwp.jms.manager.web.summary;
 
 import uk.gov.dwp.jms.manager.web.common.Page;
 
-public class DestinationStatisticsPage extends Page {
+public class DestinationSummaryPage extends Page {
 
     private final String records;
 
-    public DestinationStatisticsPage(String records) {
+    public DestinationSummaryPage(String records) {
         super("destination-statistics.mustache");
         this.records = records;
     }

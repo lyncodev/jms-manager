@@ -2,6 +2,7 @@ package uk.gov.dwp.jms.manager.web.configuration;
 
 import org.apache.cxf.Bus;
 import org.apache.cxf.endpoint.Server;
+import org.apache.cxf.interceptor.LoggingInInterceptor;
 import org.apache.cxf.jaxrs.JAXRSServerFactoryBean;
 import org.apache.cxf.transport.servlet.CXFServlet;
 import org.springframework.boot.context.embedded.ServletRegistrationBean;
@@ -13,10 +14,10 @@ import uk.gov.dwp.jms.manager.core.client.DestinationStatisticsResource;
 import uk.gov.dwp.jms.manager.core.client.FailedMessageResource;
 import uk.gov.dwp.jms.manager.web.common.jackson.PageMessageBodyWriter;
 import uk.gov.dwp.jms.manager.web.common.mustache.MustachePageRenderer;
-import uk.gov.dwp.jms.manager.web.search.FailedMessageListController;
-import uk.gov.dwp.jms.manager.web.search.FailedMessagesJsonSerializer;
-import uk.gov.dwp.jms.manager.web.summary.DestinationStatisticsController;
-import uk.gov.dwp.jms.manager.web.summary.DestinationStatisticsJsonSerializer;
+import uk.gov.dwp.jms.manager.web.destination.FailedMessageListController;
+import uk.gov.dwp.jms.manager.web.destination.FailedMessagesJsonSerializer;
+import uk.gov.dwp.jms.manager.web.summary.DestinationSummaryController;
+import uk.gov.dwp.jms.manager.web.summary.DestinationSummaryJsonSerializer;
 
 import javax.servlet.ServletException;
 import java.util.ArrayList;
@@ -44,11 +45,12 @@ public class CxfBusConfiguration {
                            DestinationStatisticsResource destinationStatisticsResource,
                            JacksonConfiguration jacksonConfiguration,
                            MustachePageRenderer mustachePageRenderer) {
+        bus.getInInterceptors().add(new LoggingInInterceptor());
         JAXRSServerFactoryBean endpoint = new JAXRSServerFactoryBean();
         endpoint.setAddress("/web");
         endpoint.setServiceBeans(new ArrayList<Object>() {{
             add(new FailedMessageListController(failedMessageResource, new FailedMessagesJsonSerializer()));
-            add(new DestinationStatisticsController(destinationStatisticsResource, new DestinationStatisticsJsonSerializer(jacksonConfiguration.objectMapper())));
+            add(new DestinationSummaryController(destinationStatisticsResource, new DestinationSummaryJsonSerializer(jacksonConfiguration.objectMapper())));
         }});
         endpoint.setProvider(jacksonConfiguration.jacksonJsonProvider());
         endpoint.setProvider(new PageMessageBodyWriter(mustachePageRenderer));

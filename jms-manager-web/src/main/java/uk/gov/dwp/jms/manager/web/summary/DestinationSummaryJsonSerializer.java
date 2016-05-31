@@ -9,11 +9,11 @@ import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
 
-public class DestinationStatisticsJsonSerializer {
+public class DestinationSummaryJsonSerializer {
 
     private final ObjectMapper objectMapper;
 
-    public DestinationStatisticsJsonSerializer(ObjectMapper objectMapper) {
+    public DestinationSummaryJsonSerializer(ObjectMapper objectMapper) {
         this.objectMapper = objectMapper;
     }
 

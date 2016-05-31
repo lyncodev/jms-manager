@@ -3,6 +3,7 @@
 <head>
     <title>JMS Manager - Failed Messages</title>
     <link rel="stylesheet" type="text/css" href="/static/css/w2ui-1.4.3.min.css" />
+    <link rel="stylesheet" type="text/css" href="/static/css/jms-manager.css" />
     <script type="text/javascript" src="/static/js/jquery-2.1.0.min.js"></script>
     <script type="text/javascript" src="/static/js/w2ui-1.4.3.js"></script>
 </head>
@@ -11,16 +12,21 @@
 <div id="grid" style="width: 100%; height: 250px;"></div>
 
 <script type="text/javascript">
+    w2utils.settings['dataType'] = 'JSON';
     $(function () {
         $('#grid').w2grid({
             name: 'grid',
             url: {
-                remove: '/web/failed-messages/delete'
+                get: '/web/failed-messages/data',
+                remove: '/web/failed-messages/delete',
+                resend: '/web/failed-messages/resend',
+                save: '/web/failed-messages/add-label'
             },
             show: {
                 selectColumn: true,
                 toolbar: true,
-                toolbarDelete: true
+                toolbarDelete: true,
+                toolbarSave: true
             },
             columns: [
                 { field: 'recid', caption: 'Failed Message Id', size: '220px', sortable: true },
@@ -28,11 +34,28 @@
                 { field: 'destination.name', caption: 'Queue', size: '10%', sortable: true },
                 { field: 'sentAt', caption: 'Originally Sent', size: '160px', sortable: true },
                 { field: 'failedAt', caption: 'Failed', size: '160px', sortable: true },
-                { field: 'labels', caption: 'Labels', size: '20%' },
+                { field: 'labels', caption: 'Labels', size: '20%', editable: { type: 'text' } },
                 { field: 'content', caption: 'Content', size: '80%', sortable: true },
-            ],
-            records: {{{failedMessagesAsJson}}}
-        });
+            ]
+        }).toolbar.insert(
+                'w2ui-delete',
+                {
+                    type: 'button',
+                    id: 'resend',
+                    text: 'Re-send selected records',
+                    caption: 'Resend',
+                    img: 'icon-send',
+                    onClick: function (event) {
+                        console.log(event);
+                        w2ui.grid.request('resend', null, w2ui.grid.url.resend,
+                                function (data) {
+                                    if (data.status !== 'error') {
+                                        w2ui.grid.reload();
+                                    }
+                                });
+                    }
+                }
+        );
     });
 </script>
 

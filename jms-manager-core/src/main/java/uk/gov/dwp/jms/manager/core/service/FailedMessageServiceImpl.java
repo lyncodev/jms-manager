@@ -9,6 +9,9 @@ import uk.gov.dwp.jms.manager.core.dao.FailedMessageDao;
 import uk.gov.dwp.jms.manager.core.dao.FailedMessageLabelDao;
 
 import java.util.List;
+import java.util.Set;
+
+import static java.util.stream.Collectors.toSet;
 
 public class FailedMessageServiceImpl implements FailedMessageService, FailedMessageResource {
 
@@ -44,6 +47,13 @@ public class FailedMessageServiceImpl implements FailedMessageService, FailedMes
     @Override
     public void addLabel(FailedMessageId failedMessageId, String label) {
         failedMessageLabelDao.insert(new FailedMessageLabel(failedMessageId, label));
+    }
+
+    @Override
+    public void addLabels(FailedMessageId failedMessageId, Set<String> labels) {
+        failedMessageLabelDao.insert(
+                labels.stream().map(label -> new FailedMessageLabel(failedMessageId, label)).collect(toSet())
+        );
     }
 
     @Override

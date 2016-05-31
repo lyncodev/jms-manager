@@ -12,14 +12,14 @@ import static org.junit.Assert.assertThat;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-public class DestinationStatisticsControllerTest {
+public class DestinationSummaryControllerTest {
 
     private static final List<DestinationStatistics> SOME_STATISTICS = Collections.emptyList();
     private static final String SOME_JSON = "[]";
     private final DestinationStatisticsResource destinationStatisticsResource = mock(DestinationStatisticsResource.class);
-    private final DestinationStatisticsJsonSerializer jsonSerializer = mock(DestinationStatisticsJsonSerializer.class);
+    private final DestinationSummaryJsonSerializer jsonSerializer = mock(DestinationSummaryJsonSerializer.class);
 
-    private final DestinationStatisticsController underTest = new DestinationStatisticsController(destinationStatisticsResource, jsonSerializer);
+    private final DestinationSummaryController underTest = new DestinationSummaryController(destinationStatisticsResource, jsonSerializer);
 
     @Test
     public void getSummary() throws Exception {

@@ -5,8 +5,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import uk.gov.dwp.jms.manager.core.client.FailedMessageId;
 import uk.gov.dwp.jms.manager.core.client.FailedMessageLabel;
 
-import java.util.ArrayList;
-
 import static org.hamcrest.Matchers.*;
 import static org.junit.Assert.assertThat;
 import static uk.gov.dwp.jms.manager.core.client.FailedMessageId.newFailedMessageId;
@@ -18,12 +16,12 @@ public class FailedMessageLabelMongoDaoTest extends AbstractMongoDaoTest {
 
     @Test
     public void findByFailedMessageIdReturnsEmptyListWhenNotFound() throws Exception {
-        assertThat(underTest.findById(newFailedMessageId()), equalTo(new ArrayList<>()));
+        assertThat(underTest.findById(newFailedMessageId()), hasSize(0));
     }
 
     @Test
     public void findByLabelReturnsEmptyListWhenNotFound() throws Exception {
-        assertThat(underTest.findByLabel("Label"), equalTo(new ArrayList<>()));
+        assertThat(underTest.findByLabel("Label"), hasSize(0));
     }
 
     @Test
@@ -38,7 +36,7 @@ public class FailedMessageLabelMongoDaoTest extends AbstractMongoDaoTest {
     }
 
     @Test
-    public void duplicateLabelsForTheSameFailedMessageAreNotReturned() throws Exception {
+    public void duplicateLabelsForTheSameFailedMessageAreNotSaved() throws Exception {
         FailedMessageId failedMessageId = newFailedMessageId();
         FailedMessageLabel failedMessageLabel1 = underTest.insert(new FailedMessageLabel(failedMessageId, "A Label"));
         underTest.insert(new FailedMessageLabel(failedMessageId, "A Label"));

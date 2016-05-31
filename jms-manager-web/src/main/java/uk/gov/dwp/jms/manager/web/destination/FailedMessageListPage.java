@@ -1,4 +1,4 @@
-package uk.gov.dwp.jms.manager.web.search;
+package uk.gov.dwp.jms.manager.web.destination;
 
 import uk.gov.dwp.jms.manager.core.client.FailedMessage;
 import uk.gov.dwp.jms.manager.web.common.Page;

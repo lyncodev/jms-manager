@@ -1,10 +1,12 @@
-package uk.gov.dwp.jms.manager.web.search;
+package uk.gov.dwp.jms.manager.web.destination;
 
 import uk.gov.dwp.jms.manager.core.client.FailedMessage;
 import uk.gov.dwp.jms.manager.core.client.FailedMessageId;
 import uk.gov.dwp.jms.manager.core.client.FailedMessageResource;
+import uk.gov.dwp.jms.manager.web.w2ui.BaseW2UIRequest;
 
 import javax.ws.rs.*;
+import javax.ws.rs.core.MediaType;
 import java.util.List;
 
 import static java.util.stream.Collectors.toList;
@@ -44,10 +46,44 @@ public class FailedMessageListController {
 
     @POST
     @Path("/delete")
-    public String deleteFailedMessages(@FormParam("cmd") String command, @FormParam("selected[]") List<String> selected) {
-        List<FailedMessageId> failedMessageIds = selected.stream().map(x -> FailedMessageId.fromString(x)).collect(toList());
+    @Consumes("application/json")
+    public String deleteFailedMessages(BaseW2UIRequest request) {
+        List<FailedMessageId> failedMessageIds = request.getSelected().stream().map(FailedMessageId::fromString).collect(toList());
         failedMessageResource.delete(failedMessageIds);
         return "{ 'status': 'success' }";
     }
 
+    @POST
+    @Path("/add-label")
+    @Consumes("application/json")
+    public String addLabelToFailedMessages(AddLabelRequest request) {
+        request.getChanges().stream().forEach(change -> failedMessageResource.addLabel(change.));
+        return "{ 'status': 'success' }";
+    }
+
+
+    @POST
+    @Path("/resend")
+    @Consumes(MediaType.APPLICATION_JSON)
+    public String resendFailedMessages(BaseW2UIRequest request) {
+        // Resend
+        return  "{ 'status': 'success' }";
+    }
+
+    @POST
+    @Path("/data")
+    @Consumes(MediaType.APPLICATION_JSON)
+    public String getData(BaseW2UIRequest request) {
+        List<FailedMessage> failedMessages = failedMessageResource.getFailedMessages();
+        return getJson(failedMessages);
+    }
+
+    private String getJson(List<FailedMessage> failedMessages) {
+        return new StringBuilder("{ ")
+                .append("'status': 'success'")
+                .append(", 'total': ").append(failedMessages.size())
+                .append(", 'records': ").append(failedMessagesJsonSerializer.asJson(failedMessages))
+                .append(" }")
+                .toString();
+    }
 }

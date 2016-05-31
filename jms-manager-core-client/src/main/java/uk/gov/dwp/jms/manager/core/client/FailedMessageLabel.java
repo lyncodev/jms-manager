@@ -5,7 +5,7 @@ import org.hibernate.validator.constraints.NotEmpty;
 
 import javax.validation.constraints.NotNull;
 
-public class FailedMessageLabel {
+public class FailedMessageLabel implements Comparable<FailedMessageLabel> {
 
     @NotNull
     private final FailedMessageId failedMessageId;
@@ -45,5 +45,10 @@ public class FailedMessageLabel {
     @Override
     public String toString() {
         return String.format("%s[failedMessageId=%s, label=%s]", super.toString(), failedMessageId, label);
+    }
+
+    @Override
+    public int compareTo(FailedMessageLabel failedMessageLabel) {
+        return 0;
     }
 }

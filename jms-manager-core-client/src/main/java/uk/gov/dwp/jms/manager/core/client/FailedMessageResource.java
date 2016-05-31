@@ -2,6 +2,7 @@ package uk.gov.dwp.jms.manager.core.client;
 
 import javax.ws.rs.*;
 import java.util.List;
+import java.util.Set;
 
 @Consumes("application/json")
 @Produces("application/json")
@@ -13,8 +14,12 @@ public interface FailedMessageResource {
     FailedMessage getFailedMessage(@PathParam("failedMessageId") FailedMessageId failedMessgeId);
 
     @PUT
-    @Path("/{failedMessageId}/{label}")
+    @Path("/{failedMessageId}/add/{label}")
     void addLabel(@PathParam("failedMessageId") FailedMessageId failedMessageId, @PathParam("label") String label);
+
+    @PUT
+    @Path("/{failedMessageId}/add")
+    void addLabels(@PathParam("failedMessageId") FailedMessageId failedMessageId, Set<String> labels);
 
     @GET
     @Path("/all")
