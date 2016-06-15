@@ -1,25 +1,29 @@
 package uk.gov.dwp.jms.manager.core.service;
 
 import uk.gov.dwp.jms.manager.core.client.FailedMessage;
+import uk.gov.dwp.jms.manager.core.client.FailedMessageBuilder;
 import uk.gov.dwp.jms.manager.core.client.FailedMessageId;
-import uk.gov.dwp.jms.manager.core.client.FailedMessageLabel;
 import uk.gov.dwp.jms.manager.core.client.FailedMessageResource;
 import uk.gov.dwp.jms.manager.core.dao.DestinationStatisticsDao;
 import uk.gov.dwp.jms.manager.core.dao.FailedMessageDao;
-import uk.gov.dwp.jms.manager.core.dao.FailedMessageLabelDao;
+import uk.gov.dwp.jms.manager.core.dao.FailedMessageLabelsDao;
 
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
+
+import static java.util.Optional.ofNullable;
 
 public class FailedMessageServiceImpl implements FailedMessageService, FailedMessageResource {
 
     private final FailedMessageDao failedMessageDao;
     private final DestinationStatisticsDao destinationStatisticsDao;
-    private final FailedMessageLabelDao failedMessageLabelDao;
+    private final FailedMessageLabelsDao failedMessageLabelsDao;
 
-    public FailedMessageServiceImpl(FailedMessageDao failedMessageDao, FailedMessageLabelDao failedMessageLabelDao, DestinationStatisticsDao destinationStatisticsDao) {
+    public FailedMessageServiceImpl(FailedMessageDao failedMessageDao, FailedMessageLabelsDao failedMessageLabelsDao, DestinationStatisticsDao destinationStatisticsDao) {
         this.failedMessageDao = failedMessageDao;
         this.destinationStatisticsDao = destinationStatisticsDao;
-        this.failedMessageLabelDao = failedMessageLabelDao;
+        this.failedMessageLabelsDao = failedMessageLabelsDao;
     }
 
     @Override
@@ -31,31 +35,47 @@ public class FailedMessageServiceImpl implements FailedMessageService, FailedMes
     @Override
     public void reprocess(FailedMessageId failedMessageId) {
         FailedMessage failedMessage = failedMessageDao.findById(failedMessageId);
-        failedMessageLabelDao.removeAll(failedMessageId);
+        failedMessageLabelsDao.remove(failedMessageId);
         failedMessageDao.delete(failedMessageId);
         destinationStatisticsDao.reprocess(failedMessage.getDestination());
     }
 
     @Override
-    public FailedMessage getFailedMessage(FailedMessageId failedMessgeId) {
-        return failedMessageDao.findById(failedMessgeId);
+    public FailedMessage getFailedMessage(FailedMessageId failedMessageId) {
+        return ofNullable(failedMessageDao.findById(failedMessageId))
+                .map(this::getLabels)
+                .orElse(null);
     }
 
     @Override
     public void addLabel(FailedMessageId failedMessageId, String label) {
-        failedMessageLabelDao.insert(new FailedMessageLabel(failedMessageId, label));
+        failedMessageLabelsDao.addLabel(failedMessageId, label);
+    }
+
+    @Override
+    public void setLabels(FailedMessageId failedMessageId, Set<String> labels) {
+        failedMessageLabelsDao.setLabels(failedMessageId, labels);
     }
 
     @Override
     public List<FailedMessage> getFailedMessages() {
-        return failedMessageDao.find();
+        return failedMessageDao.find()
+                .parallelStream()
+                .map(this::getLabels)
+                .collect(Collectors.toList());
+    }
+
+    private FailedMessage getLabels(FailedMessage failedMessage) {
+        return FailedMessageBuilder.clone(failedMessage)
+                .withLabels(failedMessageLabelsDao.findLabelsById(failedMessage.getFailedMessageId()))
+                .build();
     }
 
     @Override
     public void delete(List<FailedMessageId> failedMessageIds) {
         failedMessageIds.forEach(failedMessageId -> {
             failedMessageDao.delete(failedMessageId);
-            failedMessageLabelDao.removeAll(failedMessageId);
+            failedMessageLabelsDao.remove(failedMessageId);
         });
     }
 }

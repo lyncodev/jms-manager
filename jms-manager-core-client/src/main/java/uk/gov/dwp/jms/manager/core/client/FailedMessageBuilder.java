@@ -3,6 +3,8 @@ package uk.gov.dwp.jms.manager.core.client;
 import java.time.ZonedDateTime;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.SortedSet;
+import java.util.TreeSet;
 
 public class FailedMessageBuilder {
 
@@ -12,6 +14,7 @@ public class FailedMessageBuilder {
     private ZonedDateTime failedDateTime;
     private String content;
     private Map<String, Object> properties = new HashMap<>();
+    private SortedSet<String> labels = new TreeSet<>();
 
     private FailedMessageBuilder() {}
 
@@ -19,8 +22,19 @@ public class FailedMessageBuilder {
         return new FailedMessageBuilder();
     }
 
+    public static FailedMessageBuilder clone(FailedMessage failedMessage) {
+        return aFailedMessage()
+                .withFailedMessageId(failedMessage.getFailedMessageId())
+                .withDestination(failedMessage.getDestination())
+                .withSentDateTime(failedMessage.getSentAt())
+                .withFailedDateTime(failedMessage.getFailedAt())
+                .withContent(failedMessage.getContent())
+                .withProperties(failedMessage.getProperties())
+                .withLabels(failedMessage.getLabels());
+    }
+
     public FailedMessage build() {
-        return new FailedMessage(failedMessageId, destination, sentDateTime, failedDateTime, content, properties);
+        return new FailedMessage(failedMessageId, destination, sentDateTime, failedDateTime, content, properties, labels);
     }
 
     public FailedMessageBuilder withFailedMessageId(FailedMessageId failedMessageId) {
@@ -55,6 +69,16 @@ public class FailedMessageBuilder {
 
     public FailedMessageBuilder withProperty(String key, Object value) {
         this.properties.put(key, value);
+        return this;
+    }
+
+    public FailedMessageBuilder withLabel(String label) {
+        this.labels.add(label);
+        return this;
+    }
+
+    public FailedMessageBuilder withLabels(SortedSet<String> labels) {
+        this.labels = labels;
         return this;
     }
 }

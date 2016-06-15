@@ -14,7 +14,7 @@ import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
 import uk.gov.dwp.jms.manager.core.client.Destination;
 import uk.gov.dwp.jms.manager.core.client.Id;
 import uk.gov.dwp.jms.manager.core.dao.FailedMessageDao;
-import uk.gov.dwp.jms.manager.core.dao.FailedMessageLabelDao;
+import uk.gov.dwp.jms.manager.core.dao.FailedMessageLabelsDao;
 import uk.gov.dwp.jms.manager.core.dao.mongo.*;
 
 import java.time.LocalDateTime;
@@ -49,8 +49,8 @@ public class DaoConfig {
     }
 
     @Bean
-    public FailedMessageLabelDao failedMessageLabelDao(MongoClient mongoClient, DaoProperties daoProperties) {
-        return new FailedMessageLabelMongoDao(mongoClient.getDB(daoProperties.getDbName()).getCollection(daoProperties.getCollection().getFailedMessageLabel()));
+    public FailedMessageLabelsDao failedMessageLabelDao(MongoClient mongoClient, DaoProperties daoProperties) {
+        return new FailedMessageLabelsMongoDao(mongoClient.getDB(daoProperties.getDbName()).getCollection(daoProperties.getCollection().getFailedMessageLabel()));
     }
 
     @Bean

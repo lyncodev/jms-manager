@@ -3,25 +3,25 @@ package uk.gov.dwp.jms.manager.core.domain;
 import org.hamcrest.Description;
 import org.hamcrest.Matcher;
 import org.hamcrest.TypeSafeMatcher;
+import org.hamcrest.core.IsAnything;
 import uk.gov.dwp.jms.manager.core.client.Destination;
 import uk.gov.dwp.jms.manager.core.client.FailedMessage;
 import uk.gov.dwp.jms.manager.core.client.FailedMessageId;
 
 import java.time.ZonedDateTime;
-import java.util.HashMap;
 import java.util.Map;
 
 import static org.hamcrest.Matchers.equalTo;
-import static org.hamcrest.Matchers.notNullValue;
 
 public class FailedMessageMatcher extends TypeSafeMatcher<FailedMessage> {
 
-    private Matcher<FailedMessageId> failedMessageIdMatcher = notNullValue(FailedMessageId.class);
-    private Matcher<String> contentMatcher = notNullValue(String.class);
-    private Matcher<Destination> destinationMatcher = notNullValue(Destination.class);
-    private Matcher<ZonedDateTime> sentAtMatcher = notNullValue(ZonedDateTime.class);
-    private Matcher<ZonedDateTime> failedAtMatcher = notNullValue(ZonedDateTime.class);
-    private Matcher<Map<String, Object>> propertiesMatcher = equalTo(new HashMap<>());
+    private Matcher<FailedMessageId> failedMessageIdMatcher = new IsAnything<>();
+    private Matcher<String> contentMatcher = new IsAnything<>();
+    private Matcher<Destination> destinationMatcher = new IsAnything<>();
+    private Matcher<ZonedDateTime> sentAtMatcher = new IsAnything<>();
+    private Matcher<ZonedDateTime> failedAtMatcher = new IsAnything<>();
+    private Matcher<Map<String, Object>> propertiesMatcher = new IsAnything<>();
+    private Matcher<Iterable<? extends String>> labelsMatcher = new IsAnything<>();
 
     private FailedMessageMatcher() { }
 
@@ -69,6 +69,11 @@ public class FailedMessageMatcher extends TypeSafeMatcher<FailedMessage> {
         return this;
     }
 
+    public FailedMessageMatcher withLabels(Matcher<Iterable<? extends String>> labelsMatcher) {
+        this.labelsMatcher = labelsMatcher;
+        return this;
+    }
+
     @Override
     protected boolean matchesSafely(FailedMessage item) {
         return failedMessageIdMatcher.matches(item.getFailedMessageId())
@@ -76,7 +81,8 @@ public class FailedMessageMatcher extends TypeSafeMatcher<FailedMessage> {
                 && destinationMatcher.matches(item.getDestination())
                 && sentAtMatcher.matches(item.getSentAt())
                 && failedAtMatcher.matches(item.getFailedAt())
-                && propertiesMatcher.matches(item.getProperties());
+                && propertiesMatcher.matches(item.getProperties())
+                && labelsMatcher.matches(item.getLabels());
     }
 
     @Override
@@ -87,6 +93,8 @@ public class FailedMessageMatcher extends TypeSafeMatcher<FailedMessage> {
                 .appendText(" destination is ").appendDescriptionOf(destinationMatcher)
                 .appendText(" sentAt is ").appendDescriptionOf(sentAtMatcher)
                 .appendText(" failedAt is ").appendDescriptionOf(failedAtMatcher)
-                .appendText(" properties are ").appendDescriptionOf(propertiesMatcher);
+                .appendText(" properties are ").appendDescriptionOf(propertiesMatcher)
+                .appendText(" labels are ").appendDescriptionOf(labelsMatcher)
+        ;
     }
 }

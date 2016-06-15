@@ -5,7 +5,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 import uk.gov.dwp.jms.manager.core.dao.DestinationStatisticsDao;
 import uk.gov.dwp.jms.manager.core.dao.FailedMessageDao;
-import uk.gov.dwp.jms.manager.core.dao.FailedMessageLabelDao;
+import uk.gov.dwp.jms.manager.core.dao.FailedMessageLabelsDao;
 import uk.gov.dwp.jms.manager.core.service.FailedMessageService;
 import uk.gov.dwp.jms.manager.core.service.FailedMessageServiceImpl;
 
@@ -15,8 +15,8 @@ public class ServiceConfig {
 
     @Bean
     public FailedMessageService failedMessageService(FailedMessageDao failedMessageDao,
-                                                     FailedMessageLabelDao failedMessageLabelDao,
+                                                     FailedMessageLabelsDao failedMessageLabelsDao,
                                                      DestinationStatisticsDao destinationStatisticsDao) {
-        return new FailedMessageServiceImpl(failedMessageDao, failedMessageLabelDao, destinationStatisticsDao);
+        return new FailedMessageServiceImpl(failedMessageDao, failedMessageLabelsDao, destinationStatisticsDao);
     }
 }

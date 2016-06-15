@@ -24,7 +24,8 @@ public class FailedMessagesJsonSerializer {
                         .append("content: \"").append(fm.getContent().replace("\"", "\\\"")).append("\", ")
                         .append("destination: ").append(destinationJsonSerializer.asJson(fm.getDestination())).append(", ")
                         .append("sentAt: \"").append(asJson(fm.getSentAt())).append("\", ")
-                        .append("failedAt: \"").append(asJson(fm.getFailedAt())).append("\" ")
+                        .append("failedAt: \"").append(asJson(fm.getFailedAt())).append("\", ")
+                        .append("labels: ").append(fm.getLabels().stream().collect(Collectors.joining("\", \"", "[\"", "\"]")))
                         .append("}"))
                 .collect(Collectors.joining(",", "[", "]"));
     }

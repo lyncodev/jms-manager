@@ -2,6 +2,7 @@ package uk.gov.dwp.jms.manager.web.configuration;
 
 import org.apache.cxf.Bus;
 import org.apache.cxf.endpoint.Server;
+import org.apache.cxf.interceptor.LoggingInInterceptor;
 import org.apache.cxf.jaxrs.JAXRSServerFactoryBean;
 import org.apache.cxf.transport.servlet.CXFServlet;
 import org.springframework.boot.context.embedded.ServletRegistrationBean;
@@ -44,6 +45,7 @@ public class CxfBusConfiguration {
                            DestinationStatisticsResource destinationStatisticsResource,
                            JacksonConfiguration jacksonConfiguration,
                            MustachePageRenderer mustachePageRenderer) {
+        bus.getInInterceptors().add(new LoggingInInterceptor());
         JAXRSServerFactoryBean endpoint = new JAXRSServerFactoryBean();
         endpoint.setAddress("/web");
         endpoint.setServiceBeans(new ArrayList<Object>() {{
