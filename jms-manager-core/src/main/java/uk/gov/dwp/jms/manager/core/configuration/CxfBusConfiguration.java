@@ -13,16 +13,14 @@ import org.springframework.context.annotation.Import;
 import org.springframework.context.annotation.ImportResource;
 import uk.gov.dwp.jms.manager.core.client.DestinationStatisticsResource;
 import uk.gov.dwp.jms.manager.core.client.FailedMessageResource;
-import uk.gov.dwp.jms.manager.core.dao.DestinationStatisticsDao;
-import uk.gov.dwp.jms.manager.core.service.DestinationStatisticsResourceImpl;
+import uk.gov.dwp.jms.manager.core.client.FailedMessageSearchResource;
 
 import java.util.Arrays;
 
 @Configuration
 @Import({
         JacksonConfiguration.class,
-        DaoConfig.class,
-        ServiceConfig.class
+        ResourceConfiguration.class
 })
 @ImportResource({"classpath:META-INF/cxf/cxf.xml"})
 public class CxfBusConfiguration {
@@ -33,12 +31,15 @@ public class CxfBusConfiguration {
     }
 
     @Bean
-    public Server failedMessageResource(Bus bus,
-                                        JacksonJsonProvider jacksonJsonProvider,
-                                        FailedMessageResource failedMessageResource,
-                                        DestinationStatisticsResource destinationStatisticsResource) {
+    public Server server(Bus bus,
+                         JacksonJsonProvider jacksonJsonProvider,
+                         FailedMessageResource failedMessageResource,
+                         FailedMessageSearchResource failedMessageSearchResource,
+                         DestinationStatisticsResource destinationStatisticsResource) {
         JAXRSServerFactoryBean endpoint = new JAXRSServerFactoryBean();
-        endpoint.setServiceBeans(Arrays.asList(failedMessageResource, destinationStatisticsResource));
+        endpoint.setServiceBeans(Arrays.asList(
+                failedMessageResource, failedMessageSearchResource, destinationStatisticsResource
+        ));
         endpoint.setAddress("/core");
         endpoint.setProvider(jacksonJsonProvider);
         endpoint.setBus(bus);
@@ -51,8 +52,5 @@ public class CxfBusConfiguration {
         return new LoggingFeature();
     }
 
-    @Bean
-    public DestinationStatisticsResource destinationStatisticsResource(DestinationStatisticsDao destinationStatisticsDao) {
-        return new DestinationStatisticsResourceImpl(destinationStatisticsDao);
-    }
+
 }
