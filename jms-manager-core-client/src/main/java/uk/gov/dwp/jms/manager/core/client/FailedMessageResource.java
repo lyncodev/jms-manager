@@ -9,6 +9,7 @@ import java.util.Set;
 @Path("/failed-message")
 public interface FailedMessageResource {
 
+    @Deprecated
     @GET
     @Path("/{failedMessageId}")
     FailedMessage getFailedMessage(@PathParam("failedMessageId") FailedMessageId failedMessgeId);
@@ -21,6 +22,7 @@ public interface FailedMessageResource {
     @Path("/{failedMessageId}/add")
     void setLabels(@PathParam("failedMessageId") FailedMessageId failedMessageId, Set<String> labels);
 
+    @Deprecated
     @GET
     @Path("/all")
     List<FailedMessage> getFailedMessages();

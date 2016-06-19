@@ -19,6 +19,11 @@ dependencies {
             "org.springframework.boot:spring-boot-starter-jetty",
             "org.springframework:spring-web"
 
-            testCompile "org.springframework.boot:spring-boot-starter-test",
-                        'org.valid4j:json-path-matchers:1.1'
+    compile("org.springframework.boot:spring-boot-starter-security")
+    compile("org.springframework.security:spring-security-ldap")
+    compile("org.springframework:spring-tx")
+    compile("org.apache.directory.server:apacheds-server-jndi:1.5.5")
+
+    testCompile "org.springframework.boot:spring-boot-starter-test",
+                'org.valid4j:json-path-matchers:1.1'
 }

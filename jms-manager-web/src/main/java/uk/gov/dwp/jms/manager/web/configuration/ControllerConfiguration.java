@@ -13,7 +13,10 @@ import uk.gov.dwp.jms.manager.web.summary.DestinationStatisticsController;
 import uk.gov.dwp.jms.manager.web.summary.DestinationStatisticsJsonSerializer;
 
 @Configuration
-@Import(JmsManagerCoreClientConfiguration.class)
+@Import({
+        JacksonConfiguration.class,
+        JmsManagerCoreClientConfiguration.class
+})
 public class ControllerConfiguration {
 
     @Bean

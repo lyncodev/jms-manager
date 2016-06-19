@@ -16,17 +16,20 @@ import static java.util.Collections.singletonList;
 public class JmsManagerCoreClientConfiguration {
 
     @Bean
-    public FailedMessageResource failedMessageResource(JacksonJsonProvider jacksonJsonProvider, ClientProperties clientProperties) {
+    public FailedMessageResource failedMessageResource(JacksonJsonProvider jacksonJsonProvider,
+                                                       ClientProperties clientProperties) {
         return JAXRSClientFactory.create(clientProperties.getCore().getUrl(), FailedMessageResource.class, singletonList(jacksonJsonProvider));
     }
 
     @Bean
-    public FailedMessageSearchResource failedMessageSearchResource(JacksonJsonProvider jacksonJsonProvider, ClientProperties clientProperties) {
+    public FailedMessageSearchResource failedMessageSearchResource(JacksonJsonProvider jacksonJsonProvider,
+                                                                   ClientProperties clientProperties) {
         return JAXRSClientFactory.create(clientProperties.getCore().getUrl(), FailedMessageSearchResource.class, singletonList(jacksonJsonProvider));
     }
 
     @Bean
-    public DestinationStatisticsResource destinationStatisticsResource(JacksonJsonProvider jacksonJsonProvider, ClientProperties clientProperties) {
+    public DestinationStatisticsResource destinationStatisticsResource(JacksonJsonProvider jacksonJsonProvider,
+                                                                       ClientProperties clientProperties) {
         return JAXRSClientFactory.create(clientProperties.getCore().getUrl(), DestinationStatisticsResource.class, singletonList(jacksonJsonProvider));
     }
 }
