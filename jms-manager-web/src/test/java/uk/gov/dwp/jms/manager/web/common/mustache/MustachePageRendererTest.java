@@ -3,15 +3,17 @@ package uk.gov.dwp.jms.manager.web.common.mustache;
 import com.github.mustachejava.DefaultMustacheFactory;
 import org.junit.Test;
 import uk.gov.dwp.jms.manager.web.common.Page;
+import uk.gov.dwp.jms.manager.web.common.security.LocalSecurityContext;
 
 import java.io.ByteArrayOutputStream;
 
 import static org.hamcrest.Matchers.containsString;
 import static org.junit.Assert.assertThat;
+import static org.mockito.Mockito.mock;
 
 public class MustachePageRendererTest {
 
-    private final MustachePageRenderer underTest = new MustachePageRenderer(new DefaultMustacheFactory("./mustache"));
+    private final MustachePageRenderer underTest = new MustachePageRenderer(new DefaultMustacheFactory("./mustache"), mock(LocalSecurityContext.class));
 
     @Test
     public void testRenderPage() throws Exception {

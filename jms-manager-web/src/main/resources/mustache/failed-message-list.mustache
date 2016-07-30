@@ -2,10 +2,12 @@
 <html>
 <head>
     <title>JMS Manager - Failed Messages</title>
-    <link rel="stylesheet" type="text/css" href="/static/css/w2ui-1.4.3.min.css" />
+    <link rel="stylesheet" type="text/css" href="/static/css/w2ui-1.5.0.min.css" />
     <link rel="stylesheet" type="text/css" href="/static/css/jms-manager.css" />
     <script type="text/javascript" src="/static/js/jquery-2.1.0.min.js"></script>
-    <script type="text/javascript" src="/static/js/w2ui-1.4.3.js"></script>
+    <script type="text/javascript" src="/static/js/w2ui-1.5.0.js"></script>
+    <meta name="_csrf"  content="{{_csrfToken}}"/>
+    <meta name="_csrf_header" content="{{_csrfHeaderName}}"/>
 </head>
 <body>
 
@@ -36,7 +38,12 @@
                 { field: 'failedAt', caption: 'Failed', size: '160px', sortable: true },
                 { field: 'labels', caption: 'Labels', size: '20%', editable: { type: 'text' } },
                 { field: 'content', caption: 'Content', size: '80%', sortable: true },
-            ]
+            ],
+            onRequest: function(event) {
+                var token = $("meta[name='_csrf']").attr("content");
+                var header = $("meta[name='_csrf_header']").attr("content");
+                event.httpHeaders[header] = token;
+            }
         }).toolbar.insert(
                 'w2ui-delete',
                 {
@@ -58,6 +65,5 @@
         );
     });
 </script>
-
 </body>
 </html>
