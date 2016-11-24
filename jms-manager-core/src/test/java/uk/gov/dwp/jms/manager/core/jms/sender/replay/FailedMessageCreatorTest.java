@@ -1,4 +1,4 @@
-package uk.gov.dwp.jms.manager.core.jms.replay;
+package uk.gov.dwp.jms.manager.core.jms.sender.replay;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -11,7 +11,10 @@ import javax.jms.TextMessage;
 import static java.util.Collections.emptyMap;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.verifyNoMoreInteractions;
+import static org.mockito.Mockito.when;
 import static uk.gov.dwp.jms.manager.core.client.FailedMessageBuilder.aFailedMessage;
 
 public class FailedMessageCreatorTest {

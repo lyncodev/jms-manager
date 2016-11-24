@@ -1,4 +1,4 @@
-package uk.gov.dwp.jms.manager.core.jms.replay;
+package uk.gov.dwp.jms.manager.core.jms.sender.replay;
 
 import org.springframework.jms.core.MessageCreator;
 import uk.gov.dwp.jms.manager.core.client.FailedMessage;
