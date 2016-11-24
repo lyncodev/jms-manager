@@ -24,10 +24,10 @@ public class FailedMessageListener implements MessageListener {
     @Override
     public void onMessage(Message message) {
         try {
-            LOGGER.debug("Received message: {} with CorrelationId: {}", message.getJMSMessageID(), message.getJMSCorrelationID());
+            LOGGER.info("Received message: {}", message.getJMSMessageID());
             failedMessageResource.create(failedMessageFactory.createFailedMessage(message));
         } catch (JMSException e) {
-            LOGGER.error("Could not read jmsMessageId or correlationId", e);
+            LOGGER.error("Could not read jmsMessageId", e);
         }
     }
 }
