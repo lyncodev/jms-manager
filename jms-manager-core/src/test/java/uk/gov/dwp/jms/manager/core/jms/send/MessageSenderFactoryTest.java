@@ -1,4 +1,4 @@
-package uk.gov.dwp.jms.manager.core.jms.sender;
+package uk.gov.dwp.jms.manager.core.jms.send;
 
 import org.junit.Before;
 import org.junit.Rule;
@@ -27,7 +27,7 @@ public class MessageSenderFactoryTest {
         String brokerName = "unknown";
 
         expectedException.expect(IllegalStateException.class);
-        expectedException.expectMessage("No sender for broker "+brokerName);
+        expectedException.expectMessage("No send for broker "+brokerName);
 
         underTest.senderFor(brokerName);
     }

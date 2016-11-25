@@ -1,6 +1,10 @@
-package uk.gov.dwp.jms.manager.core.service;
+package uk.gov.dwp.jms.manager.core.service.resources;
 
-import uk.gov.dwp.jms.manager.core.client.*;
+import uk.gov.dwp.jms.manager.core.client.FailedMessage;
+import uk.gov.dwp.jms.manager.core.client.FailedMessageBuilder;
+import uk.gov.dwp.jms.manager.core.client.FailedMessageId;
+import uk.gov.dwp.jms.manager.core.client.FailedMessageSearchResource;
+import uk.gov.dwp.jms.manager.core.client.SearchRequest;
 import uk.gov.dwp.jms.manager.core.dao.FailedMessageDao;
 import uk.gov.dwp.jms.manager.core.dao.FailedMessageLabelsDao;
 

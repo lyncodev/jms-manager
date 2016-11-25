@@ -1,4 +1,4 @@
-package uk.gov.dwp.jms.manager.core.service;
+package uk.gov.dwp.jms.manager.core.service.resources;
 
 import uk.gov.dwp.jms.manager.core.client.FailedMessage;
 import uk.gov.dwp.jms.manager.core.client.FailedMessageBuilder;
@@ -15,29 +15,20 @@ import java.util.stream.Collectors;
 import static java.util.Optional.ofNullable;
 
 public class FailedMessageResourceImpl implements FailedMessageResource {
-
     private final FailedMessageDao failedMessageDao;
-    private final DestinationStatisticsDao destinationStatisticsDao;
     private final FailedMessageLabelsDao failedMessageLabelsDao;
+    private final DestinationStatisticsDao destinationStatisticsDao;
 
     public FailedMessageResourceImpl(FailedMessageDao failedMessageDao, FailedMessageLabelsDao failedMessageLabelsDao, DestinationStatisticsDao destinationStatisticsDao) {
         this.failedMessageDao = failedMessageDao;
-        this.destinationStatisticsDao = destinationStatisticsDao;
         this.failedMessageLabelsDao = failedMessageLabelsDao;
+        this.destinationStatisticsDao = destinationStatisticsDao;
     }
 
     @Override
     public void create(FailedMessage failedMessage) {
         failedMessageDao.insert(failedMessage);
         destinationStatisticsDao.addFailed(failedMessage.getDestination());
-    }
-
-    @Override
-    public void reprocess(FailedMessageId failedMessageId) {
-        FailedMessage failedMessage = failedMessageDao.findById(failedMessageId);
-        failedMessageLabelsDao.remove(failedMessageId);
-        failedMessageDao.delete(failedMessageId);
-        destinationStatisticsDao.reprocess(failedMessage.getDestination());
     }
 
     @Override
@@ -69,13 +60,5 @@ public class FailedMessageResourceImpl implements FailedMessageResource {
         return FailedMessageBuilder.clone(failedMessage)
                 .withLabels(failedMessageLabelsDao.findLabelsById(failedMessage.getFailedMessageId()))
                 .build();
-    }
-
-    @Override
-    public void delete(List<FailedMessageId> failedMessageIds) {
-        failedMessageIds.forEach(failedMessageId -> {
-            failedMessageDao.delete(failedMessageId);
-            failedMessageLabelsDao.remove(failedMessageId);
-        });
     }
 }

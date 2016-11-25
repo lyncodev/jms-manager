@@ -4,14 +4,23 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 import uk.gov.dwp.jms.manager.core.client.DestinationStatisticsResource;
+import uk.gov.dwp.jms.manager.core.client.FailedMessageMoveResource;
+import uk.gov.dwp.jms.manager.core.client.FailedMessageRemoveResource;
+import uk.gov.dwp.jms.manager.core.client.FailedMessageReplayResource;
 import uk.gov.dwp.jms.manager.core.client.FailedMessageResource;
 import uk.gov.dwp.jms.manager.core.client.FailedMessageSearchResource;
 import uk.gov.dwp.jms.manager.core.dao.DestinationStatisticsDao;
 import uk.gov.dwp.jms.manager.core.dao.FailedMessageDao;
 import uk.gov.dwp.jms.manager.core.dao.FailedMessageLabelsDao;
-import uk.gov.dwp.jms.manager.core.service.DestinationStatisticsResourceImpl;
-import uk.gov.dwp.jms.manager.core.service.FailedMessageResourceImpl;
-import uk.gov.dwp.jms.manager.core.service.FailedMessageSearchResourceImpl;
+import uk.gov.dwp.jms.manager.core.jms.send.FailedMessageCreator;
+import uk.gov.dwp.jms.manager.core.jms.send.MessageSenderFactory;
+import uk.gov.dwp.jms.manager.core.service.remove.FailedMessageRemoveService;
+import uk.gov.dwp.jms.manager.core.service.resources.DestinationStatisticsResourceImpl;
+import uk.gov.dwp.jms.manager.core.service.resources.FailedMessageMoveResourceImpl;
+import uk.gov.dwp.jms.manager.core.service.resources.FailedMessageRemoveResourceImpl;
+import uk.gov.dwp.jms.manager.core.service.resources.FailedMessageReplayResourceImpl;
+import uk.gov.dwp.jms.manager.core.service.resources.FailedMessageResourceImpl;
+import uk.gov.dwp.jms.manager.core.service.resources.FailedMessageSearchResourceImpl;
 
 @Configuration
 @Import({ DaoConfig.class })
@@ -34,5 +43,20 @@ public class ResourceConfiguration {
                                                        FailedMessageLabelsDao failedMessageLabelsDao,
                                                        DestinationStatisticsDao destinationStatisticsDao) {
         return new FailedMessageResourceImpl(failedMessageDao, failedMessageLabelsDao, destinationStatisticsDao);
+    }
+
+    @Bean
+    public FailedMessageRemoveResource failedMessageRemoveResource (FailedMessageDao failedMessageDao, FailedMessageRemoveService failedMessageRemoveService) {
+        return new FailedMessageRemoveResourceImpl(failedMessageDao, failedMessageRemoveService);
+    }
+
+    @Bean
+    public FailedMessageReplayResource failedMessageReplayResource (FailedMessageDao failedMessageDao, FailedMessageRemoveService failedMessageRemoveService, MessageSenderFactory messageSenderFactory) {
+        return new FailedMessageReplayResourceImpl(failedMessageDao, messageSenderFactory, FailedMessageCreator::new, failedMessageRemoveService);
+    }
+
+    @Bean
+    public FailedMessageMoveResource failedMessageMoveResource (FailedMessageDao failedMessageDao, FailedMessageRemoveService failedMessageRemoveService, MessageSenderFactory messageSenderFactory) {
+        return new FailedMessageMoveResourceImpl(failedMessageDao, messageSenderFactory, FailedMessageCreator::new, failedMessageRemoveService);
     }
 }

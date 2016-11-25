@@ -1,4 +1,4 @@
-package uk.gov.dwp.jms.manager.core.service;
+package uk.gov.dwp.jms.manager.core.service.resources;
 
 import uk.gov.dwp.jms.manager.core.client.DestinationStatistics;
 import uk.gov.dwp.jms.manager.core.client.DestinationStatisticsResource;

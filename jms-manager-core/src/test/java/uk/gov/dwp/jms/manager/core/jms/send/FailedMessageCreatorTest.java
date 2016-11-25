@@ -1,4 +1,4 @@
-package uk.gov.dwp.jms.manager.core.jms.sender.replay;
+package uk.gov.dwp.jms.manager.core.jms.send;
 
 import org.junit.Before;
 import org.junit.Test;

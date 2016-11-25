@@ -1,4 +1,4 @@
-package uk.gov.dwp.jms.manager.core.jms.sender;
+package uk.gov.dwp.jms.manager.core.jms.send;
 
 import org.springframework.jms.core.JmsTemplate;
 import org.springframework.jms.core.MessageCreator;

@@ -1,4 +1,4 @@
-package uk.gov.dwp.jms.manager.core.jms.sender;
+package uk.gov.dwp.jms.manager.core.jms.send;
 
 import java.util.Map;
 import java.util.Optional;
@@ -12,6 +12,6 @@ public class MessageSenderFactory {
 
     public MessageSender senderFor (String brokerName) {
         return Optional.ofNullable(messageSenderMap.get(brokerName))
-                .orElseThrow(() -> new IllegalStateException("No sender for broker " + brokerName));
+                .orElseThrow(() -> new IllegalStateException("No send for broker " + brokerName));
     }
 }

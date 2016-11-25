@@ -1,9 +1,19 @@
 package uk.gov.dwp.jms.manager.web.search;
 
-import uk.gov.dwp.jms.manager.core.client.*;
+import uk.gov.dwp.jms.manager.core.client.FailedMessage;
+import uk.gov.dwp.jms.manager.core.client.FailedMessageId;
+import uk.gov.dwp.jms.manager.core.client.FailedMessageRemoveResource;
+import uk.gov.dwp.jms.manager.core.client.FailedMessageResource;
+import uk.gov.dwp.jms.manager.core.client.FailedMessageSearchResource;
+import uk.gov.dwp.jms.manager.core.client.SearchRequest;
 import uk.gov.dwp.jms.manager.web.w2ui.BaseW2UIRequest;
 
-import javax.ws.rs.*;
+import javax.ws.rs.Consumes;
+import javax.ws.rs.GET;
+import javax.ws.rs.POST;
+import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
+import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import java.util.List;
 import java.util.Set;
@@ -23,11 +33,13 @@ public class FailedMessageListController {
 
     private final FailedMessageResource failedMessageResource;
     private final FailedMessageSearchResource failedMessageSearchResource;
+    private final FailedMessageRemoveResource failedMessageRemoveResource;
     private FailedMessagesJsonSerializer failedMessagesJsonSerializer;
 
-    public FailedMessageListController(FailedMessageResource failedMessageResource, FailedMessageSearchResource failedMessageSearchResource, FailedMessagesJsonSerializer failedMessagesJsonSerializer) {
+    public FailedMessageListController(FailedMessageResource failedMessageResource, FailedMessageSearchResource failedMessageSearchResource, FailedMessageRemoveResource failedMessageRemoveResource, FailedMessagesJsonSerializer failedMessagesJsonSerializer) {
         this.failedMessageResource = failedMessageResource;
         this.failedMessageSearchResource = failedMessageSearchResource;
+        this.failedMessageRemoveResource = failedMessageRemoveResource;
         this.failedMessagesJsonSerializer = failedMessagesJsonSerializer;
     }
 
@@ -57,7 +69,7 @@ public class FailedMessageListController {
     @Path("/delete")
     @Consumes("application/json")
     public String deleteFailedMessages(BaseW2UIRequest request) {
-        failedMessageResource.delete(toFailedMessageIds(request));
+        failedMessageRemoveResource.remove(toFailedMessageIds(request));
         return "{ 'status': 'success' }";
     }
 

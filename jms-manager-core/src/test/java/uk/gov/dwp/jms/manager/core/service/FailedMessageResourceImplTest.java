@@ -8,6 +8,7 @@ import uk.gov.dwp.jms.manager.core.client.FailedMessageId;
 import uk.gov.dwp.jms.manager.core.dao.DestinationStatisticsDao;
 import uk.gov.dwp.jms.manager.core.dao.FailedMessageDao;
 import uk.gov.dwp.jms.manager.core.dao.FailedMessageLabelsDao;
+import uk.gov.dwp.jms.manager.core.service.resources.FailedMessageResourceImpl;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -15,8 +16,12 @@ import java.util.TreeSet;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.contains;
-import static org.hamcrest.Matchers.*;
-import static org.mockito.Mockito.*;
+import static org.hamcrest.Matchers.equalTo;
+import static org.hamcrest.Matchers.is;
+import static org.mockito.Mockito.argThat;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 import static uk.gov.dwp.jms.manager.core.domain.FailedMessageMatcher.aFailedMessage;
 
 public class FailedMessageResourceImplTest {
@@ -68,26 +73,5 @@ public class FailedMessageResourceImplTest {
 
         verify(failedMessageDao).find();
         verify(failedMessageLabelsDao).findLabelsById(FAILED_MESSAGE_ID);
-    }
-
-    @Test
-    public void testReprocess() throws Exception {
-        when(failedMessageDao.findById(FAILED_MESSAGE_ID)).thenReturn(failedMessage);
-        underTest.reprocess(FAILED_MESSAGE_ID);
-
-        verify(failedMessageDao).delete(FAILED_MESSAGE_ID);
-        verify(failedMessageLabelsDao).remove(FAILED_MESSAGE_ID);
-        verify(destinationStatisticsDao).reprocess(destination);
-    }
-
-    @Test
-    public void deleteFailedMessages() {
-
-        underTest.delete(Arrays.asList(FAILED_MESSAGE_ID, ANOTHER_FAILED_MESSAGE_ID));
-
-        verify(failedMessageDao).delete(FAILED_MESSAGE_ID);
-        verify(failedMessageLabelsDao).remove(FAILED_MESSAGE_ID);
-        verify(failedMessageDao).delete(ANOTHER_FAILED_MESSAGE_ID);
-        verify(failedMessageLabelsDao).remove(ANOTHER_FAILED_MESSAGE_ID);
     }
 }

@@ -2,6 +2,7 @@ package uk.gov.dwp.jms.manager.core.service;
 
 import org.junit.Test;
 import uk.gov.dwp.jms.manager.core.dao.DestinationStatisticsDao;
+import uk.gov.dwp.jms.manager.core.service.resources.DestinationStatisticsResourceImpl;
 
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;

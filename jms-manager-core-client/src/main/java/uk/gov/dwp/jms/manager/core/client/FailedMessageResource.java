@@ -1,6 +1,12 @@
 package uk.gov.dwp.jms.manager.core.client;
 
-import javax.ws.rs.*;
+import javax.ws.rs.Consumes;
+import javax.ws.rs.GET;
+import javax.ws.rs.POST;
+import javax.ws.rs.PUT;
+import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
+import javax.ws.rs.Produces;
 import java.util.List;
 import java.util.Set;
 
@@ -27,14 +33,7 @@ public interface FailedMessageResource {
     @Path("/all")
     List<FailedMessage> getFailedMessages();
 
-    @DELETE
-    void delete(List<FailedMessageId> failedMessageIds);
-
     @POST
     @Path("/{failedMessageId}")
     void create(@PathParam("failedMessageId") FailedMessage failedMessage);
-
-    @POST
-    @Path("/{failedMessageId}/reprocess")
-    void reprocess(@PathParam("failedMessageId") FailedMessageId failedMessageId);
 }
