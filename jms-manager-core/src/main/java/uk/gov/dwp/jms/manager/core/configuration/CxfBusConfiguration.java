@@ -12,8 +12,12 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 import org.springframework.context.annotation.ImportResource;
 import uk.gov.dwp.jms.manager.core.client.DestinationStatisticsResource;
+import uk.gov.dwp.jms.manager.core.client.FailedMessageMoveResource;
+import uk.gov.dwp.jms.manager.core.client.FailedMessageRemoveResource;
+import uk.gov.dwp.jms.manager.core.client.FailedMessageReplayResource;
 import uk.gov.dwp.jms.manager.core.client.FailedMessageResource;
 import uk.gov.dwp.jms.manager.core.client.FailedMessageSearchResource;
+import uk.gov.dwp.jms.manager.core.client.QueueResource;
 
 import java.util.Arrays;
 
@@ -35,10 +39,16 @@ public class CxfBusConfiguration {
                          JacksonJsonProvider jacksonJsonProvider,
                          FailedMessageResource failedMessageResource,
                          FailedMessageSearchResource failedMessageSearchResource,
-                         DestinationStatisticsResource destinationStatisticsResource) {
+                         FailedMessageRemoveResource failedMessageRemoveResource,
+                         FailedMessageReplayResource failedMessageReplayResource,
+                         FailedMessageMoveResource failedMessageMoveResource,
+                         DestinationStatisticsResource destinationStatisticsResource,
+                         QueueResource queueResource) {
         JAXRSServerFactoryBean endpoint = new JAXRSServerFactoryBean();
         endpoint.setServiceBeans(Arrays.asList(
-                failedMessageResource, failedMessageSearchResource, destinationStatisticsResource
+                failedMessageResource, failedMessageSearchResource, destinationStatisticsResource,
+                failedMessageRemoveResource, failedMessageReplayResource,
+                failedMessageMoveResource, queueResource
         ));
         endpoint.setAddress("/core");
         endpoint.setProvider(jacksonJsonProvider);
