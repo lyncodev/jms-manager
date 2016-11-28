@@ -6,11 +6,10 @@ import uk.gov.dwp.jms.manager.core.client.Destination;
 import uk.gov.dwp.jms.manager.core.client.FailedMessage;
 import uk.gov.dwp.jms.manager.core.client.FailedMessageId;
 import uk.gov.dwp.jms.manager.core.dao.FailedMessageDao;
+import uk.gov.dwp.jms.manager.core.jms.send.FailedMessageCreatorFactory;
 import uk.gov.dwp.jms.manager.core.jms.send.MessageSender;
 import uk.gov.dwp.jms.manager.core.jms.send.MessageSenderFactory;
 import uk.gov.dwp.jms.manager.core.service.remove.FailedMessageRemoveService;
-
-import java.util.function.Function;
 
 import static java.util.Arrays.asList;
 import static org.mockito.BDDMockito.given;
@@ -18,7 +17,7 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 
 public class FailedMessageReplayResourceImplTest {
-    private final Function<FailedMessage, MessageCreator> failedMessageCreatorFactory = mock(Function.class);
+    private final FailedMessageCreatorFactory failedMessageCreatorFactory = mock(FailedMessageCreatorFactory.class);
     private final MessageSenderFactory messageSenderFactory = mock(MessageSenderFactory.class);
     private final FailedMessageDao failedMessageDao = mock(FailedMessageDao.class);
     private final FailedMessageRemoveService failedMessageRemoveService = mock(FailedMessageRemoveService.class);

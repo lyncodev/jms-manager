@@ -13,9 +13,9 @@ import uk.gov.dwp.jms.manager.core.client.QueueResource;
 import uk.gov.dwp.jms.manager.core.dao.DestinationStatisticsDao;
 import uk.gov.dwp.jms.manager.core.dao.FailedMessageDao;
 import uk.gov.dwp.jms.manager.core.dao.FailedMessageLabelsDao;
-import uk.gov.dwp.jms.manager.core.jms.send.FailedMessageCreator;
+import uk.gov.dwp.jms.manager.core.jms.send.FailedMessageCreatorFactory;
 import uk.gov.dwp.jms.manager.core.jms.send.MessageSenderFactory;
-import uk.gov.dwp.jms.manager.core.jms.send.SimpleMessageCreator;
+import uk.gov.dwp.jms.manager.core.jms.send.SendMessageCreatorFactory;
 import uk.gov.dwp.jms.manager.core.service.remove.FailedMessageRemoveService;
 import uk.gov.dwp.jms.manager.core.service.resources.DestinationStatisticsResourceImpl;
 import uk.gov.dwp.jms.manager.core.service.resources.FailedMessageMoveResourceImpl;
@@ -54,17 +54,17 @@ public class ResourceConfiguration {
     }
 
     @Bean
-    public FailedMessageReplayResource failedMessageReplayResource (FailedMessageDao failedMessageDao, FailedMessageRemoveService failedMessageRemoveService, MessageSenderFactory messageSenderFactory) {
-        return new FailedMessageReplayResourceImpl(failedMessageDao, messageSenderFactory, FailedMessageCreator::new, failedMessageRemoveService);
+    public FailedMessageReplayResource failedMessageReplayResource (FailedMessageDao failedMessageDao, FailedMessageRemoveService failedMessageRemoveService, MessageSenderFactory messageSenderFactory, FailedMessageCreatorFactory failedMessageCreatorFactory) {
+        return new FailedMessageReplayResourceImpl(failedMessageDao, messageSenderFactory, failedMessageCreatorFactory, failedMessageRemoveService);
     }
 
     @Bean
-    public FailedMessageMoveResource failedMessageMoveResource (FailedMessageDao failedMessageDao, FailedMessageRemoveService failedMessageRemoveService, MessageSenderFactory messageSenderFactory) {
-        return new FailedMessageMoveResourceImpl(failedMessageDao, messageSenderFactory, FailedMessageCreator::new, failedMessageRemoveService);
+    public FailedMessageMoveResource failedMessageMoveResource (FailedMessageDao failedMessageDao, FailedMessageRemoveService failedMessageRemoveService, MessageSenderFactory messageSenderFactory, FailedMessageCreatorFactory failedMessageCreatorFactory) {
+        return new FailedMessageMoveResourceImpl(failedMessageDao, messageSenderFactory, failedMessageCreatorFactory, failedMessageRemoveService);
     }
 
     @Bean
-    public QueueResource queueResource (MessageSenderFactory messageSenderFactory) {
-        return new QueueResourceImpl(messageSenderFactory, x -> new SimpleMessageCreator(x.getContent(), x.getProperties()));
+    public QueueResource queueResource (MessageSenderFactory messageSenderFactory, SendMessageCreatorFactory sendMessageCreatorFactory) {
+        return new QueueResourceImpl(messageSenderFactory, sendMessageCreatorFactory);
     }
 }
