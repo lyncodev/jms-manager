@@ -14,6 +14,7 @@ public class ActiveMQDestinationExtractor implements DestinationExtractor<Active
 
     @Override
     public Destination extractDestination(ActiveMQMessage message) {
+        if (message.getOriginalDestination() == null) return new Destination(brokerName, null);
         return new Destination(brokerName, message.getOriginalDestination().getPhysicalName());
     }
 }

@@ -6,6 +6,8 @@ import org.junit.Test;
 import uk.gov.dwp.jms.manager.core.client.Destination;
 
 import static org.hamcrest.Matchers.equalTo;
+import static org.hamcrest.Matchers.nullValue;
+import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
@@ -21,5 +23,17 @@ public class ActiveMQDestinationExtractorTest {
         Destination destination = underTest.extractDestination(message);
         assertThat(destination, equalTo(new Destination("internal", "queue.name")));
 
+    }
+
+    @Test
+    public void messageSentViaActiveMQAdminInterface() throws Exception {
+        ActiveMQMessage activeMQMessage = mock(ActiveMQMessage.class);
+
+        when(activeMQMessage.getOriginalDestination()).thenReturn(null);
+
+        Destination result = underTest.extractDestination(activeMQMessage);
+
+        assertThat(result.getBrokerName(), is("internal"));
+        assertThat(result.getName(), nullValue());
     }
 }
