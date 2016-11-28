@@ -1,9 +1,10 @@
 package uk.gov.dwp.jms.manager.core.jms;
 
-import javax.jms.Message;
+import org.apache.activemq.command.ActiveMQMessage;
+
 import java.util.Map;
 
 public interface MessagePropertyExtractor {
 
-    Map<String, Object> extractProperties(Message message);
+    Map<String, Object> extractProperties(ActiveMQMessage message);
 }
