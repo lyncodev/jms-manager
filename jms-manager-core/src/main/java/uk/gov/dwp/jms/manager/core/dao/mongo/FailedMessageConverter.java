@@ -19,6 +19,7 @@ public class FailedMessageConverter implements DBObjectWithIdConverter<FailedMes
     static final String FAILED_DATE_TIME = "failedDateTime";
     static final String CONTENT = "content";
     static final String PROPERTIES = "properties";
+    static final String JMS_MESSAGE_ID = "jmsMessageId";
 
     private final ObjectConverter<Destination, DBObject> destinationDBObjectMapper;
     private final ObjectConverter<Map<String, Object>, String> propertiesMongoMapper;
@@ -42,6 +43,7 @@ public class FailedMessageConverter implements DBObjectWithIdConverter<FailedMes
                 .withFailedDateTime((ZonedDateTime)basicDBObject.get(FAILED_DATE_TIME))
                 .withContent(basicDBObject.getString(CONTENT))
                 .withProperties(propertiesMongoMapper.convertToObject(basicDBObject.getString(PROPERTIES)))
+                .withJmsMessageId(basicDBObject.getString(JMS_MESSAGE_ID))
                 .build();
     }
 
@@ -52,6 +54,7 @@ public class FailedMessageConverter implements DBObjectWithIdConverter<FailedMes
                 .append(SENT_DATE_TIME, item.getSentAt())
                 .append(FAILED_DATE_TIME, item.getFailedAt())
                 .append(CONTENT, item.getContent())
+                .append(JMS_MESSAGE_ID, item.getJmsMessageId())
                 .append(PROPERTIES, propertiesMongoMapper.convertFromObject(item.getProperties()));
     }
 
