@@ -13,6 +13,7 @@ public class FailedMessageBuilder {
     private ZonedDateTime sentDateTime;
     private ZonedDateTime failedDateTime;
     private String content;
+    private String jmsMessageId;
     private Map<String, Object> properties = new HashMap<>();
     private SortedSet<String> labels = new TreeSet<>();
 
@@ -30,15 +31,21 @@ public class FailedMessageBuilder {
                 .withFailedDateTime(failedMessage.getFailedAt())
                 .withContent(failedMessage.getContent())
                 .withProperties(failedMessage.getProperties())
+                .withJmsMessageId(failedMessage.getJmsMessageId())
                 .withLabels(failedMessage.getLabels());
     }
 
     public FailedMessage build() {
-        return new FailedMessage(failedMessageId, destination, sentDateTime, failedDateTime, content, properties, labels);
+        return new FailedMessage(failedMessageId, destination, sentDateTime, failedDateTime, content, properties, jmsMessageId, labels);
     }
 
     public FailedMessageBuilder withFailedMessageId(FailedMessageId failedMessageId) {
         this.failedMessageId = failedMessageId;
+        return this;
+    }
+
+    public FailedMessageBuilder withJmsMessageId(String jmsMessageId) {
+        this.jmsMessageId = jmsMessageId;
         return this;
     }
 

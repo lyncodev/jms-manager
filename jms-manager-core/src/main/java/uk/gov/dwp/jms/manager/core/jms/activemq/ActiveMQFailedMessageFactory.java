@@ -42,6 +42,7 @@ public class ActiveMQFailedMessageFactory implements FailedMessageFactory {
                 .withSentDateTime(extractTimestamp(activeMQMessage.getTimestamp()))
                 .withFailedDateTime(extractTimestamp(activeMQMessage.getBrokerInTime()))
                 .withProperties(messagePropertyExtractor.extractProperties(activeMQMessage))
+                .withJmsMessageId(activeMQMessage.getJMSMessageID())
                 .build();
     }
 

@@ -23,6 +23,7 @@ public class FailedMessage {
     @NotNull
     @JsonTypeInfo(use = JsonTypeInfo.Id.CLASS)
     private final Map<String, Object> properties;
+    private final String jmsMessageId;
     @NotNull
     private final SortedSet<String> labels;
 
@@ -32,6 +33,7 @@ public class FailedMessage {
                   @JsonProperty("failedAt") ZonedDateTime failedAt,
                   @JsonProperty("content") String content,
                   @JsonProperty("properties") Map<String, Object> properties,
+                  @JsonProperty("jmsMessageId") String jmsMessageID,
                   @JsonProperty("labels") SortedSet<String> labels) {
         this.failedMessageId = failedMessageId;
         this.destination = destination;
@@ -39,6 +41,7 @@ public class FailedMessage {
         this.failedAt = failedAt;
         this.content = content;
         this.properties = properties;
+        this.jmsMessageId = jmsMessageID;
         this.labels = labels;
     }
 
@@ -56,6 +59,10 @@ public class FailedMessage {
 
     public ZonedDateTime getFailedAt() {
         return failedAt;
+    }
+
+    public String getJmsMessageId() {
+        return jmsMessageId;
     }
 
     public String getContent() {
