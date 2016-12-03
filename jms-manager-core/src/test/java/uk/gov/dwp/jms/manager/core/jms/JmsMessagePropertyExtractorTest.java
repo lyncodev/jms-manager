@@ -1,12 +1,12 @@
 package uk.gov.dwp.jms.manager.core.jms;
 
+import org.apache.activemq.command.ActiveMQMessage;
 import org.apache.commons.lang3.tuple.Pair;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
 import javax.jms.JMSException;
-import javax.jms.Message;
 import java.util.Collections;
 import java.util.Enumeration;
 import java.util.Map;
@@ -27,7 +27,7 @@ public class JmsMessagePropertyExtractorTest {
     public ExpectedException expectedException = none();
 
     private final JmsMessagePropertyExtractor underTest = new JmsMessagePropertyExtractor();
-    private final Message message = mock(Message.class);
+    private final ActiveMQMessage message = mock(ActiveMQMessage.class);
 
     @Test
     public void exceptionIsThrownIfMessageIsNull() {
@@ -38,7 +38,7 @@ public class JmsMessagePropertyExtractorTest {
 
     @Test
     public void messageWithNoProperties() throws JMSException {
-        when(message.getPropertyNames()).thenReturn(emptyEnumeration());
+        when(message.getAllPropertyNames()).thenReturn(emptyEnumeration());
         Map<String, Object> properties = underTest.extractProperties(message);
         assertThat(properties, equalTo(Collections.emptyMap()));
     }
@@ -46,7 +46,7 @@ public class JmsMessagePropertyExtractorTest {
     @Test
     public void messageWithProperties() throws Exception {
         Enumeration<String> messageProperties = messageProperties(Pair.of("foo", "bar"), Pair.of("one", 1));
-        when(message.getPropertyNames()).thenReturn(messageProperties);
+        when(message.getAllPropertyNames()).thenReturn(messageProperties);
 
         Map<String, Object> actual = underTest.extractProperties(message);
         assertThat(actual, hasEntry("foo", "bar"));

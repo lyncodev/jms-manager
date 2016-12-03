@@ -1,5 +1,7 @@
 package uk.gov.dwp.jms.manager.core.configuration;
 
+import client.Destination;
+import client.Id;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.mongodb.DBObject;
 import com.mongodb.MongoClient;
@@ -11,11 +13,16 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 import org.springframework.validation.Validator;
 import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
-import uk.gov.dwp.jms.manager.core.client.Destination;
-import uk.gov.dwp.jms.manager.core.client.Id;
 import uk.gov.dwp.jms.manager.core.dao.FailedMessageDao;
 import uk.gov.dwp.jms.manager.core.dao.FailedMessageLabelsDao;
-import uk.gov.dwp.jms.manager.core.dao.mongo.*;
+import uk.gov.dwp.jms.manager.core.dao.mongo.DestinationDBObjectConverter;
+import uk.gov.dwp.jms.manager.core.dao.mongo.DestinationStatisticsConverter;
+import uk.gov.dwp.jms.manager.core.dao.mongo.DestinationStatisticsMongoDao;
+import uk.gov.dwp.jms.manager.core.dao.mongo.FailedMessageConverter;
+import uk.gov.dwp.jms.manager.core.dao.mongo.FailedMessageLabelsMongoDao;
+import uk.gov.dwp.jms.manager.core.dao.mongo.FailedMessageMongoDao;
+import uk.gov.dwp.jms.manager.core.dao.mongo.ObjectConverter;
+import uk.gov.dwp.jms.manager.core.dao.mongo.PropertiesConverter;
 
 import java.time.LocalDateTime;
 import java.time.ZonedDateTime;

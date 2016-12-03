@@ -1,7 +1,7 @@
 package uk.gov.dwp.jms.manager.core.jms.activemq;
 
+import client.Destination;
 import org.apache.activemq.command.ActiveMQMessage;
-import uk.gov.dwp.jms.manager.core.client.Destination;
 import uk.gov.dwp.jms.manager.core.jms.DestinationExtractor;
 
 public class ActiveMQDestinationExtractor implements DestinationExtractor<ActiveMQMessage> {

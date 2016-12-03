@@ -8,4 +8,6 @@ dependencies {
     compileOnly "com.fasterxml.jackson.core:jackson-core:$project.ext.jacksonVersion",
                 "com.fasterxml.jackson.core:jackson-databind:$project.ext.jacksonVersion"
 
+    testCompile 'org.hamcrest:hamcrest-all:1.3'
+
 }

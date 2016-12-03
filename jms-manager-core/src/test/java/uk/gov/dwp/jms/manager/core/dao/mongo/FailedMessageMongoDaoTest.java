@@ -1,12 +1,12 @@
 package uk.gov.dwp.jms.manager.core.dao.mongo;
 
+import client.Destination;
+import client.FailedMessage;
+import client.FailedMessageBuilder;
+import client.FailedMessageId;
 import com.mongodb.BasicDBObject;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import uk.gov.dwp.jms.manager.core.client.Destination;
-import uk.gov.dwp.jms.manager.core.client.FailedMessage;
-import uk.gov.dwp.jms.manager.core.client.FailedMessageBuilder;
-import uk.gov.dwp.jms.manager.core.client.FailedMessageId;
 import uk.gov.dwp.jms.manager.core.util.HashMapBuilder;
 
 import java.time.LocalDateTime;
@@ -15,10 +15,12 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.UUID;
 
+import static client.FailedMessageId.newFailedMessageId;
 import static java.util.Collections.emptyMap;
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.*;
-import static uk.gov.dwp.jms.manager.core.client.FailedMessageId.newFailedMessageId;
+import static org.hamcrest.Matchers.equalTo;
+import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.nullValue;
 import static uk.gov.dwp.jms.manager.core.domain.FailedMessageMatcher.aFailedMessage;
 import static uk.gov.dwp.jms.manager.core.util.HashMapBuilder.newHashMap;
 

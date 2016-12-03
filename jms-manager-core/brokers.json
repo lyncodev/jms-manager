@@ -1,0 +1,6 @@
+[{
+  "name": "internal",
+  "url": "tcp://localhost:61636",
+  "username": "admin",
+  "password": "password"
+}]

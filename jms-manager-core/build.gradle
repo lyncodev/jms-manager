@@ -21,9 +21,17 @@ dependencies {
             "org.springframework.boot:spring-boot-starter",
             "org.springframework.boot:spring-boot-starter-data-mongodb",
             "org.springframework.boot:spring-boot-starter-jetty",
+            "org.springframework:spring-context-support",
+            "org.springframework:spring-tx",
             "org.springframework:spring-jms",
-            "org.springframework:spring-web"
+            "org.springframework:spring-web",
+            "com.novemberain:quartz-mongodb:2.0.0",
+            "org.mongodb:mongo-java-driver:3.4.0"
+
 
     testCompile "org.springframework.boot:spring-boot-starter-test",
                 'org.valid4j:json-path-matchers:1.1'
+
+    testCompile project(":jms-manager-core-client-test-support")
+
 }

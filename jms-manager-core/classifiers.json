@@ -1,0 +1,10 @@
+[
+  {
+    "predicate": { "type": "causeMatch", "regex": ".*SocketTimeoutException.*" },
+    "action": {
+      "type": "delayed",
+      "delay": { "type": "relative", "unit": "MINUTES", "duration": 30 },
+      "action":  { "type": "replay" }
+    }
+  }
+]

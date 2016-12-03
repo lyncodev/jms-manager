@@ -1,0 +1,12 @@
+apply plugin: 'spring-boot'
+
+dependencies {
+    compile project(":jms-manager-core")
+
+    compile "org.apache.activemq:activemq-kahadb-store:$project.ext.activeMqVersion"
+    compile "org.mongodb:mongo-java-driver:3.4.0"
+
+    compile "commons-io:commons-io:2.5"
+
+    testCompile project(":jms-manager-core-client-test-support")
+}

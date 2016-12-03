@@ -1,9 +1,9 @@
 package uk.gov.dwp.jms.manager.web.search;
 
+import client.FailedMessage;
+import client.FailedMessageBuilder;
+import client.FailedMessageId;
 import org.junit.Test;
-import uk.gov.dwp.jms.manager.core.client.FailedMessage;
-import uk.gov.dwp.jms.manager.core.client.FailedMessageBuilder;
-import uk.gov.dwp.jms.manager.core.client.FailedMessageId;
 
 import java.time.LocalDate;
 import java.time.LocalTime;

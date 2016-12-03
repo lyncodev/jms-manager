@@ -1,11 +1,10 @@
 package uk.gov.dwp.jms.manager.core.service;
 
+import client.Destination;
+import client.FailedMessage;
+import client.FailedMessageBuilder;
+import client.FailedMessageId;
 import org.junit.Test;
-import uk.gov.dwp.jms.manager.core.client.Destination;
-import uk.gov.dwp.jms.manager.core.client.FailedMessage;
-import uk.gov.dwp.jms.manager.core.client.FailedMessageBuilder;
-import uk.gov.dwp.jms.manager.core.client.FailedMessageId;
-import uk.gov.dwp.jms.manager.core.dao.DestinationStatisticsDao;
 import uk.gov.dwp.jms.manager.core.dao.FailedMessageDao;
 import uk.gov.dwp.jms.manager.core.dao.FailedMessageLabelsDao;
 import uk.gov.dwp.jms.manager.core.service.resources.FailedMessageResourceImpl;
@@ -18,7 +17,6 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.contains;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.is;
-import static org.mockito.Mockito.argThat;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -31,19 +29,11 @@ public class FailedMessageResourceImplTest {
 
     private final FailedMessageDao failedMessageDao = mock(FailedMessageDao.class);
     private final FailedMessageLabelsDao failedMessageLabelsDao = mock(FailedMessageLabelsDao.class);
-    private final DestinationStatisticsDao destinationStatisticsDao = mock(DestinationStatisticsDao.class);
 
-    private final FailedMessageResourceImpl underTest = new FailedMessageResourceImpl(failedMessageDao, failedMessageLabelsDao, destinationStatisticsDao);
+    private final FailedMessageResourceImpl underTest = new FailedMessageResourceImpl(failedMessageDao, failedMessageLabelsDao);
     private final Destination destination = mock(Destination.class);
     private final FailedMessage failedMessage = FailedMessageBuilder.aFailedMessage().withFailedMessageId(FAILED_MESSAGE_ID).withDestination(destination).build();
 
-    @Test
-    public void testCreate() throws Exception {
-        underTest.create(failedMessage);
-
-        verify(failedMessageDao).insert(argThat(aFailedMessage().withFailedMessageId(equalTo(FAILED_MESSAGE_ID))));
-        verify(destinationStatisticsDao).addFailed(destination);
-    }
 
     @Test
     public void testFindById() throws Exception {

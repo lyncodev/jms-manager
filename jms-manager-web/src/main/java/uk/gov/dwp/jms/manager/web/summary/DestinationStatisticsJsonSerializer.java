@@ -1,9 +1,9 @@
 package uk.gov.dwp.jms.manager.web.summary;
 
+import client.Destination;
+import client.DestinationStatistics;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import uk.gov.dwp.jms.manager.core.client.Destination;
-import uk.gov.dwp.jms.manager.core.client.DestinationStatistics;
 
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;

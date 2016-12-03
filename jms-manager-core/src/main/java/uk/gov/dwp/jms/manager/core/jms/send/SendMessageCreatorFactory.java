@@ -1,7 +1,7 @@
 package uk.gov.dwp.jms.manager.core.jms.send;
 
+import client.SendMessageRequest;
 import org.springframework.jms.core.MessageCreator;
-import uk.gov.dwp.jms.manager.core.client.SendMessageRequest;
 import uk.gov.dwp.jms.manager.core.jms.send.decorator.MessageDecorator;
 
 import java.util.Collection;

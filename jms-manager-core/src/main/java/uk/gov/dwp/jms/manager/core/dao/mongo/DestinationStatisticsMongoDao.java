@@ -1,16 +1,24 @@
 package uk.gov.dwp.jms.manager.core.dao.mongo;
 
-import com.mongodb.*;
+import client.Destination;
+import client.DestinationStatistics;
+import com.mongodb.BasicDBObject;
+import com.mongodb.DBCollection;
+import com.mongodb.DBCursor;
+import com.mongodb.DBObject;
+import com.mongodb.DuplicateKeyException;
+import com.mongodb.WriteConcern;
+import com.mongodb.WriteResult;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import uk.gov.dwp.jms.manager.core.client.Destination;
-import uk.gov.dwp.jms.manager.core.client.DestinationStatistics;
 import uk.gov.dwp.jms.manager.core.dao.DestinationStatisticsDao;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import static uk.gov.dwp.jms.manager.core.dao.mongo.DestinationStatisticsConverter.*;
+import static uk.gov.dwp.jms.manager.core.dao.mongo.DestinationStatisticsConverter.DELETED;
+import static uk.gov.dwp.jms.manager.core.dao.mongo.DestinationStatisticsConverter.FAILED;
+import static uk.gov.dwp.jms.manager.core.dao.mongo.DestinationStatisticsConverter.REPROCESSED;
 
 public class DestinationStatisticsMongoDao implements DestinationStatisticsDao {
 

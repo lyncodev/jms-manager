@@ -1,15 +1,15 @@
 package uk.gov.dwp.jms.manager.core.service.resources;
 
+import client.Destination;
+import client.FailedMessage;
+import client.FailedMessageId;
+import client.FailedMessageMoveResource;
 import org.junit.Test;
 import org.springframework.jms.core.MessageCreator;
-import uk.gov.dwp.jms.manager.core.client.Destination;
-import uk.gov.dwp.jms.manager.core.client.FailedMessage;
-import uk.gov.dwp.jms.manager.core.client.FailedMessageId;
-import uk.gov.dwp.jms.manager.core.client.FailedMessageMoveResource;
 import uk.gov.dwp.jms.manager.core.dao.FailedMessageDao;
 import uk.gov.dwp.jms.manager.core.jms.send.MessageSender;
 import uk.gov.dwp.jms.manager.core.jms.send.MessageSenderFactory;
-import uk.gov.dwp.jms.manager.core.service.remove.FailedMessageRemoveService;
+import uk.gov.dwp.jms.manager.core.service.messages.FailedMessageService;
 
 import java.util.function.Function;
 
@@ -19,7 +19,7 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 
 public class FailedMessageMoveResourceImplTest {
-    private final FailedMessageRemoveService failedMessageRemoveService = mock(FailedMessageRemoveService.class);
+    private final FailedMessageService failedMessageService = mock(FailedMessageService.class);
     private final Function<FailedMessage, MessageCreator> failedMessageCreatorFactory = mock(Function.class);
     private final MessageSenderFactory messageSenderFactory = mock(MessageSenderFactory.class);
     private final FailedMessageDao failedMessageDao = mock(FailedMessageDao.class);
@@ -27,7 +27,7 @@ public class FailedMessageMoveResourceImplTest {
             failedMessageDao,
             messageSenderFactory,
             failedMessageCreatorFactory,
-            failedMessageRemoveService
+            failedMessageService
     );
 
     @Test
@@ -50,7 +50,7 @@ public class FailedMessageMoveResourceImplTest {
         underTest.move(failedMessageId, destination);
 
         verify(messageSender).send(queueName, messageCreator);
-        verify(failedMessageRemoveService).remove(failedMessage);
+        verify(failedMessageService).remove(failedMessage);
     }
 
     @Test
@@ -73,6 +73,6 @@ public class FailedMessageMoveResourceImplTest {
         underTest.move(new FailedMessageMoveResource.Bulk(asList(failedMessageId), destination));
 
         verify(messageSender).send(queueName, messageCreator);
-        verify(failedMessageRemoveService).remove(failedMessage);
+        verify(failedMessageService).remove(failedMessage);
     }
 }

@@ -21,10 +21,12 @@ buildscript {
 
 
 subprojects {
-
     repositories {
-        jcenter()
         mavenCentral()
+        jcenter()
+        maven {
+            url ("https://dl.bintray.com/michaelklishin/maven")
+        }
     }
 
     apply plugin: 'java'

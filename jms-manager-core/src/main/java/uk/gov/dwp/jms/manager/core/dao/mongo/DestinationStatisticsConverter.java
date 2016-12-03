@@ -1,9 +1,9 @@
 package uk.gov.dwp.jms.manager.core.dao.mongo;
 
+import client.Destination;
+import client.DestinationStatistics;
 import com.mongodb.BasicDBObject;
 import com.mongodb.DBObject;
-import uk.gov.dwp.jms.manager.core.client.Destination;
-import uk.gov.dwp.jms.manager.core.client.DestinationStatistics;
 
 public class DestinationStatisticsConverter implements DBObjectWithIdConverter<DestinationStatistics, Destination> {
 

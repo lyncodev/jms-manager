@@ -2,26 +2,28 @@ package uk.gov.dwp.jms.manager.core.jms;
 
 import org.springframework.jms.listener.DefaultMessageListenerContainer;
 import org.springframework.jms.listener.MessageListenerContainer;
-import uk.gov.dwp.jms.manager.core.client.FailedMessageResource;
+import uk.gov.dwp.jms.manager.core.jms.config.Broker;
+import uk.gov.dwp.jms.manager.core.service.messages.FailedMessageClassifierProcessor;
+import uk.gov.dwp.jms.manager.core.service.messages.FailedMessageService;
 
 public class MessageListenerContainerFactory {
     private final String queueName;
-    private final FailedMessageResource failedMessageResource;
+    private final FailedMessageService failedMessageService;
+    private final FailedMessageClassifierProcessor failedMessageClassifierProcessor;
     private final FailedMessageListenerFactory messageListenerFactory;
-    private final ConnectionFactoryFactory connectionFactoryFactory;
 
-    public MessageListenerContainerFactory(String queueName, FailedMessageResource failedMessageResource, FailedMessageListenerFactory messageListenerFactory, ConnectionFactoryFactory connectionFactoryFactory) {
+    public MessageListenerContainerFactory(String queueName, FailedMessageService failedMessageService, FailedMessageClassifierProcessor failedMessageClassifierProcessor, FailedMessageListenerFactory messageListenerFactory) {
         this.queueName = queueName;
-        this.failedMessageResource = failedMessageResource;
+        this.failedMessageService = failedMessageService;
+        this.failedMessageClassifierProcessor = failedMessageClassifierProcessor;
         this.messageListenerFactory = messageListenerFactory;
-        this.connectionFactoryFactory = connectionFactoryFactory;
     }
 
-    public MessageListenerContainer create (String brokerName) {
+    public MessageListenerContainer create (Broker broker) {
         DefaultMessageListenerContainer defaultMessageListenerContainer = new DefaultMessageListenerContainer();
-        defaultMessageListenerContainer.setConnectionFactory(connectionFactoryFactory.create(brokerName));
+        defaultMessageListenerContainer.setConnectionFactory(broker.createConnectionFactory());
         defaultMessageListenerContainer.setDestinationName(queueName);
-        defaultMessageListenerContainer.setupMessageListener(messageListenerFactory.create(failedMessageResource, brokerName));
+        defaultMessageListenerContainer.setupMessageListener(messageListenerFactory.create(failedMessageService, failedMessageClassifierProcessor, broker.getName()));
         defaultMessageListenerContainer.afterPropertiesSet();
         return defaultMessageListenerContainer;
     }

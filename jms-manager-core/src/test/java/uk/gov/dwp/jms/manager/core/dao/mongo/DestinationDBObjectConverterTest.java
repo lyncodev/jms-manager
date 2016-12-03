@@ -1,8 +1,8 @@
 package uk.gov.dwp.jms.manager.core.dao.mongo;
 
+import client.Destination;
 import com.mongodb.DBObject;
 import org.junit.Test;
-import uk.gov.dwp.jms.manager.core.client.Destination;
 
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertThat;

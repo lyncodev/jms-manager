@@ -1,5 +1,13 @@
 package uk.gov.dwp.jms.manager.core.configuration;
 
+import client.DestinationStatisticsResource;
+import client.FailedMessageMoveResource;
+import client.FailedMessageRemoveResource;
+import client.FailedMessageReplayResource;
+import client.FailedMessageReprocessResource;
+import client.FailedMessageResource;
+import client.FailedMessageSearchResource;
+import client.SendMessageResource;
 import com.fasterxml.jackson.jaxrs.json.JacksonJsonProvider;
 import org.apache.cxf.Bus;
 import org.apache.cxf.endpoint.Server;
@@ -11,13 +19,6 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 import org.springframework.context.annotation.ImportResource;
-import uk.gov.dwp.jms.manager.core.client.DestinationStatisticsResource;
-import uk.gov.dwp.jms.manager.core.client.FailedMessageMoveResource;
-import uk.gov.dwp.jms.manager.core.client.FailedMessageRemoveResource;
-import uk.gov.dwp.jms.manager.core.client.FailedMessageReplayResource;
-import uk.gov.dwp.jms.manager.core.client.FailedMessageResource;
-import uk.gov.dwp.jms.manager.core.client.FailedMessageSearchResource;
-import uk.gov.dwp.jms.manager.core.client.QueueResource;
 
 import java.util.Arrays;
 
@@ -43,12 +44,14 @@ public class CxfBusConfiguration {
                          FailedMessageReplayResource failedMessageReplayResource,
                          FailedMessageMoveResource failedMessageMoveResource,
                          DestinationStatisticsResource destinationStatisticsResource,
-                         QueueResource queueResource) {
+                         FailedMessageReprocessResource failedMessageReprocessResource,
+                         SendMessageResource sendMessageResource) {
         JAXRSServerFactoryBean endpoint = new JAXRSServerFactoryBean();
         endpoint.setServiceBeans(Arrays.asList(
                 failedMessageResource, failedMessageSearchResource, destinationStatisticsResource,
                 failedMessageRemoveResource, failedMessageReplayResource,
-                failedMessageMoveResource, queueResource
+                failedMessageMoveResource, sendMessageResource,
+                failedMessageReprocessResource
         ));
         endpoint.setAddress("/core");
         endpoint.setProvider(jacksonJsonProvider);

@@ -1,10 +1,9 @@
 package uk.gov.dwp.jms.manager.core.service.resources;
 
-import uk.gov.dwp.jms.manager.core.client.FailedMessage;
-import uk.gov.dwp.jms.manager.core.client.FailedMessageBuilder;
-import uk.gov.dwp.jms.manager.core.client.FailedMessageId;
-import uk.gov.dwp.jms.manager.core.client.FailedMessageResource;
-import uk.gov.dwp.jms.manager.core.dao.DestinationStatisticsDao;
+import client.FailedMessage;
+import client.FailedMessageBuilder;
+import client.FailedMessageId;
+import client.FailedMessageResource;
 import uk.gov.dwp.jms.manager.core.dao.FailedMessageDao;
 import uk.gov.dwp.jms.manager.core.dao.FailedMessageLabelsDao;
 
@@ -17,18 +16,10 @@ import static java.util.Optional.ofNullable;
 public class FailedMessageResourceImpl implements FailedMessageResource {
     private final FailedMessageDao failedMessageDao;
     private final FailedMessageLabelsDao failedMessageLabelsDao;
-    private final DestinationStatisticsDao destinationStatisticsDao;
 
-    public FailedMessageResourceImpl(FailedMessageDao failedMessageDao, FailedMessageLabelsDao failedMessageLabelsDao, DestinationStatisticsDao destinationStatisticsDao) {
+    public FailedMessageResourceImpl(FailedMessageDao failedMessageDao, FailedMessageLabelsDao failedMessageLabelsDao) {
         this.failedMessageDao = failedMessageDao;
         this.failedMessageLabelsDao = failedMessageLabelsDao;
-        this.destinationStatisticsDao = destinationStatisticsDao;
-    }
-
-    @Override
-    public void create(FailedMessage failedMessage) {
-        failedMessageDao.insert(failedMessage);
-        destinationStatisticsDao.addFailed(failedMessage.getDestination());
     }
 
     @Override

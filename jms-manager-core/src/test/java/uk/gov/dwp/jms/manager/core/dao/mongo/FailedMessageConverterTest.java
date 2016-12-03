@@ -1,12 +1,12 @@
 package uk.gov.dwp.jms.manager.core.dao.mongo;
 
+import client.Destination;
+import client.FailedMessageBuilder;
+import client.FailedMessageId;
 import com.mongodb.BasicDBObject;
 import com.mongodb.DBObject;
 import org.junit.Before;
 import org.junit.Test;
-import uk.gov.dwp.jms.manager.core.client.Destination;
-import uk.gov.dwp.jms.manager.core.client.FailedMessageBuilder;
-import uk.gov.dwp.jms.manager.core.client.FailedMessageId;
 import uk.gov.dwp.jms.manager.core.configuration.DaoConfig;
 
 import java.time.ZoneOffset;
@@ -14,13 +14,18 @@ import java.time.ZonedDateTime;
 import java.util.HashMap;
 import java.util.Map;
 
-import static org.hamcrest.Matchers.*;
+import static client.FailedMessageId.newFailedMessageId;
+import static org.hamcrest.Matchers.allOf;
+import static org.hamcrest.Matchers.equalTo;
+import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.nullValue;
 import static org.junit.Assert.assertThat;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
-import static uk.gov.dwp.jms.manager.core.client.FailedMessageId.newFailedMessageId;
 import static uk.gov.dwp.jms.manager.core.dao.mongo.DBObjectMatcher.hasField;
-import static uk.gov.dwp.jms.manager.core.dao.mongo.FailedMessageConverter.*;
+import static uk.gov.dwp.jms.manager.core.dao.mongo.FailedMessageConverter.CONTENT;
+import static uk.gov.dwp.jms.manager.core.dao.mongo.FailedMessageConverter.DESTINATION;
+import static uk.gov.dwp.jms.manager.core.dao.mongo.FailedMessageConverter.PROPERTIES;
 import static uk.gov.dwp.jms.manager.core.domain.DestinationMatcher.aDestination;
 import static uk.gov.dwp.jms.manager.core.domain.FailedMessageMatcher.aFailedMessage;
 

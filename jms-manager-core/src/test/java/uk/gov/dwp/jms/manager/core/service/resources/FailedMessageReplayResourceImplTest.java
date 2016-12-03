@@ -1,15 +1,15 @@
 package uk.gov.dwp.jms.manager.core.service.resources;
 
+import client.Destination;
+import client.FailedMessage;
+import client.FailedMessageId;
 import org.junit.Test;
 import org.springframework.jms.core.MessageCreator;
-import uk.gov.dwp.jms.manager.core.client.Destination;
-import uk.gov.dwp.jms.manager.core.client.FailedMessage;
-import uk.gov.dwp.jms.manager.core.client.FailedMessageId;
 import uk.gov.dwp.jms.manager.core.dao.FailedMessageDao;
 import uk.gov.dwp.jms.manager.core.jms.send.FailedMessageCreatorFactory;
 import uk.gov.dwp.jms.manager.core.jms.send.MessageSender;
 import uk.gov.dwp.jms.manager.core.jms.send.MessageSenderFactory;
-import uk.gov.dwp.jms.manager.core.service.remove.FailedMessageRemoveService;
+import uk.gov.dwp.jms.manager.core.service.messages.FailedMessageService;
 
 import static java.util.Arrays.asList;
 import static org.mockito.BDDMockito.given;
@@ -20,12 +20,12 @@ public class FailedMessageReplayResourceImplTest {
     private final FailedMessageCreatorFactory failedMessageCreatorFactory = mock(FailedMessageCreatorFactory.class);
     private final MessageSenderFactory messageSenderFactory = mock(MessageSenderFactory.class);
     private final FailedMessageDao failedMessageDao = mock(FailedMessageDao.class);
-    private final FailedMessageRemoveService failedMessageRemoveService = mock(FailedMessageRemoveService.class);
+    private final FailedMessageService failedMessageService = mock(FailedMessageService.class);
     private FailedMessageReplayResourceImpl underTest = new FailedMessageReplayResourceImpl(
             failedMessageDao,
             messageSenderFactory,
             failedMessageCreatorFactory,
-            failedMessageRemoveService
+            failedMessageService
     );
 
     @Test
@@ -49,7 +49,7 @@ public class FailedMessageReplayResourceImplTest {
         underTest.replay(failedMessageId);
 
         verify(messageSender).send(queueName, messageCreator);
-        verify(failedMessageRemoveService).remove(failedMessage);
+        verify(failedMessageService).remove(failedMessage);
     }
 
     @Test
@@ -73,6 +73,6 @@ public class FailedMessageReplayResourceImplTest {
         underTest.replay(asList(failedMessageId));
 
         verify(messageSender).send(queueName, messageCreator);
-        verify(failedMessageRemoveService).remove(failedMessage);
+        verify(failedMessageService).remove(failedMessage);
     }
 }

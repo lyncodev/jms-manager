@@ -1,6 +1,6 @@
 package uk.gov.dwp.jms.manager.web.summary;
 
-import uk.gov.dwp.jms.manager.core.client.DestinationStatisticsResource;
+import client.DestinationStatisticsResource;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;

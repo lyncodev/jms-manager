@@ -1,10 +1,10 @@
 package uk.gov.dwp.jms.manager.core.domain;
 
+import client.FailedMessageId;
+import client.FailedMessageLabels;
 import org.hamcrest.Description;
 import org.hamcrest.Matcher;
 import org.hamcrest.TypeSafeMatcher;
-import uk.gov.dwp.jms.manager.core.client.FailedMessageId;
-import uk.gov.dwp.jms.manager.core.client.FailedMessageLabels;
 
 import static org.hamcrest.Matchers.emptyIterable;
 import static org.hamcrest.Matchers.notNullValue;

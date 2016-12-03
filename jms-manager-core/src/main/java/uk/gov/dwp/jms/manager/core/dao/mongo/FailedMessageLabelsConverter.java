@@ -1,17 +1,17 @@
 package uk.gov.dwp.jms.manager.core.dao.mongo;
 
+import client.FailedMessageId;
+import client.FailedMessageLabels;
 import com.mongodb.BasicDBObject;
 import com.mongodb.DBObject;
-import uk.gov.dwp.jms.manager.core.client.FailedMessageId;
-import uk.gov.dwp.jms.manager.core.client.FailedMessageLabels;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
-import static uk.gov.dwp.jms.manager.core.client.FailedMessageId.FAILED_MESSAGE_ID;
-import static uk.gov.dwp.jms.manager.core.client.FailedMessageId.fromString;
+import static client.FailedMessageId.FAILED_MESSAGE_ID;
+import static client.FailedMessageId.fromString;
 
 public class FailedMessageLabelsConverter implements DBObjectWithIdConverter<FailedMessageLabels, FailedMessageId> {
 

@@ -1,24 +1,24 @@
 package uk.gov.dwp.jms.manager.core.service.resources;
 
-import uk.gov.dwp.jms.manager.core.client.FailedMessageId;
-import uk.gov.dwp.jms.manager.core.client.FailedMessageRemoveResource;
+import client.FailedMessageId;
+import client.FailedMessageRemoveResource;
 import uk.gov.dwp.jms.manager.core.dao.FailedMessageDao;
-import uk.gov.dwp.jms.manager.core.service.remove.FailedMessageRemoveService;
+import uk.gov.dwp.jms.manager.core.service.messages.FailedMessageService;
 
 import java.util.List;
 
 public class FailedMessageRemoveResourceImpl implements FailedMessageRemoveResource {
     private final FailedMessageDao failedMessageDao;
-    private final FailedMessageRemoveService failedMessageRemoveService;
+    private final FailedMessageService failedMessageService;
 
-    public FailedMessageRemoveResourceImpl(FailedMessageDao failedMessageDao, FailedMessageRemoveService failedMessageRemoveService) {
+    public FailedMessageRemoveResourceImpl(FailedMessageDao failedMessageDao, FailedMessageService failedMessageService) {
         this.failedMessageDao = failedMessageDao;
-        this.failedMessageRemoveService = failedMessageRemoveService;
+        this.failedMessageService = failedMessageService;
     }
 
     @Override
     public void remove(FailedMessageId failedMessageId) {
-        failedMessageRemoveService.remove(failedMessageDao.findById(failedMessageId));
+        failedMessageService.remove(failedMessageDao.findById(failedMessageId));
     }
 
     @Override

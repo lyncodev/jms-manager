@@ -1,12 +1,12 @@
 package uk.gov.dwp.jms.manager.core.service.resources;
 
+import client.FailedMessage;
+import client.FailedMessageId;
+import client.FailedMessageReplayResource;
 import org.springframework.jms.core.MessageCreator;
-import uk.gov.dwp.jms.manager.core.client.FailedMessage;
-import uk.gov.dwp.jms.manager.core.client.FailedMessageId;
-import uk.gov.dwp.jms.manager.core.client.FailedMessageReplayResource;
 import uk.gov.dwp.jms.manager.core.dao.FailedMessageDao;
 import uk.gov.dwp.jms.manager.core.jms.send.MessageSenderFactory;
-import uk.gov.dwp.jms.manager.core.service.remove.FailedMessageRemoveService;
+import uk.gov.dwp.jms.manager.core.service.messages.FailedMessageService;
 
 import java.util.List;
 import java.util.function.Function;
@@ -15,13 +15,13 @@ public class FailedMessageReplayResourceImpl implements FailedMessageReplayResou
     private final FailedMessageDao failedMessageDao;
     private final MessageSenderFactory messageSenderFactory;
     private final Function<FailedMessage, MessageCreator> failedMessageCreatorFactory;
-    private final FailedMessageRemoveService failedMessageRemoveService;
+    private final FailedMessageService failedMessageService;
 
-    public FailedMessageReplayResourceImpl(FailedMessageDao failedMessageDao, MessageSenderFactory messageSenderFactory, Function<FailedMessage, MessageCreator> failedMessageCreatorFactory, FailedMessageRemoveService failedMessageRemoveService) {
+    public FailedMessageReplayResourceImpl(FailedMessageDao failedMessageDao, MessageSenderFactory messageSenderFactory, Function<FailedMessage, MessageCreator> failedMessageCreatorFactory, FailedMessageService failedMessageService) {
         this.failedMessageDao = failedMessageDao;
         this.messageSenderFactory = messageSenderFactory;
         this.failedMessageCreatorFactory = failedMessageCreatorFactory;
-        this.failedMessageRemoveService = failedMessageRemoveService;
+        this.failedMessageService = failedMessageService;
     }
 
     @Override
@@ -29,7 +29,7 @@ public class FailedMessageReplayResourceImpl implements FailedMessageReplayResou
         FailedMessage failedMessage = failedMessageDao.findById(messageId);
         messageSenderFactory.senderFor(failedMessage.getDestination().getBrokerName())
                 .send(failedMessage.getDestination().getName(), failedMessageCreatorFactory.apply(failedMessage));
-        failedMessageRemoveService.remove(failedMessage);
+        failedMessageService.remove(failedMessage);
     }
 
     @Override

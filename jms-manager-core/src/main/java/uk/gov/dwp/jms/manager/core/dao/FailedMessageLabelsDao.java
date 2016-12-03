@@ -1,7 +1,7 @@
 package uk.gov.dwp.jms.manager.core.dao;
 
-import uk.gov.dwp.jms.manager.core.client.FailedMessageId;
-import uk.gov.dwp.jms.manager.core.client.FailedMessageLabels;
+import client.FailedMessageId;
+import client.FailedMessageLabels;
 
 import java.util.Set;
 import java.util.SortedSet;

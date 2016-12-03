@@ -1,9 +1,9 @@
 package uk.gov.dwp.jms.manager.core.jms.activemq;
 
+import client.Destination;
 import org.apache.activemq.command.ActiveMQMessage;
 import org.apache.activemq.command.ActiveMQQueue;
 import org.junit.Test;
-import uk.gov.dwp.jms.manager.core.client.Destination;
 
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.nullValue;

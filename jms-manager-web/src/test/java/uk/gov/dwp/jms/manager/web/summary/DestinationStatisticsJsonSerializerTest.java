@@ -1,9 +1,9 @@
 package uk.gov.dwp.jms.manager.web.summary;
 
+import client.Destination;
+import client.DestinationStatistics;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.Test;
-import uk.gov.dwp.jms.manager.core.client.Destination;
-import uk.gov.dwp.jms.manager.core.client.DestinationStatistics;
 import uk.gov.dwp.jms.manager.web.configuration.JacksonConfiguration;
 
 import java.util.Arrays;

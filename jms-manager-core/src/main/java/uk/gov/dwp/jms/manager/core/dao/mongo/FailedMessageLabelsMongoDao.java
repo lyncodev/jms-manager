@@ -1,11 +1,11 @@
 package uk.gov.dwp.jms.manager.core.dao.mongo;
 
+import client.FailedMessageId;
+import client.FailedMessageLabels;
 import com.mongodb.BasicDBObject;
 import com.mongodb.DBCollection;
 import com.mongodb.DBCursor;
 import com.mongodb.DBObject;
-import uk.gov.dwp.jms.manager.core.client.FailedMessageId;
-import uk.gov.dwp.jms.manager.core.client.FailedMessageLabels;
 import uk.gov.dwp.jms.manager.core.dao.FailedMessageLabelsDao;
 
 import java.util.HashSet;
@@ -13,8 +13,8 @@ import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
+import static client.FailedMessageLabels.aFailedMessageWithLabels;
 import static java.util.Optional.ofNullable;
-import static uk.gov.dwp.jms.manager.core.client.FailedMessageLabels.aFailedMessageWithLabels;
 import static uk.gov.dwp.jms.manager.core.dao.mongo.FailedMessageLabelsConverter.LABELS;
 
 public class FailedMessageLabelsMongoDao implements FailedMessageLabelsDao {

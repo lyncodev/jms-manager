@@ -3,4 +3,6 @@ rootProject.name = 'jms-manager'
 include 'jms-manager-core',
         'jms-manager-core-client',
         'jms-manager-web'
+include 'jms-manager-core-integration-test'
+include 'jms-manager-core-client-test-support'
 

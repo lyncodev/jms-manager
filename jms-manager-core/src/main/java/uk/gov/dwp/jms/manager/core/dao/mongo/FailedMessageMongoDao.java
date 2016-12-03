@@ -1,11 +1,11 @@
 package uk.gov.dwp.jms.manager.core.dao.mongo;
 
+import client.FailedMessage;
+import client.FailedMessageId;
 import com.mongodb.BasicDBObject;
 import com.mongodb.DBCollection;
 import com.mongodb.DBCursor;
 import com.mongodb.DBObject;
-import uk.gov.dwp.jms.manager.core.client.FailedMessage;
-import uk.gov.dwp.jms.manager.core.client.FailedMessageId;
 import uk.gov.dwp.jms.manager.core.dao.FailedMessageDao;
 
 import java.util.ArrayList;

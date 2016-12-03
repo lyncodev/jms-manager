@@ -1,10 +1,10 @@
 package uk.gov.dwp.jms.manager.core.jms.activemq;
 
+import client.FailedMessage;
+import client.FailedMessageBuilder;
 import org.apache.activemq.command.ActiveMQMessage;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import uk.gov.dwp.jms.manager.core.client.FailedMessage;
-import uk.gov.dwp.jms.manager.core.client.FailedMessageBuilder;
 import uk.gov.dwp.jms.manager.core.jms.DestinationExtractor;
 import uk.gov.dwp.jms.manager.core.jms.FailedMessageFactory;
 import uk.gov.dwp.jms.manager.core.jms.MessagePropertyExtractor;

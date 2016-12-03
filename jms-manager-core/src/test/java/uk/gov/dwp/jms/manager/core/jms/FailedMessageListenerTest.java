@@ -1,23 +1,28 @@
 package uk.gov.dwp.jms.manager.core.jms;
 
+import client.FailedMessage;
 import org.junit.Test;
-import uk.gov.dwp.jms.manager.core.client.FailedMessage;
-import uk.gov.dwp.jms.manager.core.client.FailedMessageResource;
+import uk.gov.dwp.jms.manager.core.service.messages.FailedMessageClassifierProcessor;
+import uk.gov.dwp.jms.manager.core.service.messages.FailedMessageService;
 
 import javax.jms.JMSException;
 import javax.jms.Message;
 
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.verifyZeroInteractions;
+import static org.mockito.Mockito.when;
 
 public class FailedMessageListenerTest {
 
     private final FailedMessageFactory failedMessageFactory = mock(FailedMessageFactory.class);
-    private final FailedMessageResource failedMessageResource = mock(FailedMessageResource.class);
+    private final FailedMessageService failedMessageService = mock(FailedMessageService.class);
+    private final FailedMessageClassifierProcessor failedMessageClassifierProcessor = mock(FailedMessageClassifierProcessor.class);
 
     private final Message message = mock(Message.class);
     private final FailedMessage failedMessage = mock(FailedMessage.class);
 
-    private final FailedMessageListener underTest = new FailedMessageListener(failedMessageFactory, failedMessageResource);
+    private final FailedMessageListener underTest = new FailedMessageListener(failedMessageFactory, failedMessageService, failedMessageClassifierProcessor);
 
     @Test
     public void processMessageSuccessfully() throws Exception {
@@ -25,7 +30,7 @@ public class FailedMessageListenerTest {
 
         underTest.onMessage(message);
 
-        verify(failedMessageResource).create(failedMessage);
+        verify(failedMessageService).create(failedMessage);
     }
 
     @Test
@@ -34,6 +39,6 @@ public class FailedMessageListenerTest {
 
         underTest.onMessage(message);
 
-        verifyZeroInteractions(failedMessageResource);
+        verifyZeroInteractions(failedMessageService);
     }
 }

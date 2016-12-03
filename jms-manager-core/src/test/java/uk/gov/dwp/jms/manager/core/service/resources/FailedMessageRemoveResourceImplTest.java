@@ -1,11 +1,11 @@
 package uk.gov.dwp.jms.manager.core.service.resources;
 
+import client.Destination;
+import client.FailedMessage;
+import client.FailedMessageId;
 import org.junit.Test;
-import uk.gov.dwp.jms.manager.core.client.Destination;
-import uk.gov.dwp.jms.manager.core.client.FailedMessage;
-import uk.gov.dwp.jms.manager.core.client.FailedMessageId;
 import uk.gov.dwp.jms.manager.core.dao.FailedMessageDao;
-import uk.gov.dwp.jms.manager.core.service.remove.FailedMessageRemoveService;
+import uk.gov.dwp.jms.manager.core.service.messages.FailedMessageService;
 
 import static java.util.Arrays.asList;
 import static org.mockito.BDDMockito.given;
@@ -14,9 +14,9 @@ import static org.mockito.Mockito.verify;
 
 public class FailedMessageRemoveResourceImplTest {
     private final FailedMessageDao failedMessageDao = mock(FailedMessageDao.class);
-    private final FailedMessageRemoveService failedMessageRemoveService = mock(FailedMessageRemoveService.class);
+    private final FailedMessageService failedMessageService = mock(FailedMessageService.class);
     private FailedMessageRemoveResourceImpl underTest = new FailedMessageRemoveResourceImpl(
-            failedMessageDao, failedMessageRemoveService
+            failedMessageDao, failedMessageService
     );
 
     @Test
@@ -31,7 +31,7 @@ public class FailedMessageRemoveResourceImplTest {
 
         underTest.remove(failedMessageId);
 
-        verify(failedMessageRemoveService).remove(failedMessage);
+        verify(failedMessageService).remove(failedMessage);
     }
 
     @Test
@@ -53,7 +53,7 @@ public class FailedMessageRemoveResourceImplTest {
 
         underTest.remove(asList(failedMessageId1, failedMessageId2));
 
-        verify(failedMessageRemoveService).remove(failedMessage1);
-        verify(failedMessageRemoveService).remove(failedMessage2);
+        verify(failedMessageService).remove(failedMessage1);
+        verify(failedMessageService).remove(failedMessage2);
     }
 }

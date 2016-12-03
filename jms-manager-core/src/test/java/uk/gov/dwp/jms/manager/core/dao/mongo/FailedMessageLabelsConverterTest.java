@@ -1,22 +1,22 @@
 package uk.gov.dwp.jms.manager.core.dao.mongo;
 
+import client.FailedMessageId;
+import client.FailedMessageLabels;
 import com.mongodb.BasicDBObject;
 import org.hamcrest.Description;
 import org.hamcrest.Matcher;
 import org.hamcrest.TypeSafeMatcher;
 import org.junit.Test;
-import uk.gov.dwp.jms.manager.core.client.FailedMessageId;
-import uk.gov.dwp.jms.manager.core.client.FailedMessageLabels;
 
 import java.util.SortedSet;
 import java.util.TreeSet;
 
+import static client.FailedMessageId.fromString;
+import static client.FailedMessageId.newFailedMessageId;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.Matchers.contains;
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertThat;
-import static uk.gov.dwp.jms.manager.core.client.FailedMessageId.fromString;
-import static uk.gov.dwp.jms.manager.core.client.FailedMessageId.newFailedMessageId;
 import static uk.gov.dwp.jms.manager.core.dao.mongo.FailedMessageLabelsConverter.LABELS;
 import static uk.gov.dwp.jms.manager.core.domain.FailedMessageLabelsMatcher.aFailedMessageWithLabels;
 

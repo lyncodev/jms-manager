@@ -1,5 +1,6 @@
 package uk.gov.dwp.jms.manager.core.service;
 
+import client.Destination;
 import com.mongodb.BasicDBObject;
 import com.mongodb.DB;
 import com.mongodb.MongoClient;
@@ -10,23 +11,22 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.SpringApplicationConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import uk.gov.dwp.jms.manager.core.JmsManagerApplication;
-import uk.gov.dwp.jms.manager.core.client.Destination;
-import uk.gov.dwp.jms.manager.core.client.FailedMessageResource;
 import uk.gov.dwp.jms.manager.core.configuration.DaoProperties;
+import uk.gov.dwp.jms.manager.core.service.messages.FailedMessageService;
 
 import java.time.ZonedDateTime;
 import java.util.Arrays;
 import java.util.List;
 
+import static client.FailedMessageBuilder.aFailedMessage;
 import static java.time.ZoneOffset.UTC;
-import static uk.gov.dwp.jms.manager.core.client.FailedMessageBuilder.aFailedMessage;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringApplicationConfiguration(JmsManagerApplication.class)
 public class CreateFailedMessagesIntTest {
 
     @Autowired
-    private FailedMessageResource failedMessageResource;
+    private FailedMessageService failedMessageService;
 
     @Autowired
     private MongoClient mongoClient;
@@ -63,7 +63,7 @@ public class CreateFailedMessagesIntTest {
     @Test
     public void testCreate() throws Exception {
         for (int i=0; i<10; i++) {
-            failedMessageResource.create(aFailedMessage()
+            failedMessageService.create(aFailedMessage()
                     .withDestination(destinations.get(i % 4))
                     .withContent("{ \"name\": \"foo\" }")
                     .withSentDateTime(ZonedDateTime.now(UTC).minusSeconds(2))

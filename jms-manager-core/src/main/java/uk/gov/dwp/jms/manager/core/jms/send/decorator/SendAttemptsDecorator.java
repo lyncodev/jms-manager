@@ -4,7 +4,7 @@ import javax.jms.JMSException;
 import javax.jms.Message;
 
 public class SendAttemptsDecorator implements MessageDecorator {
-    private static final String PROPERTY = "jms.manager.attempts";
+    public static final String PROPERTY = "jms.manager.attempts";
 
     @Override
     public void decorate(Message message) {

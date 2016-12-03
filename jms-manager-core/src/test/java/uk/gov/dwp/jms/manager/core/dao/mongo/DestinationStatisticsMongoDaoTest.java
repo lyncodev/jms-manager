@@ -1,13 +1,13 @@
 package uk.gov.dwp.jms.manager.core.dao.mongo;
 
+import client.Destination;
+import client.DestinationStatistics;
 import com.mongodb.BasicDBObject;
 import com.mongodb.WriteResult;
 import org.hamcrest.Description;
 import org.hamcrest.TypeSafeMatcher;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import uk.gov.dwp.jms.manager.core.client.Destination;
-import uk.gov.dwp.jms.manager.core.client.DestinationStatistics;
 import uk.gov.dwp.jms.manager.core.domain.DestinationMatcher;
 
 import java.util.ArrayList;
@@ -21,7 +21,9 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.allOf;
 import static org.hamcrest.Matchers.contains;
 import static uk.gov.dwp.jms.manager.core.dao.mongo.DBObjectMatcher.hasField;
-import static uk.gov.dwp.jms.manager.core.dao.mongo.DestinationStatisticsConverter.*;
+import static uk.gov.dwp.jms.manager.core.dao.mongo.DestinationStatisticsConverter.DELETED;
+import static uk.gov.dwp.jms.manager.core.dao.mongo.DestinationStatisticsConverter.FAILED;
+import static uk.gov.dwp.jms.manager.core.dao.mongo.DestinationStatisticsConverter.REPROCESSED;
 import static uk.gov.dwp.jms.manager.core.dao.mongo.DestinationStatisticsMongoDaoTest.FailedMessageStatisticsMatcher.statisticsFor;
 import static uk.gov.dwp.jms.manager.core.domain.DestinationMatcher.aDestination;
 

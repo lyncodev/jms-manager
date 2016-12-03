@@ -1,6 +1,6 @@
 package uk.gov.dwp.jms.manager.core.jms;
 
-import uk.gov.dwp.jms.manager.core.client.Destination;
+import client.Destination;
 
 import javax.jms.Message;
 

@@ -1,6 +1,6 @@
 package uk.gov.dwp.jms.manager.web.search;
 
-import uk.gov.dwp.jms.manager.core.client.FailedMessage;
+import client.FailedMessage;
 
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
