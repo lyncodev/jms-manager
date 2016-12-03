@@ -1,22 +1,22 @@
 package uk.gov.dwp.jms.manager.core.classification.action;
 
 import client.Destination;
-import client.DestinationMatcherBuilder;
 import client.FailedMessage;
 import client.FailedMessageId;
 import client.SendMessageResource;
 import org.junit.Test;
 import org.springframework.context.ApplicationContext;
+import uk.gov.dwp.jms.manager.core.client.DestinationMatcherBuilder;
 import uk.gov.dwp.jms.manager.core.service.replace.StringReplacementService;
 
 import java.util.HashMap;
 
-import static client.SendMessageRequestMatcherBuilder.sendMessageRequest;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Matchers.argThat;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
+import static uk.gov.dwp.jms.manager.core.client.SendMessageRequestMatcherBuilder.sendMessageRequest;
 
 public class ModifyAndSendFailedMessageActionTest {
     private final String pattern = "pattern";

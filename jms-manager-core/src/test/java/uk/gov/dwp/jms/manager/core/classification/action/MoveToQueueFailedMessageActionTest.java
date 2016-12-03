@@ -6,8 +6,8 @@ import client.FailedMessageId;
 import client.FailedMessageMoveResource;
 import org.junit.Test;
 import org.springframework.context.ApplicationContext;
+import uk.gov.dwp.jms.manager.core.client.DestinationMatcherBuilder;
 
-import static client.DestinationMatcherBuilder.destination;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Matchers.argThat;
@@ -39,7 +39,7 @@ public class MoveToQueueFailedMessageActionTest {
 
         underTest.perform(request);
 
-        verify(failedMessageMoveResource).move(eq(failedMessageId), argThat(destination()
+        verify(failedMessageMoveResource).move(eq(failedMessageId), argThat(DestinationMatcherBuilder.destination()
                 .withBrokerName(equalTo(brokerName))
                 .withQueueName(equalTo(moveDestination))
         ));
