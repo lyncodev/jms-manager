@@ -1,7 +1,7 @@
 package uk.gov.dwp.jms.manager.core.dao;
 
-import client.Destination;
-import client.DestinationStatistics;
+import uk.gov.dwp.jms.manager.client.Destination;
+import uk.gov.dwp.jms.manager.client.DestinationStatistics;
 
 import java.util.List;
 

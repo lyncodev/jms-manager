@@ -1,6 +1,6 @@
 package uk.gov.dwp.jms.manager.web.search;
 
-import client.Destination;
+import uk.gov.dwp.jms.manager.client.Destination;
 
 public class DestinationJsonSerializer {
 

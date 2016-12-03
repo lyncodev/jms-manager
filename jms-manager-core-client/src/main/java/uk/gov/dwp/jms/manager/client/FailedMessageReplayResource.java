@@ -1,4 +1,4 @@
-package client;
+package uk.gov.dwp.jms.manager.client;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.POST;
@@ -9,12 +9,12 @@ import java.util.List;
 
 @Consumes("application/json")
 @Produces("application/json")
-@Path("/failed-message/queue/remove")
-public interface FailedMessageRemoveResource {
+@Path("/failed-message/queue/replay")
+public interface FailedMessageReplayResource {
     @POST
     @Path("/{failedMessageId}")
-    void remove(@PathParam("failedMessageId") FailedMessageId messageId);
+    void replay(@PathParam("failedMessageId") FailedMessageId messageId);
 
     @POST
-    void remove (List<FailedMessageId> messageIds);
+    void replay (List<FailedMessageId> messageIds);
 }

@@ -1,6 +1,6 @@
 package uk.gov.dwp.jms.manager.core.dao.mongo;
 
-import client.Destination;
+import uk.gov.dwp.jms.manager.client.Destination;
 import com.mongodb.DBObject;
 import org.junit.Test;
 

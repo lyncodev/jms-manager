@@ -1,13 +1,14 @@
 package uk.gov.dwp.jms.manager.core.dao.mongo;
 
-import client.Destination;
+import uk.gov.dwp.jms.manager.client.Destination;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.mongodb.BasicDBObject;
 import com.mongodb.DBObject;
+import uk.gov.dwp.jms.manager.client.jackson.JacksonObjectMapperFactory;
 
 public class DestinationDBObjectConverter implements DBObjectConverter<Destination> {
 
-    private final ObjectMapper objectMapper = new ObjectMapper();
+    private final ObjectMapper objectMapper = JacksonObjectMapperFactory.create();
 
     @Override
     public Destination convertToObject(DBObject dbObject) {

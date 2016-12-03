@@ -1,4 +1,4 @@
-package client;
+package uk.gov.dwp.jms.manager.client;
 
 
 import javax.ws.rs.Consumes;

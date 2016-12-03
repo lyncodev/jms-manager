@@ -1,6 +1,6 @@
 package uk.gov.dwp.jms.manager.core.classification.action;
 
-import client.FailedMessage;
+import uk.gov.dwp.jms.manager.client.FailedMessage;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.fasterxml.jackson.databind.annotation.JsonTypeIdResolver;
 import org.springframework.context.ApplicationContext;

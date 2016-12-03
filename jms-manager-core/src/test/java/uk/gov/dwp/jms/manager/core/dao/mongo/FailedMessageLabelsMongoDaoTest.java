@@ -1,7 +1,7 @@
 package uk.gov.dwp.jms.manager.core.dao.mongo;
 
-import client.FailedMessageId;
-import client.FailedMessageLabels;
+import uk.gov.dwp.jms.manager.client.FailedMessageId;
+import uk.gov.dwp.jms.manager.client.FailedMessageLabels;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -10,7 +10,7 @@ import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
-import static client.FailedMessageId.newFailedMessageId;
+import static uk.gov.dwp.jms.manager.client.FailedMessageId.newFailedMessageId;
 import static org.hamcrest.Matchers.contains;
 import static org.hamcrest.Matchers.containsInAnyOrder;
 import static org.hamcrest.Matchers.emptyIterable;

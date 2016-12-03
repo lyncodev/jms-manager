@@ -1,6 +1,6 @@
 package uk.gov.dwp.jms.manager.core.classification.predicate;
 
-import client.FailedMessage;
+import uk.gov.dwp.jms.manager.client.FailedMessage;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonTypeName;
 import uk.gov.dwp.jms.manager.core.jms.send.decorator.SendAttemptsDecorator;

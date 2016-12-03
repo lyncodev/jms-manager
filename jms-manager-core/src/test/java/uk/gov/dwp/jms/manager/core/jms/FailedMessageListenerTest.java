@@ -1,6 +1,6 @@
 package uk.gov.dwp.jms.manager.core.jms;
 
-import client.FailedMessage;
+import uk.gov.dwp.jms.manager.client.FailedMessage;
 import org.junit.Test;
 import uk.gov.dwp.jms.manager.core.service.messages.FailedMessageClassifierProcessor;
 import uk.gov.dwp.jms.manager.core.service.messages.FailedMessageService;

@@ -1,9 +1,9 @@
 package uk.gov.dwp.jms.manager.core.service;
 
-import client.Destination;
-import client.FailedMessage;
-import client.FailedMessageBuilder;
-import client.FailedMessageId;
+import uk.gov.dwp.jms.manager.client.Destination;
+import uk.gov.dwp.jms.manager.client.FailedMessage;
+import uk.gov.dwp.jms.manager.client.FailedMessageBuilder;
+import uk.gov.dwp.jms.manager.client.FailedMessageId;
 import org.junit.Test;
 import uk.gov.dwp.jms.manager.core.dao.FailedMessageDao;
 import uk.gov.dwp.jms.manager.core.dao.FailedMessageLabelsDao;

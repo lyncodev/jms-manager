@@ -1,6 +1,6 @@
 package uk.gov.dwp.jms.manager.core.jms.send;
 
-import client.FailedMessage;
+import uk.gov.dwp.jms.manager.client.FailedMessage;
 import org.springframework.jms.core.MessageCreator;
 import uk.gov.dwp.jms.manager.core.jms.send.decorator.MessageDecorator;
 

@@ -1,7 +1,7 @@
 package uk.gov.dwp.jms.manager.core.service.resources;
 
-import client.FailedMessageId;
-import client.FailedMessageRemoveResource;
+import uk.gov.dwp.jms.manager.client.FailedMessageId;
+import uk.gov.dwp.jms.manager.client.FailedMessageRemoveResource;
 import uk.gov.dwp.jms.manager.core.dao.FailedMessageDao;
 import uk.gov.dwp.jms.manager.core.service.messages.FailedMessageService;
 

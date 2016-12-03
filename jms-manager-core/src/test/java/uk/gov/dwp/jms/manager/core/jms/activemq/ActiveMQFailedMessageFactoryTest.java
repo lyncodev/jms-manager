@@ -1,7 +1,7 @@
 package uk.gov.dwp.jms.manager.core.jms.activemq;
 
-import client.Destination;
-import client.FailedMessage;
+import uk.gov.dwp.jms.manager.client.Destination;
+import uk.gov.dwp.jms.manager.client.FailedMessage;
 import org.apache.activemq.command.ActiveMQMessage;
 import org.junit.Rule;
 import org.junit.Test;

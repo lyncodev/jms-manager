@@ -1,8 +1,8 @@
 package uk.gov.dwp.jms.manager.core.classification.action;
 
-import client.Destination;
-import client.SendMessageRequest;
-import client.SendMessageResource;
+import uk.gov.dwp.jms.manager.client.Destination;
+import uk.gov.dwp.jms.manager.client.SendMessageRequest;
+import uk.gov.dwp.jms.manager.client.SendMessageResource;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonTypeName;

@@ -1,7 +1,7 @@
 package uk.gov.dwp.jms.manager.core.dao.mongo;
 
-import client.Destination;
-import client.DestinationStatistics;
+import uk.gov.dwp.jms.manager.client.Destination;
+import uk.gov.dwp.jms.manager.client.DestinationStatistics;
 import com.mongodb.BasicDBObject;
 import com.mongodb.WriteResult;
 import org.hamcrest.Description;

@@ -1,7 +1,7 @@
 package uk.gov.dwp.jms.manager.core.dao.mongo;
 
-import client.FailedMessage;
-import client.FailedMessageId;
+import uk.gov.dwp.jms.manager.client.FailedMessage;
+import uk.gov.dwp.jms.manager.client.FailedMessageId;
 import com.mongodb.BasicDBObject;
 import com.mongodb.DBCollection;
 import com.mongodb.DBCursor;

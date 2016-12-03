@@ -1,9 +1,9 @@
 package uk.gov.dwp.jms.manager.core.dao.mongo;
 
-import client.Destination;
-import client.FailedMessage;
-import client.FailedMessageBuilder;
-import client.FailedMessageId;
+import uk.gov.dwp.jms.manager.client.Destination;
+import uk.gov.dwp.jms.manager.client.FailedMessage;
+import uk.gov.dwp.jms.manager.client.FailedMessageBuilder;
+import uk.gov.dwp.jms.manager.client.FailedMessageId;
 import com.mongodb.BasicDBObject;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +15,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.UUID;
 
-import static client.FailedMessageId.newFailedMessageId;
+import static uk.gov.dwp.jms.manager.client.FailedMessageId.newFailedMessageId;
 import static java.util.Collections.emptyMap;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;

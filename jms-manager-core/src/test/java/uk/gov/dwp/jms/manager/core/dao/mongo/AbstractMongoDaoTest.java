@@ -18,12 +18,14 @@ import uk.gov.dwp.jms.manager.core.configuration.DaoProperties;
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(
         classes = {
+                MongoTestProperties.class,
                 DaoConfig.class,
                 MongoAutoConfiguration.class,
-                MongoDataAutoConfiguration.class},
-        initializers = ConfigFileApplicationContextInitializer.class)
+                MongoDataAutoConfiguration.class
+        },
+        initializers = ConfigFileApplicationContextInitializer.class
+)
 public abstract class AbstractMongoDaoTest {
-
     @Autowired
     protected MongoClient mongoClient;
     @Autowired
@@ -42,5 +44,6 @@ public abstract class AbstractMongoDaoTest {
     }
 
     protected abstract String getCollectionName();
+
 
 }

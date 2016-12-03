@@ -1,9 +1,9 @@
 package uk.gov.dwp.jms.manager.web.configuration;
 
-import client.DestinationStatisticsResource;
-import client.FailedMessageRemoveResource;
-import client.FailedMessageResource;
-import client.FailedMessageSearchResource;
+import uk.gov.dwp.jms.manager.client.DestinationStatisticsResource;
+import uk.gov.dwp.jms.manager.client.FailedMessageRemoveResource;
+import uk.gov.dwp.jms.manager.client.FailedMessageResource;
+import uk.gov.dwp.jms.manager.client.FailedMessageSearchResource;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

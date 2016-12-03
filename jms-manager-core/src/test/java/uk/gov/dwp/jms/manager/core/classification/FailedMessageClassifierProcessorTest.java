@@ -1,6 +1,6 @@
 package uk.gov.dwp.jms.manager.core.classification;
 
-import client.FailedMessage;
+import uk.gov.dwp.jms.manager.client.FailedMessage;
 import org.hamcrest.FeatureMatcher;
 import org.hamcrest.Matcher;
 import org.junit.Before;

@@ -1,11 +1,11 @@
 package uk.gov.dwp.jms.manager.web.search;
 
-import client.FailedMessage;
-import client.FailedMessageId;
-import client.FailedMessageRemoveResource;
-import client.FailedMessageResource;
-import client.FailedMessageSearchResource;
-import client.SearchRequest;
+import uk.gov.dwp.jms.manager.client.FailedMessage;
+import uk.gov.dwp.jms.manager.client.FailedMessageId;
+import uk.gov.dwp.jms.manager.client.FailedMessageRemoveResource;
+import uk.gov.dwp.jms.manager.client.FailedMessageResource;
+import uk.gov.dwp.jms.manager.client.FailedMessageSearchResource;
+import uk.gov.dwp.jms.manager.client.SearchRequest;
 import uk.gov.dwp.jms.manager.web.w2ui.BaseW2UIRequest;
 
 import javax.ws.rs.Consumes;
@@ -19,8 +19,8 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Stream;
 
-import static client.FailedMessageId.fromString;
-import static client.SearchRequest.aSearchRequest;
+import static uk.gov.dwp.jms.manager.client.FailedMessageId.fromString;
+import static uk.gov.dwp.jms.manager.client.SearchRequest.aSearchRequest;
 import static java.util.Optional.of;
 import static java.util.stream.Collectors.toList;
 import static java.util.stream.Collectors.toSet;

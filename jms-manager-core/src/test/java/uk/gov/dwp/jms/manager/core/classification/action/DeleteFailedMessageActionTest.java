@@ -1,6 +1,6 @@
 package uk.gov.dwp.jms.manager.core.classification.action;
 
-import client.FailedMessage;
+import uk.gov.dwp.jms.manager.client.FailedMessage;
 import org.junit.Test;
 import org.springframework.context.ApplicationContext;
 import uk.gov.dwp.jms.manager.core.service.messages.FailedMessageService;

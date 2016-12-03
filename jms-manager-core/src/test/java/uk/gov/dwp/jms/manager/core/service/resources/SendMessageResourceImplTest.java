@@ -1,7 +1,7 @@
 package uk.gov.dwp.jms.manager.core.service.resources;
 
-import client.Destination;
-import client.SendMessageRequest;
+import uk.gov.dwp.jms.manager.client.Destination;
+import uk.gov.dwp.jms.manager.client.SendMessageRequest;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.Test;
 import org.quartz.Scheduler;

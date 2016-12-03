@@ -1,6 +1,6 @@
-package uk.gov.dwp.jms.manager.core.jackson;
+package uk.gov.dwp.jms.manager.client.jackson;
 
-import client.Id;
+import uk.gov.dwp.jms.manager.client.Id;
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.databind.JsonSerializer;
 import com.fasterxml.jackson.databind.SerializerProvider;

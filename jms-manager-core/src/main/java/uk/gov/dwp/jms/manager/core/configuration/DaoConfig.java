@@ -1,7 +1,7 @@
 package uk.gov.dwp.jms.manager.core.configuration;
 
-import client.Destination;
-import client.Id;
+import uk.gov.dwp.jms.manager.client.Destination;
+import uk.gov.dwp.jms.manager.client.Id;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.mongodb.DBObject;
 import com.mongodb.MongoClient;

@@ -1,16 +1,16 @@
 package uk.gov.dwp.jms.manager.core.dao.mongo;
 
-import client.Destination;
-import client.FailedMessage;
-import client.FailedMessageId;
+import uk.gov.dwp.jms.manager.client.Destination;
+import uk.gov.dwp.jms.manager.client.FailedMessage;
+import uk.gov.dwp.jms.manager.client.FailedMessageId;
 import com.mongodb.BasicDBObject;
 import com.mongodb.DBObject;
 
 import java.time.ZonedDateTime;
 import java.util.Map;
 
-import static client.FailedMessageBuilder.aFailedMessage;
-import static client.FailedMessageId.fromString;
+import static uk.gov.dwp.jms.manager.client.FailedMessageBuilder.aFailedMessage;
+import static uk.gov.dwp.jms.manager.client.FailedMessageId.fromString;
 
 public class FailedMessageConverter implements DBObjectWithIdConverter<FailedMessage, FailedMessageId> {
 

@@ -1,6 +1,6 @@
 package uk.gov.dwp.jms.manager.web.search;
 
-import client.FailedMessage;
+import uk.gov.dwp.jms.manager.client.FailedMessage;
 import uk.gov.dwp.jms.manager.web.common.Page;
 
 import java.util.List;

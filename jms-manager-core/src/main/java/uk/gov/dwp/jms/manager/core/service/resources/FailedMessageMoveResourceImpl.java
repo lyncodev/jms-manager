@@ -1,9 +1,9 @@
 package uk.gov.dwp.jms.manager.core.service.resources;
 
-import client.Destination;
-import client.FailedMessage;
-import client.FailedMessageId;
-import client.FailedMessageMoveResource;
+import uk.gov.dwp.jms.manager.client.Destination;
+import uk.gov.dwp.jms.manager.client.FailedMessage;
+import uk.gov.dwp.jms.manager.client.FailedMessageId;
+import uk.gov.dwp.jms.manager.client.FailedMessageMoveResource;
 import org.springframework.jms.core.MessageCreator;
 import uk.gov.dwp.jms.manager.core.dao.FailedMessageDao;
 import uk.gov.dwp.jms.manager.core.jms.send.MessageSenderFactory;

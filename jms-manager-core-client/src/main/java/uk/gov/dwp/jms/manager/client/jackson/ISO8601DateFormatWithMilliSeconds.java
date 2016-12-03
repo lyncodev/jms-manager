@@ -1,4 +1,4 @@
-package uk.gov.dwp.jms.manager.core.jackson;
+package uk.gov.dwp.jms.manager.client.jackson;
 
 import com.fasterxml.jackson.databind.util.ISO8601DateFormat;
 import com.fasterxml.jackson.databind.util.ISO8601Utils;

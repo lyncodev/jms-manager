@@ -1,6 +1,6 @@
 package uk.gov.dwp.jms.manager.core.service.schedule;
 
-import client.FailedMessageId;
+import uk.gov.dwp.jms.manager.client.FailedMessageId;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.quartz.Job;
 import org.quartz.JobExecutionContext;

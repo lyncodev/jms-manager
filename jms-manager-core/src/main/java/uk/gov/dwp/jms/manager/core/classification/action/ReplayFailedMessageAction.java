@@ -1,6 +1,6 @@
 package uk.gov.dwp.jms.manager.core.classification.action;
 
-import client.FailedMessageReplayResource;
+import uk.gov.dwp.jms.manager.client.FailedMessageReplayResource;
 import com.fasterxml.jackson.annotation.JsonTypeName;
 
 @JsonTypeName("replay")

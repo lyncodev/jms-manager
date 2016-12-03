@@ -1,6 +1,6 @@
 package uk.gov.dwp.jms.manager.core.jms;
 
-import client.FailedMessage;
+import uk.gov.dwp.jms.manager.client.FailedMessage;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import uk.gov.dwp.jms.manager.core.service.messages.FailedMessageClassifierProcessor;

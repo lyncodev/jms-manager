@@ -1,7 +1,7 @@
 package uk.gov.dwp.jms.manager.core.dao.mongo;
 
-import client.FailedMessageId;
-import client.FailedMessageLabels;
+import uk.gov.dwp.jms.manager.client.FailedMessageId;
+import uk.gov.dwp.jms.manager.client.FailedMessageLabels;
 import com.mongodb.BasicDBObject;
 import org.hamcrest.Description;
 import org.hamcrest.Matcher;
@@ -11,8 +11,8 @@ import org.junit.Test;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
-import static client.FailedMessageId.fromString;
-import static client.FailedMessageId.newFailedMessageId;
+import static uk.gov.dwp.jms.manager.client.FailedMessageId.fromString;
+import static uk.gov.dwp.jms.manager.client.FailedMessageId.newFailedMessageId;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.Matchers.contains;
 import static org.hamcrest.Matchers.is;

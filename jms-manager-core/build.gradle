@@ -5,12 +5,6 @@ dependencies {
     compile project(':jms-manager-core-client')
 
     compile "javax.validation:validation-api:1.1.0.Final",
-            "com.fasterxml.jackson.core:jackson-annotations:$project.ext.jacksonVersion",
-            "com.fasterxml.jackson.core:jackson-core:$project.ext.jacksonVersion",
-            "com.fasterxml.jackson.core:jackson-databind:$project.ext.jacksonVersion",
-            "com.fasterxml.jackson.datatype:jackson-datatype-jsr310:$project.ext.jacksonVersion",
-            "com.fasterxml.jackson.jaxrs:jackson-jaxrs-json-provider:$project.ext.jacksonVersion",
-            "org.apache.activemq:activemq-broker:$project.ext.activeMqVersion",
             "org.apache.commons:commons-lang3:$project.ext.apacheCommons3Version",
             "org.apache.cxf:cxf-core:$project.ext.apacheCxfVersion",
             "org.apache.cxf:cxf-rt-frontend-jaxrs:$project.ext.apacheCxfVersion",

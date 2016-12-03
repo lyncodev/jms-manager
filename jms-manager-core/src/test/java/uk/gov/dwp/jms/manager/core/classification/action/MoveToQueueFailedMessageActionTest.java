@@ -1,9 +1,9 @@
 package uk.gov.dwp.jms.manager.core.classification.action;
 
-import client.Destination;
-import client.FailedMessage;
-import client.FailedMessageId;
-import client.FailedMessageMoveResource;
+import uk.gov.dwp.jms.manager.client.Destination;
+import uk.gov.dwp.jms.manager.client.FailedMessage;
+import uk.gov.dwp.jms.manager.client.FailedMessageId;
+import uk.gov.dwp.jms.manager.client.FailedMessageMoveResource;
 import org.junit.Test;
 import org.springframework.context.ApplicationContext;
 import uk.gov.dwp.jms.manager.core.client.DestinationMatcherBuilder;

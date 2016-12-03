@@ -1,8 +1,8 @@
 package uk.gov.dwp.jms.manager.core.dao.mongo;
 
-import client.Destination;
-import client.FailedMessageBuilder;
-import client.FailedMessageId;
+import uk.gov.dwp.jms.manager.client.Destination;
+import uk.gov.dwp.jms.manager.client.FailedMessageBuilder;
+import uk.gov.dwp.jms.manager.client.FailedMessageId;
 import com.mongodb.BasicDBObject;
 import com.mongodb.DBObject;
 import org.junit.Before;
@@ -14,7 +14,7 @@ import java.time.ZonedDateTime;
 import java.util.HashMap;
 import java.util.Map;
 
-import static client.FailedMessageId.newFailedMessageId;
+import static uk.gov.dwp.jms.manager.client.FailedMessageId.newFailedMessageId;
 import static org.hamcrest.Matchers.allOf;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.is;

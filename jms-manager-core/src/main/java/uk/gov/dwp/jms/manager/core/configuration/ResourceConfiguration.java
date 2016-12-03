@@ -1,13 +1,13 @@
 package uk.gov.dwp.jms.manager.core.configuration;
 
-import client.DestinationStatisticsResource;
-import client.FailedMessageMoveResource;
-import client.FailedMessageRemoveResource;
-import client.FailedMessageReplayResource;
-import client.FailedMessageReprocessResource;
-import client.FailedMessageResource;
-import client.FailedMessageSearchResource;
-import client.SendMessageResource;
+import uk.gov.dwp.jms.manager.client.DestinationStatisticsResource;
+import uk.gov.dwp.jms.manager.client.FailedMessageMoveResource;
+import uk.gov.dwp.jms.manager.client.FailedMessageRemoveResource;
+import uk.gov.dwp.jms.manager.client.FailedMessageReplayResource;
+import uk.gov.dwp.jms.manager.client.FailedMessageReprocessResource;
+import uk.gov.dwp.jms.manager.client.FailedMessageResource;
+import uk.gov.dwp.jms.manager.client.FailedMessageSearchResource;
+import uk.gov.dwp.jms.manager.client.SendMessageResource;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.quartz.Scheduler;
 import org.springframework.context.annotation.Bean;

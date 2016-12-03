@@ -1,4 +1,4 @@
-package client;
+package uk.gov.dwp.jms.manager.client;
 
 import java.time.ZonedDateTime;
 import java.util.HashMap;

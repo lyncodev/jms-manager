@@ -1,7 +1,7 @@
 package uk.gov.dwp.jms.manager.core.classification.predicate;
 
-import client.Destination;
-import client.FailedMessage;
+import uk.gov.dwp.jms.manager.client.Destination;
+import uk.gov.dwp.jms.manager.client.FailedMessage;
 import org.junit.Test;
 
 import static org.hamcrest.core.Is.is;

@@ -8,13 +8,14 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.context.embedded.EmbeddedWebApplicationContext;
 import org.springframework.context.ConfigurableApplicationContext;
 import uk.gov.dwp.jms.manager.core.JmsManagerApplication;
+import uk.gov.dwp.jms.manager.client.jackson.JacksonObjectMapperFactory;
 
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.OutputStream;
 
 public class JmsManagerCoreSetup {
-    private static final ObjectMapper objectMapper = new ObjectMapper();
+    private static final ObjectMapper objectMapper = JacksonObjectMapperFactory.create();
     private final JmsManagerCoreConfiguration configuration;
     private ConfigurableApplicationContext context;
 

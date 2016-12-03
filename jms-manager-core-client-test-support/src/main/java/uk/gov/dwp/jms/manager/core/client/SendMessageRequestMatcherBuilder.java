@@ -1,7 +1,7 @@
 package uk.gov.dwp.jms.manager.core.client;
 
-import client.Destination;
-import client.SendMessageRequest;
+import uk.gov.dwp.jms.manager.client.Destination;
+import uk.gov.dwp.jms.manager.client.SendMessageRequest;
 import org.hamcrest.FeatureMatcher;
 import org.hamcrest.Matcher;
 

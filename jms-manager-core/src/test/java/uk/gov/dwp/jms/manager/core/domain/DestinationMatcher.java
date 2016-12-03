@@ -1,6 +1,6 @@
 package uk.gov.dwp.jms.manager.core.domain;
 
-import client.Destination;
+import uk.gov.dwp.jms.manager.client.Destination;
 import org.hamcrest.Description;
 import org.hamcrest.Matcher;
 import org.hamcrest.TypeSafeMatcher;

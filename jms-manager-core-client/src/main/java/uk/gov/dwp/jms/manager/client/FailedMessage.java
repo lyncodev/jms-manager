@@ -1,4 +1,4 @@
-package client;
+package uk.gov.dwp.jms.manager.client;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;

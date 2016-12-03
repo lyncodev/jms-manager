@@ -1,7 +1,7 @@
 package uk.gov.dwp.jms.manager.core.classification.action;
 
-import client.Destination;
-import client.FailedMessageMoveResource;
+import uk.gov.dwp.jms.manager.client.Destination;
+import uk.gov.dwp.jms.manager.client.FailedMessageMoveResource;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonTypeName;

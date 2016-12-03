@@ -1,7 +1,7 @@
 package uk.gov.dwp.jms.manager.web.summary;
 
-import client.DestinationStatistics;
-import client.DestinationStatisticsResource;
+import uk.gov.dwp.jms.manager.client.DestinationStatistics;
+import uk.gov.dwp.jms.manager.client.DestinationStatisticsResource;
 import org.junit.Test;
 
 import java.util.Collections;
